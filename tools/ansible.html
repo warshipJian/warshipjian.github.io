@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>ansible的安装与使用 | 小小郭的博客</title>
+    <meta name="generator" content="VuePress 1.5.2">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="description" content="小小郭">
+    <link rel="preload" href="/assets/css/0.styles.f333096b.css" as="style"><link rel="preload" href="/assets/js/app.158714e6.js" as="script"><link rel="preload" href="/assets/js/2.a806d99a.js" as="script"><link rel="preload" href="/assets/js/66.51641258.js" as="script"><link rel="prefetch" href="/assets/js/10.ceb6da30.js"><link rel="prefetch" href="/assets/js/11.f6fcdde7.js"><link rel="prefetch" href="/assets/js/12.c1ccc7c5.js"><link rel="prefetch" href="/assets/js/13.2e80b5f4.js"><link rel="prefetch" href="/assets/js/14.86580eea.js"><link rel="prefetch" href="/assets/js/15.ec8bc9ac.js"><link rel="prefetch" href="/assets/js/16.ffe6c259.js"><link rel="prefetch" href="/assets/js/17.f11cefb5.js"><link rel="prefetch" href="/assets/js/18.ba7fa50a.js"><link rel="prefetch" href="/assets/js/19.d98194cd.js"><link rel="prefetch" href="/assets/js/20.b3e3e3ba.js"><link rel="prefetch" href="/assets/js/21.0560925d.js"><link rel="prefetch" href="/assets/js/22.151f504b.js"><link rel="prefetch" href="/assets/js/23.c0dd585a.js"><link rel="prefetch" href="/assets/js/24.5ac8c4b5.js"><link rel="prefetch" href="/assets/js/25.57989e7c.js"><link rel="prefetch" href="/assets/js/26.19ae4c70.js"><link rel="prefetch" href="/assets/js/27.7b7a4013.js"><link rel="prefetch" href="/assets/js/28.c02de8fb.js"><link rel="prefetch" href="/assets/js/29.be98b5ac.js"><link rel="prefetch" href="/assets/js/3.f9a5341d.js"><link rel="prefetch" href="/assets/js/30.151ce4ad.js"><link rel="prefetch" href="/assets/js/31.e3b05220.js"><link rel="prefetch" href="/assets/js/32.48233f51.js"><link rel="prefetch" href="/assets/js/33.cdf1ba85.js"><link rel="prefetch" href="/assets/js/34.8e175bdf.js"><link rel="prefetch" href="/assets/js/35.53e76add.js"><link rel="prefetch" href="/assets/js/36.2588db5d.js"><link rel="prefetch" href="/assets/js/37.904d3476.js"><link rel="prefetch" href="/assets/js/38.1424f189.js"><link rel="prefetch" href="/assets/js/39.0e05003b.js"><link rel="prefetch" href="/assets/js/4.84d9a9b8.js"><link rel="prefetch" href="/assets/js/40.e4b36098.js"><link rel="prefetch" href="/assets/js/41.13258ed7.js"><link rel="prefetch" href="/assets/js/42.6f5a7cbb.js"><link rel="prefetch" href="/assets/js/43.7898149d.js"><link rel="prefetch" href="/assets/js/44.37b08732.js"><link rel="prefetch" href="/assets/js/45.17998593.js"><link rel="prefetch" href="/assets/js/46.055bc79a.js"><link rel="prefetch" href="/assets/js/47.6df10fa7.js"><link rel="prefetch" href="/assets/js/48.2660180a.js"><link rel="prefetch" href="/assets/js/49.4625a12a.js"><link rel="prefetch" href="/assets/js/5.501f4465.js"><link rel="prefetch" href="/assets/js/50.b3b348da.js"><link rel="prefetch" href="/assets/js/51.dcb3be6c.js"><link rel="prefetch" href="/assets/js/52.7dd04b5b.js"><link rel="prefetch" href="/assets/js/53.20259b4b.js"><link rel="prefetch" href="/assets/js/54.c876d67f.js"><link rel="prefetch" href="/assets/js/55.52c8359c.js"><link rel="prefetch" href="/assets/js/56.ab71b89a.js"><link rel="prefetch" href="/assets/js/57.30af5fe9.js"><link rel="prefetch" href="/assets/js/58.d1f3acb8.js"><link rel="prefetch" href="/assets/js/59.0c65a864.js"><link rel="prefetch" href="/assets/js/6.56baaf4e.js"><link rel="prefetch" href="/assets/js/60.cc2dc3eb.js"><link rel="prefetch" href="/assets/js/61.bc3d577e.js"><link rel="prefetch" href="/assets/js/62.88dedbc6.js"><link rel="prefetch" href="/assets/js/63.5403d296.js"><link rel="prefetch" href="/assets/js/64.cdcabf93.js"><link rel="prefetch" href="/assets/js/65.7fba108e.js"><link rel="prefetch" href="/assets/js/67.f408a0b2.js"><link rel="prefetch" href="/assets/js/68.326016eb.js"><link rel="prefetch" href="/assets/js/69.9dde49ee.js"><link rel="prefetch" href="/assets/js/7.86ee5bb7.js"><link rel="prefetch" href="/assets/js/70.76be6feb.js"><link rel="prefetch" href="/assets/js/71.8bb3d5a3.js"><link rel="prefetch" href="/assets/js/72.3d340b56.js"><link rel="prefetch" href="/assets/js/73.94ae8b58.js"><link rel="prefetch" href="/assets/js/74.c38b2bf5.js"><link rel="prefetch" href="/assets/js/75.ab88131c.js"><link rel="prefetch" href="/assets/js/76.b15fc67e.js"><link rel="prefetch" href="/assets/js/8.77896323.js"><link rel="prefetch" href="/assets/js/9.1bb7c316.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.f333096b.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="global-layout"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">小小郭的博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav>  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="ansible的安装与使用"><a href="#ansible的安装与使用" class="header-anchor">#</a> ansible的安装与使用</h1> <p>ansible挺好用的,网上有很丰富的教程.</p> <p>结合最近的使用情况,我也总结下.</p> <p>ansible的特点:</p> <p>1.基于ssh运行</p> <p>2.无需客户端</p> <h2 id="安装ansible"><a href="#安装ansible" class="header-anchor">#</a> 安装ansible</h2> <p>这里提供四种安装方式,根据自己的需要任选一种即可</p> <h3 id="_1-1使用yum安装"><a href="#_1-1使用yum安装" class="header-anchor">#</a> 1.1使用yum安装</h3> <p>yum install epel-release -y</p> <p>yum install ansible -y</p> <h3 id="_1-2-使用pip安装"><a href="#_1-2-使用pip安装" class="header-anchor">#</a> 1.2 使用pip安装</h3> <p>pip install ansible</p> <p>如果没pip,需先安装好pip.方法如下:</p> <p>yum install python-setuptools</p> <p>easy_install pip</p> <h3 id="_1-3-源码安装pip"><a href="#_1-3-源码安装pip" class="header-anchor">#</a> 1.3 源码安装pip</h3> <p>准备工具</p> <p>yum install git python-setuptools gcc python-devel  -y</p> <p>获取源码</p> <p>git clone https://github.com/ansible/ansible</p> <p>安装ansible</p> <p>cd ansible</p> <p>python setup.py install</p> <h3 id="_1-4-brew安装"><a href="#_1-4-brew安装" class="header-anchor">#</a> 1.4 brew安装</h3> <p>在macos下，可使用brew安装</p> <p>brew install ansible</p> <h2 id="配置服务器"><a href="#配置服务器" class="header-anchor">#</a> 配置服务器</h2> <p>ansible通过文件来定义你要管理的主机,也就是说把你需要的管理的主机ip写到一个文件中即可。</p> <p>这个文件一般名为hosts，它可以放在多个路径下，也可以自定义名称和路径。</p> <p>默认我们用/etc/ansible/hosts这个文件即可</p> <p>如果是macos 10 以上的系统，默认是没有权限写/etc/的，可以通过自定义配置来添加hosts文件</p> <p>在~下添加.ansible.cfg文件，指定hosts文件的路径，内容如下</p> <div class="language- extra-class"><pre class="language-text"><code>[defaults]
+hostfile = /usr/local/etc/ansible/hosts
+</code></pre></div><p>hosts文件的格式为：</p> <div class="language- extra-class"><pre class="language-text"><code>[webservers]
+10.2.2.121
+10.2.2.122
+</code></pre></div><p>这里webservers是主机组的名称，10.2.2.121和10.2.2.122就是具体的服务器ip了</p> <p>按照这个格式来自定义自己要管理的主机和主机组即可</p> <p>如我想定义一组名称test的主机，ip分别是10.2.1.201，10.2.1.202</p> <p>格式如下</p> <div class="language- extra-class"><pre class="language-text"><code>[test]
+10.2.1.201
+10.2.1.202
+</code></pre></div><p>默认ssh端口是22，如果主机端口号是其他的，在ip后加:端口号即可，如10.2.1.203的端口是2211，属于test组，格式如下：</p> <div class="language- extra-class"><pre class="language-text"><code>[test]
+10.2.1.201
+10.2.1.202
+10.2.1.203:2211
+</code></pre></div><p>如果要定义登录机器的用户名和密码，比如10.2.1.204的用户名是test，密码是admin@test,端口是2244,</p> <div class="language- extra-class"><pre class="language-text"><code>[test]
+10.2.1.201
+10.2.1.202
+10.2.1.203:2211
+10.2.1.204:2244 ansible_ssh_user=test ansible_ssh_pass=admin@test
+</code></pre></div><p>还可以定义主机的别名，如</p> <div class="language- extra-class"><pre class="language-text"><code>[test]
+web-01 ansible_host=10.2.1.205 ansible_ssh_user=test ansible_ssh_pass=admin@test ansible_ssh_port=2233
+</code></pre></div><p>建议使用免密码登录来管理服务器，在ansible的服务器上配置一套ssh的key，通过ssh-copy-id把公钥分发到要管理的服务器上。具体步骤如下：</p> <h3 id="_1-使用ssh-keygen产生ssh密钥"><a href="#_1-使用ssh-keygen产生ssh密钥" class="header-anchor">#</a> 1.使用ssh-keygen产生ssh密钥</h3> <div class="language- extra-class"><pre class="language-text"><code>[root@test-201 ~]# ssh-keygen 
+Generating public/private rsa key pair.
+Enter file in which to save the key (/root/.ssh/id_rsa): 
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /root/.ssh/id_rsa.
+Your public key has been saved in /root/.ssh/id_rsa.pub.
+The key fingerprint is:
+dd:20:23:7c:1a:2e:01:bf:b1:67:7a:08:87:5f:e6:7e root@test-201
+The key's randomart image is:
++--[ RSA 2048]----+
+|  .              |
+|   o .           |
+|    + + + .      |
+|   . * = + o     |
+|  o = B S . .    |
+|   + X           |
+|    + o          |
+|     o  E        |
+|      ..         |
++-----------------+
+</code></pre></div><h3 id="_2-将公钥发送到要管理的服务器"><a href="#_2-将公钥发送到要管理的服务器" class="header-anchor">#</a> 2.将公钥发送到要管理的服务器</h3> <p>使用ssh-copy-id命令</p> <p>比如要发送到10.2.31.202，使用如下命令：</p> <div class="language- extra-class"><pre class="language-text"><code>[root@test-201 ~]# ssh-copy-id -i /root/.ssh/id_rsa.pub 10.2.31.202
+root@10.2.31.202's password: 
+Now try logging into the machine, with &quot;ssh '10.2.31.202'&quot;, and check in:
+
+  .ssh/authorized_keys
+
+to make sure we haven't added extra keys that you weren't expecting.
+</code></pre></div><h2 id="使用ansible"><a href="#使用ansible" class="header-anchor">#</a> 使用ansible</h2> <p>命令格式如下：</p> <p><strong>ansible + 主机组名称 + -m + 模块名称 + -a  + 参数</strong></p> <p>主机组名称，即hosts中定义的主机组名称</p> <p>-m 指使用模块，后加指定的模块名称</p> <p>-a  指传给模块的参数</p> <p>在不指定模块时，默认调用command模块。</p> <p>如我们想看下test组上的服务器的/tmp下面有哪些文件，可以使用如下命令</p> <p><strong>ansible test -a &quot;ls /tmp&quot;</strong></p> <div class="language- extra-class"><pre class="language-text"><code>[root@test-201 ~]# ansible test -a &quot;ls /tmp&quot;
+10.2.31.203 | SUCCESS | rc=0 &gt;&gt;
+ansible_EMEGZI
+testabcdefg
+</code></pre></div><p>我们可以使用copy模块，将本地文件发送到目标服务器上，如：</p> <p><strong>ansible test -m copy -a &quot;src=/root/install.log dest=/tmp&quot;</strong></p> <p>这个命令是将本地的/root/install.log发送到test组的/tmp下，执行的效果如下：</p> <div class="language- extra-class"><pre class="language-text"><code>[root@test-201 ~]# ansible test -m copy -a &quot;src=/root/install.log dest=/tmp&quot;
+10.2.31.203 | SUCCESS =&gt; {
+    &quot;changed&quot;: true, 
+    &quot;checksum&quot;: &quot;114ee153946d9cd2e690c405e5796a4fcc400542&quot;, 
+    &quot;dest&quot;: &quot;/tmp/install.log&quot;, 
+    &quot;gid&quot;: 0, 
+    &quot;group&quot;: &quot;root&quot;, 
+    &quot;md5sum&quot;: &quot;17b18780156a31a65d62a324110d686e&quot;, 
+    &quot;mode&quot;: &quot;0644&quot;, 
+    &quot;owner&quot;: &quot;root&quot;, 
+    &quot;secontext&quot;: &quot;unconfined_u:object_r:admin_home_t:s0&quot;, 
+    &quot;size&quot;: 43688, 
+    &quot;src&quot;: &quot;/root/.ansible/tmp/ansible-tmp-1466157410.68-191787255687953/source&quot;, 
+    &quot;state&quot;: &quot;file&quot;, 
+    &quot;uid&quot;: 0
+}
+</code></pre></div><p>你可以使用<strong>ansible-doc --list</strong>查看当前的所有模块</p> <div class="language- extra-class"><pre class="language-text"><code>[root@test-201 ~]# ansible-doc  --list                       
+….
+….                                                        
+authorized_key                     Adds or removes an SSH authorized key                                                                                           
+azure                              create or terminate a virtual machine in azure                                                                                  
+azure_rm_deployment                Create or destroy Azure Resource Manager template deployments                                                                   
+azure_rm_networkinterface          Manage Azure network interfaces.                                                                                                
+azure_rm_networkinterface_facts    Get network interface facts.                                                                                                    
+azure_rm_publicipaddress           Manage Azure Public IP Addresses.                                                                                               
+azure_rm_publicipaddress_facts     Get public IP facts.                                                                                                            
+azure_rm_resourcegroup             Manage Azure resource groups.                                                                                                   
+azure_rm_resourcegroup_facts       Get resource group facts.                                                                                                       
+azure_rm_securitygroup             Manage Azure network security groups.
+….
+…
+</code></pre></div><p>使用<strong>ansible-doc + 模块名</strong>，可以看具体某个模块的使用方法，如查看yum模块的使用方法</p> <p><strong>ansible-doc  yum</strong></p> <div class="language- extra-class"><pre class="language-text"><code>[root@test-201 ~]# ansible-doc  yum
+&gt; YUM
+
+  Installs, upgrade, removes, and lists packages and groups with the `yum' package manager.
+  ......
+  
+</code></pre></div><p>ansible自带了很多丰富的模块，详细请看：</p> <p>http://docs.ansible.com/ansible/list_of_all_modules.html</p> <h2 id="playbooks"><a href="#playbooks" class="header-anchor">#</a> Playbooks</h2> <p>顾名思义，playbooks就像剧本一样，将你要做的事情先定义好，然后通过它来执行。这也是ansible一个强大的地方，可以通过它来做些复杂的应用部署。</p> <p>举个例子：</p> <div class="language- extra-class"><pre class="language-text"><code>[root@test-201 ~]# cat test-playbook
+- hosts: test
+  tasks:
+  - name: 确认apache是否在运行
+service: name=httpd state=started
+</code></pre></div><p>这是个很简单的playbooks，首先它指定了要操作的主机组是test，定义了一个名称：确认apache是否在运行，执行pkg=httpd state=latest动作。</p> <p>执行如下命令</p> <h3 id="ansible-playbook-test-playbook"><a href="#ansible-playbook-test-playbook" class="header-anchor">#</a> ansible-playbook test-playbook</h3> <p>效果如下：</p> <div class="language- extra-class"><pre class="language-text"><code>[root@test-201 ~]# ansible-playbook test-playbook 
+
+PLAY [test] ********************************************************************
+
+TASK [setup] *******************************************************************
+ok: [10.2.31.203]
+
+TASK [确认apache是否在运行] ***********************************************************
+ok: [10.2.31.203]
+
+PLAY RECAP *********************************************************************
+10.2.31.203                : ok=2    changed=0    unreachable=0    failed=0
+</code></pre></div><p>由于playbooks涉及的内容较多,这里就不一一赘述了,更多内容请参考文档： http://ansible-tran.readthedocs.io/en/latest/docs/playbooks.html</p> <h2 id="小技巧"><a href="#小技巧" class="header-anchor">#</a> 小技巧:</h2> <p>有时候如果想直接操作某台服务器,但又没有在hosts里定义这台服务器时,可以使用如下命令:</p> <p><strong>ansible all -i '服务器ip,'</strong></p> <p>注意服务器ip后面要加个,</p> <p>如</p> <p>ansible all -i '10.2.31.201,' -u test  -k -a 'uptime'</p></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div> <footer><div style="text-align: center;">
+            © 2020 小小郭的博客
+            <a href="http://www.beian.miit.gov.cn/">粤ICP备16016910号</a> <br><br></div></footer></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.158714e6.js" defer></script><script src="/assets/js/2.a806d99a.js" defer></script><script src="/assets/js/66.51641258.js" defer></script>
+  </body>
+</html>

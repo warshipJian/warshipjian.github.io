@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>linux的文件权限及符号 | 小小郭的博客</title>
+    <meta name="generator" content="VuePress 1.5.2">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="description" content="小小郭">
+    <link rel="preload" href="/assets/css/0.styles.f333096b.css" as="style"><link rel="preload" href="/assets/js/app.158714e6.js" as="script"><link rel="preload" href="/assets/js/2.a806d99a.js" as="script"><link rel="preload" href="/assets/js/27.7b7a4013.js" as="script"><link rel="prefetch" href="/assets/js/10.ceb6da30.js"><link rel="prefetch" href="/assets/js/11.f6fcdde7.js"><link rel="prefetch" href="/assets/js/12.c1ccc7c5.js"><link rel="prefetch" href="/assets/js/13.2e80b5f4.js"><link rel="prefetch" href="/assets/js/14.86580eea.js"><link rel="prefetch" href="/assets/js/15.ec8bc9ac.js"><link rel="prefetch" href="/assets/js/16.ffe6c259.js"><link rel="prefetch" href="/assets/js/17.f11cefb5.js"><link rel="prefetch" href="/assets/js/18.ba7fa50a.js"><link rel="prefetch" href="/assets/js/19.d98194cd.js"><link rel="prefetch" href="/assets/js/20.b3e3e3ba.js"><link rel="prefetch" href="/assets/js/21.0560925d.js"><link rel="prefetch" href="/assets/js/22.151f504b.js"><link rel="prefetch" href="/assets/js/23.c0dd585a.js"><link rel="prefetch" href="/assets/js/24.5ac8c4b5.js"><link rel="prefetch" href="/assets/js/25.57989e7c.js"><link rel="prefetch" href="/assets/js/26.19ae4c70.js"><link rel="prefetch" href="/assets/js/28.c02de8fb.js"><link rel="prefetch" href="/assets/js/29.be98b5ac.js"><link rel="prefetch" href="/assets/js/3.f9a5341d.js"><link rel="prefetch" href="/assets/js/30.151ce4ad.js"><link rel="prefetch" href="/assets/js/31.e3b05220.js"><link rel="prefetch" href="/assets/js/32.48233f51.js"><link rel="prefetch" href="/assets/js/33.cdf1ba85.js"><link rel="prefetch" href="/assets/js/34.8e175bdf.js"><link rel="prefetch" href="/assets/js/35.53e76add.js"><link rel="prefetch" href="/assets/js/36.2588db5d.js"><link rel="prefetch" href="/assets/js/37.904d3476.js"><link rel="prefetch" href="/assets/js/38.1424f189.js"><link rel="prefetch" href="/assets/js/39.0e05003b.js"><link rel="prefetch" href="/assets/js/4.84d9a9b8.js"><link rel="prefetch" href="/assets/js/40.e4b36098.js"><link rel="prefetch" href="/assets/js/41.13258ed7.js"><link rel="prefetch" href="/assets/js/42.6f5a7cbb.js"><link rel="prefetch" href="/assets/js/43.7898149d.js"><link rel="prefetch" href="/assets/js/44.37b08732.js"><link rel="prefetch" href="/assets/js/45.17998593.js"><link rel="prefetch" href="/assets/js/46.055bc79a.js"><link rel="prefetch" href="/assets/js/47.6df10fa7.js"><link rel="prefetch" href="/assets/js/48.2660180a.js"><link rel="prefetch" href="/assets/js/49.4625a12a.js"><link rel="prefetch" href="/assets/js/5.501f4465.js"><link rel="prefetch" href="/assets/js/50.b3b348da.js"><link rel="prefetch" href="/assets/js/51.dcb3be6c.js"><link rel="prefetch" href="/assets/js/52.7dd04b5b.js"><link rel="prefetch" href="/assets/js/53.20259b4b.js"><link rel="prefetch" href="/assets/js/54.c876d67f.js"><link rel="prefetch" href="/assets/js/55.52c8359c.js"><link rel="prefetch" href="/assets/js/56.ab71b89a.js"><link rel="prefetch" href="/assets/js/57.30af5fe9.js"><link rel="prefetch" href="/assets/js/58.d1f3acb8.js"><link rel="prefetch" href="/assets/js/59.0c65a864.js"><link rel="prefetch" href="/assets/js/6.56baaf4e.js"><link rel="prefetch" href="/assets/js/60.cc2dc3eb.js"><link rel="prefetch" href="/assets/js/61.bc3d577e.js"><link rel="prefetch" href="/assets/js/62.88dedbc6.js"><link rel="prefetch" href="/assets/js/63.5403d296.js"><link rel="prefetch" href="/assets/js/64.cdcabf93.js"><link rel="prefetch" href="/assets/js/65.7fba108e.js"><link rel="prefetch" href="/assets/js/66.51641258.js"><link rel="prefetch" href="/assets/js/67.f408a0b2.js"><link rel="prefetch" href="/assets/js/68.326016eb.js"><link rel="prefetch" href="/assets/js/69.9dde49ee.js"><link rel="prefetch" href="/assets/js/7.86ee5bb7.js"><link rel="prefetch" href="/assets/js/70.76be6feb.js"><link rel="prefetch" href="/assets/js/71.8bb3d5a3.js"><link rel="prefetch" href="/assets/js/72.3d340b56.js"><link rel="prefetch" href="/assets/js/73.94ae8b58.js"><link rel="prefetch" href="/assets/js/74.c38b2bf5.js"><link rel="prefetch" href="/assets/js/75.ab88131c.js"><link rel="prefetch" href="/assets/js/76.b15fc67e.js"><link rel="prefetch" href="/assets/js/8.77896323.js"><link rel="prefetch" href="/assets/js/9.1bb7c316.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.f333096b.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="global-layout"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">小小郭的博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav>  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="linux的文件权限及符号"><a href="#linux的文件权限及符号" class="header-anchor">#</a> linux的文件权限及符号</h1> <h3 id="普通权限"><a href="#普通权限" class="header-anchor">#</a> 普通权限</h3> <p><code>r</code>-读
+<code>w</code>-写
+<code>x</code>-执行。
+注意:x权限对于目录来说是进入目录的权限。比如用root创建一个目录，去掉x权限，普通用户即使有r权限，也无法进入该目录。</p> <h3 id="特殊权限"><a href="#特殊权限" class="header-anchor">#</a> 特殊权限</h3> <p>有三个:<code>SUID</code>，<code>SGID</code>，<code>Sticky</code>，其中<code>SUID</code>，<code>SGID</code>在<code>ls</code>命令中显示为<code>s</code>或大写<code>S</code>，<code>SUID</code>显示为<code>t</code>或大写<code>T</code>。</p> <h4 id="suid"><a href="#suid" class="header-anchor">#</a> SUID</h4> <p>内核在确定进程的访问权限时，会看进程的euid和egid(effective id,有效id)。一个文件如果设置了SUID，它的euid等于该文件所属用户的uid，如果未设置，则等于当前用户的uid，gid同理。</p> <p>比如用户bob的uid是1003，gid是1003，文件myfile的权限如下：</p> <div class="language- extra-class"><pre class="language-text"><code>-rw-rw-r-- 1 bob bob 3 Jan 23 07:32 myfile
+</code></pre></div><p>此时myfile的所属用户是bob，未设置SUID，则euid=bob的uid=1003。</p> <p>如果给myfile设置了SUID位，当另一个用户tom(uid为1005)来运行myfile时，原本uid应为tom的1005，但由于设置了SUID，myfile的所属用户是bob，所以此时euid=bob的uid=1003</p> <div class="language- extra-class"><pre class="language-text"><code>root@ubuntu01:/tmp# chmod u+s myfile 
+root@ubuntu01:/tmp# ls -al myfile
+-rwSrw-r-- 1 bob bob 3 Jan 23 07:32 myfile
+</code></pre></div><p>最常见的一个例子：用户的密码保存在/etc/shadow，但此文件只有root才能写，普通用户要修改密码时就通过SUID位临时获取root权限，写入密码。</p> <div class="language- extra-class"><pre class="language-text"><code>root@ubuntu01:/tmp# ls -al /usr/bin/passwd 
+-rwsr-xr-x 1 root root 54256 May 16  2017 /usr/bin/passwd
+# 用户位设置了SUID
+</code></pre></div><p>除了<code>passwd</code>命令外，<code>ping</code>，<code>crontab</code>，<code>mount</code>等命令都有设置，可通过<code>find / -perm /4000</code> 来查看系统内设置了SUID的文件</p> <p>需注意的是SUID只对<code>二进制文件</code>有效，且是临时获取一下权限，进程结束时就释放了。</p> <p>做个小实验验证下:</p> <p>编辑文件setuid.c，添加如下代码:</p> <div class="language-c extra-class"><pre class="language-c"><code><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;time.h&gt;</span> </span>
+<span class="token keyword">int</span> <span class="token function">main</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">int</span> real <span class="token operator">=</span> <span class="token function">getuid</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">int</span> euid <span class="token operator">=</span> <span class="token function">geteuid</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  FILE <span class="token operator">*</span>fp <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+  <span class="token keyword">char</span> buff<span class="token punctuation">[</span><span class="token number">20</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  time_t now <span class="token operator">=</span> <span class="token function">time</span><span class="token punctuation">(</span><span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// 打印用户的uid</span>
+  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;The REAL UID =: %d\n&quot;</span><span class="token punctuation">,</span> real<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">// 打印运行时的uid</span>
+  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;The EFFECTIVE UID =: %d\n&quot;</span><span class="token punctuation">,</span> euid<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// 格式化一下当前时间 </span>
+  <span class="token function">strftime</span><span class="token punctuation">(</span>buff<span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">,</span> <span class="token string">&quot;%Y-%m-%d %H:%M:%S&quot;</span><span class="token punctuation">,</span> <span class="token function">localtime</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>now<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+
+  <span class="token comment">// 将时间写入只有root权限的文件中</span>
+  fp <span class="token operator">=</span> <span class="token function">fopen</span><span class="token punctuation">(</span><span class="token string">&quot;/root/test.txt&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;a&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">fputs</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token string">&quot;%s&quot;</span><span class="token punctuation">,</span>buff<span class="token punctuation">)</span><span class="token punctuation">,</span> fp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">fputs</span><span class="token punctuation">(</span><span class="token string">&quot;\n&quot;</span><span class="token punctuation">,</span> fp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">fclose</span><span class="token punctuation">(</span>fp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// 打印下结果</span>
+  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;%s fputs current time to test.txt\n&quot;</span><span class="token punctuation">,</span>buff<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>这段代码很简单：打印下用户的uid和运行时的uid(即内核认可的euid)，并将当前的时间写到root目录的test.txt文件中。</p> <p>首先编译下：</p> <div class="language- extra-class"><pre class="language-text"><code>root@ubuntu01:/tmp# gcc -o setuid setuid.c
+</code></pre></div><p>查看下权限:</p> <div class="language- extra-class"><pre class="language-text"><code>root@ubuntu01:/tmp# ls -al setuid
+-rwxr-xr-x 1 root root 9120 Jan 23 08:00 setuid
+</code></pre></div><p>直接运行，可以看到root目录下增加了test.txt，uid是0，euid也是0，且/root/下有一个test.txt，里面写入了当前时间：</p> <div class="language- extra-class"><pre class="language-text"><code>root@ubuntu01:/tmp# ./setuid 
+The REAL UID =: 0
+The EFFECTIVE UID =: 0
+2019-01-23 08:04:40 fputs current time to test.txt
+root@ubuntu01:/tmp# cat /root/test.txt 
+2019-01-23 08:04:40
+</code></pre></div><p>切换到bob用户来测试下:</p> <div class="language- extra-class"><pre class="language-text"><code>root@ubuntu01:/tmp# su bob
+bob@ubuntu01:/tmp$ ./setuid 
+The REAL UID =: 1003
+The EFFECTIVE UID =: 1003
+Segmentation fault (core dumped)
+</code></pre></div><p>可以看到，uid和euid都是1003，由于普通用户无权限写入/root/test.txt，所以报错<code>Segmentation fault</code>了。</p> <p>此时设置setuid的SUID，再用bob用户来运行试试:</p> <div class="language- extra-class"><pre class="language-text"><code># 设置SUID
+root@ubuntu01:/tmp# chmod u+s setuid
+root@ubuntu01:/tmp# ls -al setuid
+-rwsr-xr-x 1 root root 9120 Jan 23 08:00 setuid
+
+# 切换到bob来运行
+root@ubuntu01:/tmp# su bob
+bob@ubuntu01:/tmp$ ./setuid 
+The REAL UID =: 1003
+The EFFECTIVE UID =: 0
+2019-01-23 08:10:14 fputs current time to test.txt
+bob@ubuntu01:/tmp$ exit
+exit
+
+# 看下是否写入到了/root/test.txt 
+root@ubuntu01:/tmp# cat /root/test.txt 
+2019-01-23 08:04:40
+2019-01-23 08:10:14
+</code></pre></div><p>可以看到当前的uid是1003，但运行时的uid变成0了，且将时间写到了/root/test.txt 中。</p> <h4 id="sgid"><a href="#sgid" class="header-anchor">#</a> SGID</h4> <p>sgid对文件设置时和suid的用途一致，对目录设置时，其作用是：<code>在该目录下创建的文件将继承该目录属组的权限，而非创建者本身</code>。
+可做个列子验证下：</p> <p>1.在tmp目录下创建一个sgid目录，且设置SGID：</p> <div class="language- extra-class"><pre class="language-text"><code>root@ubuntu01:/tmp# mkdir sgid
+root@ubuntu01:/tmp# chmod o+w sgid
+root@ubuntu01:/tmp# chmod g+s sgid
+root@ubuntu01:/tmp# ls -al | grep sgid
+drwxr-srwx   2 root root 4096 Jan 23 08:39 sgid
+</code></pre></div><p>2.切换到bob用户，在sgid目录下创建一个文件</p> <div class="language- extra-class"><pre class="language-text"><code>root@ubuntu01:/tmp# su bob
+bob@ubuntu01:/tmp$ cd sgid
+bob@ubuntu01:/tmp/sgid$ touch test
+</code></pre></div><p>3.查看下权限</p> <div class="language- extra-class"><pre class="language-text"><code>bob@ubuntu01:/tmp/sgid$ ls -al test
+-rw-rw-r-- 1 bob root 0 Jan 23 08:41 test
+</code></pre></div><p>可以看到该文件的属组是root</p> <h4 id="sticky"><a href="#sticky" class="header-anchor">#</a> Sticky</h4> <p>Sticky又称SBIT，其作用是：<code>在该目录创建的文件或目录只有创建者才有权限删除</code>。</p> <p>最常见的例子就是<code>/tmp</code>目录了，所有用户都可以在该目录下创建文件或文件夹，其他用户可以查看，但无法删除。</p> <p>可以做如下实验：</p> <div class="language- extra-class"><pre class="language-text"><code>使用普通用户bob在/tmp目录下创建一个文件test，且权限为777。
+切换到另一个普通用户scboy，可以对test进行读写，但无法删除，提示：
+rm: cannot remove 'test': Operation not permitted
+</code></pre></div><h4 id="设置suid，sgid，sticky"><a href="#设置suid，sgid，sticky" class="header-anchor">#</a> 设置SUID，SGID，Sticky</h4> <p>SUID权限位是4，SGID权限位是2，Sticky权限位是1，同时设置SUID和SGID，则为6。</p> <p>例子：
+1.设置myfile的SGID位，用户权限是rwx,组权限是r,其他权限r</p> <div class="language- extra-class"><pre class="language-text"><code># 设置
+root@ubuntu01:/tmp# chmod 2744 myfile
+# 查看下
+root@ubuntu01:/tmp# ls -al myfile 
+-rwxr-Sr-- 1 bob bob 3 Jan 23 07:32 myfile
+</code></pre></div><p>2.设置test目录的Sticky为，用户权限是rwx,组权限是rwx,其他权限rwx</p> <div class="language- extra-class"><pre class="language-text"><code>root@ubuntu01:/tmp# mkdir test
+root@ubuntu01:/tmp# chmod 1777 test
+root@ubuntu01:/tmp# ls -al /tmp | grep test
+drwxrwxrwt   2 root  root  4096 Jan 23 08:53 test
+</code></pre></div><h3 id="acl"><a href="#acl" class="header-anchor">#</a> ACL</h3> <p>如果某个目录配置了ACL权限，通过ls命令查看时，在权限部分会看到有个<code>+</code>号。</p> <h4 id="安装acl"><a href="#安装acl" class="header-anchor">#</a> 安装acl</h4> <div class="language- extra-class"><pre class="language-text"><code># CentOS/Fedora/RHEL 中：
+yum install acl
+
+# Ubuntu/Debian 中:
+apt install acl
+</code></pre></div><p>查看文件系统是否支持 ACL</p> <div class="language- extra-class"><pre class="language-text"><code>root@ubuntu01:/tmp# dumpe2fs -h /dev/md126p2 | grep acl
+dumpe2fs 1.42.13 (17-May-2015)
+Default mount options:    user_xattr acl
+</code></pre></div><p>加载 ACL 功能</p> <p>如果 UNIX LIKE 支持 ACL 但是文件系统并不是默认加载此功能，可自己进行添加</p> <div class="language- extra-class"><pre class="language-text"><code>root@ubuntu01:/tmp# mount -o remount,acl /
+</code></pre></div><p>同样也可以将acl加到/etc/fstab中，默认开机加载。</p> <div class="language- extra-class"><pre class="language-text"><code>LABEL=/                 /                       ext3    defaults,acl        1 1
+</code></pre></div><h4 id="测试下"><a href="#测试下" class="header-anchor">#</a> 测试下</h4> <p>1.用root在/tmp下创建一个acldir目录，给普通用户添加访问权限</p> <div class="language- extra-class"><pre class="language-text"><code>mkdir acldir
+setfacl -m u:bob:x ./acldir/ 
+</code></pre></div><p>这时bob就可以进入acldir了</p> <p>2.查看下该目录的acl信息</p> <div class="language- extra-class"><pre class="language-text"><code>root@ubuntu01:/tmp# getfacl ./acldir/
+# file: acldir/
+# owner: root
+# group: root
+user::rwx
+user:bob:--x
+group::r-x
+mask::r-x
+other::r-x
+</code></pre></div><p>3.添加组acl权限</p> <div class="language- extra-class"><pre class="language-text"><code>setfacl -m g:test:rx ./acldir/
+</code></pre></div><p>4.删除acl权限</p> <div class="language- extra-class"><pre class="language-text"><code>setfacl -x u:bob ./acldir
+setfacl -x g:test ./acldir
+</code></pre></div><h3 id="其他特殊符号"><a href="#其他特殊符号" class="header-anchor">#</a> 其他特殊符号</h3> <ol><li>有时候用ls命令看某个目录或文件时，在权限部分的末尾有个<code>.</code>点号，这是开启了selinux时会有的，表示带有SELinux的安全上下文https://blog.csdn.net/xinlongabc/article/details/46801641</li> <li>一个文件如果有多种访问措施，用<code>+</code>标记；如果同时用了selinux和acl，用<code>+</code>标记；如果只有acl，用<code>+</code>标记。</li> <li>在mac系统中用ls查看时，可能会看到含有<code>@</code>符号，这个符号是osx特有的，表示某个文件或目录的一种特有属性，可用<code>xattr</code>命令来查看。</li></ol></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div> <footer><div style="text-align: center;">
+            © 2020 小小郭的博客
+            <a href="http://www.beian.miit.gov.cn/">粤ICP备16016910号</a> <br><br></div></footer></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.158714e6.js" defer></script><script src="/assets/js/2.a806d99a.js" defer></script><script src="/assets/js/27.7b7a4013.js" defer></script>
+  </body>
+</html>

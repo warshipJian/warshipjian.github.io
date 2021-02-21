@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>RSA算法-01 | 小小郭的博客</title>
+    <meta name="generator" content="VuePress 1.5.2">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="description" content="小小郭">
+    <link rel="preload" href="/assets/css/0.styles.f333096b.css" as="style"><link rel="preload" href="/assets/js/app.158714e6.js" as="script"><link rel="preload" href="/assets/js/2.a806d99a.js" as="script"><link rel="preload" href="/assets/js/8.77896323.js" as="script"><link rel="prefetch" href="/assets/js/10.ceb6da30.js"><link rel="prefetch" href="/assets/js/11.f6fcdde7.js"><link rel="prefetch" href="/assets/js/12.c1ccc7c5.js"><link rel="prefetch" href="/assets/js/13.2e80b5f4.js"><link rel="prefetch" href="/assets/js/14.86580eea.js"><link rel="prefetch" href="/assets/js/15.ec8bc9ac.js"><link rel="prefetch" href="/assets/js/16.ffe6c259.js"><link rel="prefetch" href="/assets/js/17.f11cefb5.js"><link rel="prefetch" href="/assets/js/18.ba7fa50a.js"><link rel="prefetch" href="/assets/js/19.d98194cd.js"><link rel="prefetch" href="/assets/js/20.b3e3e3ba.js"><link rel="prefetch" href="/assets/js/21.0560925d.js"><link rel="prefetch" href="/assets/js/22.151f504b.js"><link rel="prefetch" href="/assets/js/23.c0dd585a.js"><link rel="prefetch" href="/assets/js/24.5ac8c4b5.js"><link rel="prefetch" href="/assets/js/25.57989e7c.js"><link rel="prefetch" href="/assets/js/26.19ae4c70.js"><link rel="prefetch" href="/assets/js/27.7b7a4013.js"><link rel="prefetch" href="/assets/js/28.c02de8fb.js"><link rel="prefetch" href="/assets/js/29.be98b5ac.js"><link rel="prefetch" href="/assets/js/3.f9a5341d.js"><link rel="prefetch" href="/assets/js/30.151ce4ad.js"><link rel="prefetch" href="/assets/js/31.e3b05220.js"><link rel="prefetch" href="/assets/js/32.48233f51.js"><link rel="prefetch" href="/assets/js/33.cdf1ba85.js"><link rel="prefetch" href="/assets/js/34.8e175bdf.js"><link rel="prefetch" href="/assets/js/35.53e76add.js"><link rel="prefetch" href="/assets/js/36.2588db5d.js"><link rel="prefetch" href="/assets/js/37.904d3476.js"><link rel="prefetch" href="/assets/js/38.1424f189.js"><link rel="prefetch" href="/assets/js/39.0e05003b.js"><link rel="prefetch" href="/assets/js/4.84d9a9b8.js"><link rel="prefetch" href="/assets/js/40.e4b36098.js"><link rel="prefetch" href="/assets/js/41.13258ed7.js"><link rel="prefetch" href="/assets/js/42.6f5a7cbb.js"><link rel="prefetch" href="/assets/js/43.7898149d.js"><link rel="prefetch" href="/assets/js/44.37b08732.js"><link rel="prefetch" href="/assets/js/45.17998593.js"><link rel="prefetch" href="/assets/js/46.055bc79a.js"><link rel="prefetch" href="/assets/js/47.6df10fa7.js"><link rel="prefetch" href="/assets/js/48.2660180a.js"><link rel="prefetch" href="/assets/js/49.4625a12a.js"><link rel="prefetch" href="/assets/js/5.501f4465.js"><link rel="prefetch" href="/assets/js/50.b3b348da.js"><link rel="prefetch" href="/assets/js/51.dcb3be6c.js"><link rel="prefetch" href="/assets/js/52.7dd04b5b.js"><link rel="prefetch" href="/assets/js/53.20259b4b.js"><link rel="prefetch" href="/assets/js/54.c876d67f.js"><link rel="prefetch" href="/assets/js/55.52c8359c.js"><link rel="prefetch" href="/assets/js/56.ab71b89a.js"><link rel="prefetch" href="/assets/js/57.30af5fe9.js"><link rel="prefetch" href="/assets/js/58.d1f3acb8.js"><link rel="prefetch" href="/assets/js/59.0c65a864.js"><link rel="prefetch" href="/assets/js/6.56baaf4e.js"><link rel="prefetch" href="/assets/js/60.cc2dc3eb.js"><link rel="prefetch" href="/assets/js/61.bc3d577e.js"><link rel="prefetch" href="/assets/js/62.88dedbc6.js"><link rel="prefetch" href="/assets/js/63.5403d296.js"><link rel="prefetch" href="/assets/js/64.cdcabf93.js"><link rel="prefetch" href="/assets/js/65.7fba108e.js"><link rel="prefetch" href="/assets/js/66.51641258.js"><link rel="prefetch" href="/assets/js/67.f408a0b2.js"><link rel="prefetch" href="/assets/js/68.326016eb.js"><link rel="prefetch" href="/assets/js/69.9dde49ee.js"><link rel="prefetch" href="/assets/js/7.86ee5bb7.js"><link rel="prefetch" href="/assets/js/70.76be6feb.js"><link rel="prefetch" href="/assets/js/71.8bb3d5a3.js"><link rel="prefetch" href="/assets/js/72.3d340b56.js"><link rel="prefetch" href="/assets/js/73.94ae8b58.js"><link rel="prefetch" href="/assets/js/74.c38b2bf5.js"><link rel="prefetch" href="/assets/js/75.ab88131c.js"><link rel="prefetch" href="/assets/js/76.b15fc67e.js"><link rel="prefetch" href="/assets/js/9.1bb7c316.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.f333096b.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="global-layout"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">小小郭的博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav>  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="rsa算法-01"><a href="#rsa算法-01" class="header-anchor">#</a> RSA算法-01</h1> <h2 id="rsa加密过程"><a href="#rsa加密过程" class="header-anchor">#</a> RSA加密过程</h2> <p><strong>1.选两个质数p , q</strong></p> <p><strong>2.将p，q相乘，得到一个数n</strong></p> <p><strong>3.将(p - 1) 乘 (q - 1)得到欧拉函数fy</strong></p> <p><strong>4.获取一个公钥e，需满足 1 &lt; e &lt; fy ， 且e和fy互质</strong></p> <p><strong>5.获取一个私钥d, 需满足条件：</strong></p> <div class="language- extra-class"><pre class="language-text"><code>e * d 的积除以欧拉函数fy，其余数为1
+假设e * d 除以 fy的商为s，则 e * d = fy * s + 1，即：
+d = (fy * s + 1) / e
+</code></pre></div><p>通过前面的步骤就有了公钥和私钥，假设需要加密的数字是m，加密和解密步骤如下</p> <p><strong>6.加密：</strong></p> <div class="language- extra-class"><pre class="language-text"><code>取m的e次幂，e是刚才获取的公钥e，将m**e除以n得到余数c，n是刚才p,q的积，c就是加密后的数字。
+</code></pre></div><p><strong>7.解密：</strong></p> <div class="language- extra-class"><pre class="language-text"><code>取c的d次幂，d是刚才获取的私钥d，将c**d除以n得到余数m_，m_就是解密后的数字。
+</code></pre></div><p>如果对于它背后的数论知识很感兴趣(有的同学喜欢打破砂锅问到底)，可以看看或者回顾下这些：</p> <p><a href="https://zh.wikipedia.org/wiki/%E6%AC%A7%E6%8B%89%E5%87%BD%E6%95%B0" target="_blank" rel="noopener noreferrer">欧拉函数<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><a href="https://zh.wikipedia.org/wiki/%E6%95%B4%E6%95%B0%E5%88%86%E8%A7%A3" target="_blank" rel="noopener noreferrer">质因数分解<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><a href="https://zh.wikipedia.org/wiki/%E8%92%99%E5%93%A5%E9%A9%AC%E5%88%A9%E7%AE%97%E6%B3%95" target="_blank" rel="noopener noreferrer">蒙哥马利算法<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p>假设不清楚这些呢?也不打紧，把RSA涉及到的数学知识当做公理即可，不影响整个对整个流程的理解。</p> <h2 id="代码实现"><a href="#代码实现" class="header-anchor">#</a> 代码实现</h2> <p>以python为例</p> <div class="language-python extra-class"><pre class="language-python"><code><span class="token comment">#!/usr/bin/env python</span>
+<span class="token comment"># -*- coding: utf-8 -*-</span>
+
+<span class="token comment"># 次幂计算后取余数</span>
+<span class="token keyword">def</span> <span class="token function">e_mod</span><span class="token punctuation">(</span>base<span class="token punctuation">,</span>e<span class="token punctuation">,</span>n<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> base <span class="token operator">**</span> e <span class="token operator">%</span> n
+    
+<span class="token comment"># 生成公钥和私钥</span>
+<span class="token keyword">def</span> <span class="token function">gen_key</span><span class="token punctuation">(</span>p<span class="token punctuation">,</span>q<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    n <span class="token operator">=</span> p <span class="token operator">*</span> q
+    fy <span class="token operator">=</span> <span class="token punctuation">(</span>p <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token punctuation">(</span>q <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token comment"># 为了便于说明，直接取比n小1的数作为公钥</span>
+    e <span class="token operator">=</span> fy <span class="token operator">-</span> <span class="token number">1</span>
+
+    <span class="token comment"># 取私钥</span>
+    d <span class="token operator">=</span> <span class="token boolean">False</span>
+    <span class="token keyword">for</span> x <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> fy<span class="token operator">*</span>fy<span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token comment"># 简单取个范围，用做示例</span>
+        a <span class="token operator">=</span> fy <span class="token operator">*</span> x <span class="token operator">+</span> <span class="token number">1</span>
+        <span class="token keyword">if</span> a <span class="token operator">%</span> e <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
+            k <span class="token operator">=</span> <span class="token builtin">int</span><span class="token punctuation">(</span>a <span class="token operator">/</span> e<span class="token punctuation">)</span>
+            <span class="token keyword">if</span> k <span class="token operator">!=</span> e<span class="token punctuation">:</span>
+                d <span class="token operator">=</span> k
+                <span class="token keyword">break</span>
+
+    <span class="token keyword">if</span> <span class="token keyword">not</span> d<span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token boolean">False</span>
+
+    <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>e<span class="token punctuation">,</span>n<span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span>d<span class="token punctuation">,</span>n<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment"># 加密</span>
+<span class="token keyword">def</span> <span class="token function">encrypt</span><span class="token punctuation">(</span>m<span class="token punctuation">,</span> pubkey<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    e <span class="token operator">=</span> pubkey<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+    n <span class="token operator">=</span> pubkey<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>
+    <span class="token keyword">return</span> e_mod<span class="token punctuation">(</span>m<span class="token punctuation">,</span>e<span class="token punctuation">,</span>n<span class="token punctuation">)</span>
+
+<span class="token comment"># 解密</span>
+<span class="token keyword">def</span> <span class="token function">decrypt</span><span class="token punctuation">(</span>c<span class="token punctuation">,</span> privateKey<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    d <span class="token operator">=</span> privateKey<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+    n <span class="token operator">=</span> privateKey<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>
+    <span class="token keyword">return</span> e_mod<span class="token punctuation">(</span>c<span class="token punctuation">,</span>d<span class="token punctuation">,</span>n<span class="token punctuation">)</span>
+
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
+    keys <span class="token operator">=</span> gen_key<span class="token punctuation">(</span><span class="token number">19</span><span class="token punctuation">,</span><span class="token number">29</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> <span class="token keyword">not</span> keys<span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'未生成,请检查p,q是否正确'</span><span class="token punctuation">)</span>
+    p_key <span class="token operator">=</span> keys<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+    s_key <span class="token operator">=</span> keys<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>
+    m <span class="token operator">=</span> <span class="token number">99</span> <span class="token comment"># 需加密的数字</span>
+    c <span class="token operator">=</span> encrypt<span class="token punctuation">(</span>m<span class="token punctuation">,</span>p_key<span class="token punctuation">)</span> <span class="token comment"># 得到加密后的内容</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span>
+    m_ <span class="token operator">=</span> decrypt<span class="token punctuation">(</span>c<span class="token punctuation">,</span>s_key<span class="token punctuation">)</span> <span class="token comment"># 得到解密后的内容</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>m_<span class="token punctuation">)</span>
+</code></pre></div><h2 id="后续"><a href="#后续" class="header-anchor">#</a> 后续</h2> <p>这里的例子比较简单，粗浅地描述了下RSA的整个过程，细节性的问题，计算性能的问题等并未做说明。
+比如实际使用的RSA算法至少都是1024位，对于这么大的一个数字来说肯定不会直接计算它的幂次的值，再取模。对于这些问题，后续再找个时间补充。</p></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div> <footer><div style="text-align: center;">
+            © 2020 小小郭的博客
+            <a href="http://www.beian.miit.gov.cn/">粤ICP备16016910号</a> <br><br></div></footer></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.158714e6.js" defer></script><script src="/assets/js/2.a806d99a.js" defer></script><script src="/assets/js/8.77896323.js" defer></script>
+  </body>
+</html>

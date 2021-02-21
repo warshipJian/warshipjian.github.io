@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>redis-04-位图Bitmaps | 小小郭的博客</title>
+    <meta name="generator" content="VuePress 1.5.2">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="description" content="小小郭">
+    <link rel="preload" href="/assets/css/0.styles.f333096b.css" as="style"><link rel="preload" href="/assets/js/app.158714e6.js" as="script"><link rel="preload" href="/assets/js/2.a806d99a.js" as="script"><link rel="preload" href="/assets/js/57.30af5fe9.js" as="script"><link rel="prefetch" href="/assets/js/10.ceb6da30.js"><link rel="prefetch" href="/assets/js/11.f6fcdde7.js"><link rel="prefetch" href="/assets/js/12.c1ccc7c5.js"><link rel="prefetch" href="/assets/js/13.2e80b5f4.js"><link rel="prefetch" href="/assets/js/14.86580eea.js"><link rel="prefetch" href="/assets/js/15.ec8bc9ac.js"><link rel="prefetch" href="/assets/js/16.ffe6c259.js"><link rel="prefetch" href="/assets/js/17.f11cefb5.js"><link rel="prefetch" href="/assets/js/18.ba7fa50a.js"><link rel="prefetch" href="/assets/js/19.d98194cd.js"><link rel="prefetch" href="/assets/js/20.b3e3e3ba.js"><link rel="prefetch" href="/assets/js/21.0560925d.js"><link rel="prefetch" href="/assets/js/22.151f504b.js"><link rel="prefetch" href="/assets/js/23.c0dd585a.js"><link rel="prefetch" href="/assets/js/24.5ac8c4b5.js"><link rel="prefetch" href="/assets/js/25.57989e7c.js"><link rel="prefetch" href="/assets/js/26.19ae4c70.js"><link rel="prefetch" href="/assets/js/27.7b7a4013.js"><link rel="prefetch" href="/assets/js/28.c02de8fb.js"><link rel="prefetch" href="/assets/js/29.be98b5ac.js"><link rel="prefetch" href="/assets/js/3.f9a5341d.js"><link rel="prefetch" href="/assets/js/30.151ce4ad.js"><link rel="prefetch" href="/assets/js/31.e3b05220.js"><link rel="prefetch" href="/assets/js/32.48233f51.js"><link rel="prefetch" href="/assets/js/33.cdf1ba85.js"><link rel="prefetch" href="/assets/js/34.8e175bdf.js"><link rel="prefetch" href="/assets/js/35.53e76add.js"><link rel="prefetch" href="/assets/js/36.2588db5d.js"><link rel="prefetch" href="/assets/js/37.904d3476.js"><link rel="prefetch" href="/assets/js/38.1424f189.js"><link rel="prefetch" href="/assets/js/39.0e05003b.js"><link rel="prefetch" href="/assets/js/4.84d9a9b8.js"><link rel="prefetch" href="/assets/js/40.e4b36098.js"><link rel="prefetch" href="/assets/js/41.13258ed7.js"><link rel="prefetch" href="/assets/js/42.6f5a7cbb.js"><link rel="prefetch" href="/assets/js/43.7898149d.js"><link rel="prefetch" href="/assets/js/44.37b08732.js"><link rel="prefetch" href="/assets/js/45.17998593.js"><link rel="prefetch" href="/assets/js/46.055bc79a.js"><link rel="prefetch" href="/assets/js/47.6df10fa7.js"><link rel="prefetch" href="/assets/js/48.2660180a.js"><link rel="prefetch" href="/assets/js/49.4625a12a.js"><link rel="prefetch" href="/assets/js/5.501f4465.js"><link rel="prefetch" href="/assets/js/50.b3b348da.js"><link rel="prefetch" href="/assets/js/51.dcb3be6c.js"><link rel="prefetch" href="/assets/js/52.7dd04b5b.js"><link rel="prefetch" href="/assets/js/53.20259b4b.js"><link rel="prefetch" href="/assets/js/54.c876d67f.js"><link rel="prefetch" href="/assets/js/55.52c8359c.js"><link rel="prefetch" href="/assets/js/56.ab71b89a.js"><link rel="prefetch" href="/assets/js/58.d1f3acb8.js"><link rel="prefetch" href="/assets/js/59.0c65a864.js"><link rel="prefetch" href="/assets/js/6.56baaf4e.js"><link rel="prefetch" href="/assets/js/60.cc2dc3eb.js"><link rel="prefetch" href="/assets/js/61.bc3d577e.js"><link rel="prefetch" href="/assets/js/62.88dedbc6.js"><link rel="prefetch" href="/assets/js/63.5403d296.js"><link rel="prefetch" href="/assets/js/64.cdcabf93.js"><link rel="prefetch" href="/assets/js/65.7fba108e.js"><link rel="prefetch" href="/assets/js/66.51641258.js"><link rel="prefetch" href="/assets/js/67.f408a0b2.js"><link rel="prefetch" href="/assets/js/68.326016eb.js"><link rel="prefetch" href="/assets/js/69.9dde49ee.js"><link rel="prefetch" href="/assets/js/7.86ee5bb7.js"><link rel="prefetch" href="/assets/js/70.76be6feb.js"><link rel="prefetch" href="/assets/js/71.8bb3d5a3.js"><link rel="prefetch" href="/assets/js/72.3d340b56.js"><link rel="prefetch" href="/assets/js/73.94ae8b58.js"><link rel="prefetch" href="/assets/js/74.c38b2bf5.js"><link rel="prefetch" href="/assets/js/75.ab88131c.js"><link rel="prefetch" href="/assets/js/76.b15fc67e.js"><link rel="prefetch" href="/assets/js/8.77896323.js"><link rel="prefetch" href="/assets/js/9.1bb7c316.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.f333096b.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="global-layout"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">小小郭的博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav>  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="redis-04-位图bitmaps"><a href="#redis-04-位图bitmaps" class="header-anchor">#</a> redis-04-位图Bitmaps</h1> <p>一般知道前面介绍的五种redis数据结构，就可以开心的玩耍了，但如果知道Bitmaps，Hyperloglogs，GEO，就更开心了。</p> <p>这次我们来看下Bitmaps。</p> <h2 id="简介"><a href="#简介" class="header-anchor">#</a> 简介</h2> <p>假设一个场景：记录用户的签到天数。</p> <p>方法一：将用户的id和日期关联起来，做个key，比如用户007在2018/08/14这天的签到情况，设置个key：sign_2018_08_14_007，并将值设置为1。如果用户越来越多，数值则越来越大，到后面的统计耗时肯定越来越长，并且储存量也越来越大。</p> <p>方法二：用hash结构，uid做key，里面存签到的日期，但储存量还是很大。</p> <p>有没有更优雅的方法呢？有，答案是<code>bitmaps</code>。</p> <p>在看bitmaps的概念前，先做个小验证：</p> <p><strong>1. 设置个key的值为h</strong></p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; set w h
+OK
+127.0.0.1:6379&gt; get w
+&quot;h&quot;
+</code></pre></div><p>h对应的ASCII为<code>0110 1000</code>，即：</p> <p><img src="https://img.xiaoxiaoguo.cn/usr/uploads/2018/08/1961475.png" alt=""></p> <p><strong>2.通过getbit来验证下</strong></p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; getbit w 0 #用getbit获取w第0位的值
+(integer) 0
+127.0.0.1:6379&gt; getbit w 1 #用getbit获取w第1位的值
+(integer) 1
+127.0.0.1:6379&gt; getbit w 2 #用getbit获取w第2位的值
+(integer) 1
+127.0.0.1:6379&gt; getbit w 3
+(integer) 0
+127.0.0.1:6379&gt; getbit w 4
+(integer) 1
+127.0.0.1:6379&gt; getbit w 5
+(integer) 0
+127.0.0.1:6379&gt; getbit w 6
+(integer) 0
+127.0.0.1:6379&gt; getbit w 7
+(integer) 0
+</code></pre></div><p>到这里，对bitmaps也就有了个大概的感受了。</p> <p>bitmaps不是特殊的数据结构，它的内容其实就是普通的字符串，也就是 byte 数组。我们可以使用普通的 get/set 直接获取和设置整个位图的内容，也可以使用位图操作 getbit/setbit 等将 byte 数组看成「位数组」来处理。</p> <p>用字符串'world'来做个例子，首先看下world对应的ASCII值，可以用python直接获取</p> <div class="language- extra-class"><pre class="language-text"><code>&gt;&gt;&gt; bin(ord('w'))
+'0b1110111'
+&gt;&gt;&gt; bin(ord('o'))
+'0b1101111'
+&gt;&gt;&gt; bin(ord('r'))
+'0b1110010'
+&gt;&gt;&gt; bin(ord('l'))
+'0b1101100'
+&gt;&gt;&gt; bin(ord('d'))
+'0b1100100'
+</code></pre></div><p>用setbit来设置个key，值为'w'</p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; get test 
+(nil)
+127.0.0.1:6379&gt; setbit test 0 0
+(integer) 0
+127.0.0.1:6379&gt; setbit test 1 1
+(integer) 0
+127.0.0.1:6379&gt; setbit test 2 1
+(integer) 0
+127.0.0.1:6379&gt; setbit test 3 1
+(integer) 0
+127.0.0.1:6379&gt; setbit test 4 0
+(integer) 0
+127.0.0.1:6379&gt; setbit test 5 1
+(integer) 0
+127.0.0.1:6379&gt; setbit test 6 1
+(integer) 0
+127.0.0.1:6379&gt; setbit test 7 1
+(integer) 0
+127.0.0.1:6379&gt; get test
+&quot;w&quot;
+</code></pre></div><p>把'world'对应的值从左到右放在一起</p> <div class="language- extra-class"><pre class="language-text"><code>01110111 01101111 01110010 01101100 01100100
+</code></pre></div><p>即</p> <div class="language- extra-class"><pre class="language-text"><code>0111011101101111011100100110110001100100
+</code></pre></div><p>redis验证下</p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; set t world
+OK
+127.0.0.1:6379&gt; getbit t 0
+(integer) 0
+127.0.0.1:6379&gt; getbit t 2
+(integer) 1
+127.0.0.1:6379&gt; getbit t 7
+(integer) 1
+127.0.0.1:6379&gt; getbit t 14
+(integer) 1
+</code></pre></div><h2 id="统计和查找"><a href="#统计和查找" class="header-anchor">#</a> 统计和查找</h2> <p>Redis 提供了位图统计指令 bitcount 和位图查找指令 bitpos，bitcount 用来统计指定位置范围内 1 的个数，bitpos 用来查找指定范围内出现的第一个 0 或 1。</p> <p>比如我们可以通过 bitcount 统计用户一共签到了多少天，通过 bitpos 指令查找用户从哪一天开始第一次签到。</p> <h3 id="bitcount"><a href="#bitcount" class="header-anchor">#</a> bitcount</h3> <p>格式</p> <div class="language- extra-class"><pre class="language-text"><code>BITCOUNT key [start] [end]
+</code></pre></div><p>统计下'world'有多少个1:</p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; bitcount t
+(integer) 23
+</code></pre></div><p>统计下'wo'有多少个1:</p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; bitcount t 0 1 #wo是前两个字符，所以范围是0-1
+(integer) 12
+</code></pre></div><p>统计下'orl'有多少个1:</p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; bitcount t 1 3
+(integer) 14
+</code></pre></div><p>注意点：
+start 和 end 参数是字节索引，也就是说指定的位范围必须是 8 的倍数，而不能任意指定。</p> <h3 id="bitpos"><a href="#bitpos" class="header-anchor">#</a> bitpos</h3> <p>显示0首次出现的位置</p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; bitpos t 0
+(integer) 0
+</code></pre></div><p>显示1首次出现的位置</p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; bitpos t 1
+(integer) 1
+</code></pre></div><h2 id="bitfield"><a href="#bitfield" class="header-anchor">#</a> bitfield</h2> <p>前文我们设置 (setbit) 和获取 (getbit) 指定位的值都是单个位的，如果要一次操作多个位，就必须使用管道来处理。</p> <p>Redis 的 3.2 版本以后新增了一个指令bitfield，通过这个指令可以一次进行多个位操作。</p> <p>bitfield 有三个子指令，分别是 get/set/incrby，它们都可以对指定位片段进行读写，但是最多只能处理 64 个连续的位，如果超过 64 位，就得使用多个子指令，bitfield 可以一次执行多个子指令。</p> <p>回到我们刚才设置的'world',它对应的二进制码如下：</p> <div class="language- extra-class"><pre class="language-text"><code>0111011101101111011100100110110001100100
+</code></pre></div><h3 id="get"><a href="#get" class="header-anchor">#</a> get</h3> <p>这次我们使用bitfield的get来获取它的有符号数和无符号数</p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; get t
+&quot;world&quot;
+127.0.0.1:6379&gt; bitfield t get i4 0 #i表示有符号位，4表示连续取4位，0表示开始位置
+1) (integer) 7
+</code></pre></div><p>我们算下，看值是不是7.</p> <div class="language- extra-class"><pre class="language-text"><code>从0位开始，取4位，即0111。首位是0，所以直接将111转为十进制，得到值7，与结果一样
+</code></pre></div><p>我们再算个：</p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; bitfield t get i3 7
+1) (integer) -3
+</code></pre></div><p>看下是不是-3</p> <div class="language- extra-class"><pre class="language-text"><code>从7位开始，取3位，即101。首位是1，是负数，后面01为补码，先减1，再反转，得到11，转为十进制，即3，得到值-3，与结果一直
+</code></pre></div><p>再验证个有符号位：</p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; bitfield t get u3 7
+1) (integer) 5
+
+同样从7位开始，取3位，即101。由于是无符号位，所以直接求值，值为5，与结果一致
+</code></pre></div><p>多个同时操作</p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; bitfield t get u3 7 get i3 7 get i4 1
+1) (integer) 5
+2) (integer) -3
+3) (integer) -2
+</code></pre></div><h3 id="set"><a href="#set" class="header-anchor">#</a> set</h3> <p>我们用bitfield的set指令在'world'后增加个'w'。</p> <p>'w'在ASCII中对应的值119，加在'world'后，属于第六个字母，那么在8位的二进制中则是从40位开始，所以指令如下：</p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; bitfield t set u8 40 119 #设置无符号位，连续8位，从40位开始，值为119
+1) (integer) 0
+127.0.0.1:6379&gt; get t
+&quot;worldw&quot;
+</code></pre></div><p>使用同样的计算方式，再增加三个字母'ild'</p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; bitfield t set u8 48 105 set u8 56 108 set u8 64 100
+1) (integer) 0
+2) (integer) 0
+3) (integer) 0
+127.0.0.1:6379&gt; get t
+&quot;worldwild&quot;
+</code></pre></div><p>我们得到了一个新的单词'worldwild'</p> <h2 id="incrby"><a href="#incrby" class="header-anchor">#</a> incrby</h2> <p>再看第三个子指令 incrby，它用来对指定范围的位进行自增操作。既然提到自增，就有可能出现溢出。如果增加了正数，会出现上溢，如果增加的是负数，就会出现下溢出。Redis 默认的处理是折返。如果出现了溢出，就将溢出的符号位丢掉。如果是 8 位无符号数 255，加 1 后就会溢出，会全部变零。如果是 8 位有符号数 127，加 1 后就会溢出变成 -128。</p> <p>做下实验</p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; set a w
+OK
+127.0.0.1:6379&gt; getbit a 0
+(integer) 0
+127.0.0.1:6379&gt; getbit a 1
+(integer) 1
+127.0.0.1:6379&gt; getbit a 2
+(integer) 1
+127.0.0.1:6379&gt; getbit a 3
+(integer) 1
+</code></pre></div><p>从0位开始，对连续的4位无符号数做自增</p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; bitfield a incrby u4 0 1
+1) (integer) 8
+</code></pre></div><p>看下结果</p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; get a
+&quot;\x87&quot;
+127.0.0.1:6379&gt; getbit a 0
+(integer) 1
+127.0.0.1:6379&gt; getbit a 1
+(integer) 0
+127.0.0.1:6379&gt; getbit a 2
+(integer) 0
+127.0.0.1:6379&gt; getbit a 3
+(integer) 0
+</code></pre></div><p>测试下溢出</p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; setbit a 0 1
+(integer) 0
+127.0.0.1:6379&gt; setbit a 1 1
+(integer) 1
+127.0.0.1:6379&gt; setbit a 2 1
+(integer) 1
+127.0.0.1:6379&gt; setbit a 3 1
+(integer) 1
+127.0.0.1:6379&gt; setbit a 4 1
+(integer) 0
+127.0.0.1:6379&gt; setbit a 5 1
+(integer) 1
+127.0.0.1:6379&gt; setbit a 6 1
+(integer) 1
+127.0.0.1:6379&gt; setbit a 7 1
+(integer) 1
+127.0.0.1:6379&gt; get a
+&quot;\xff&quot;
+</code></pre></div><div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt;  bitfield a incrby u8 0 1
+1) (integer) 0
+127.0.0.1:6379&gt; get a
+&quot;\x00&quot;
+127.0.0.1:6379&gt; getbit a 0
+(integer) 0
+127.0.0.1:6379&gt; getbit a 1
+(integer) 0
+127.0.0.1:6379&gt; getbit a 2
+(integer) 0
+127.0.0.1:6379&gt;
+</code></pre></div><h3 id="overflow"><a href="#overflow" class="header-anchor">#</a> overflow</h3> <p>bitfield 指令提供了溢出策略子指令 overflow，用户可以选择溢出行为，默认是折返 (wrap)，还可以选择失败 (fail) 报错不执行，以及饱和截断 (sat)，超过了范围就停留在最大最小值。overflow 指令只影响接下来的第一条指令，这条指令执行完后溢出策略会变成默认值折返 (wrap)。</p> <p><strong>折返 (wrap)</strong></p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; setbit a 0 1
+(integer) 0
+127.0.0.1:6379&gt; setbit a 1 1
+(integer) 0
+127.0.0.1:6379&gt; setbit a 2 1
+(integer) 0
+127.0.0.1:6379&gt; setbit a 3 1
+(integer) 0
+127.0.0.1:6379&gt; setbit a 4 1
+(integer) 0
+127.0.0.1:6379&gt; setbit a 5 1
+(integer) 0
+127.0.0.1:6379&gt; setbit a 6 1
+(integer) 0
+127.0.0.1:6379&gt; setbit a 7 1
+(integer) 0
+127.0.0.1:6379&gt;  bitfield a overflow wrap incrby u8 0 1
+1) (integer) 0
+127.0.0.1:6379&gt; get a
+&quot;\x00&quot;
+</code></pre></div><p><strong>失败 (fail)</strong></p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; setbit a 0 1
+(integer) 0
+127.0.0.1:6379&gt; setbit a 1 1
+(integer) 0
+127.0.0.1:6379&gt; setbit a 2 1
+(integer) 0
+127.0.0.1:6379&gt; setbit a 3 1
+(integer) 0
+127.0.0.1:6379&gt; setbit a 4 1
+(integer) 0
+127.0.0.1:6379&gt; setbit a 5 1
+(integer) 0
+127.0.0.1:6379&gt; setbit a 6 1
+(integer) 0
+127.0.0.1:6379&gt; setbit a 7 1
+(integer) 0
+127.0.0.1:6379&gt; get a
+&quot;\xff&quot;
+127.0.0.1:6379&gt; bitfield a overflow fail incrby u8 0 1
+1) (nil)
+</code></pre></div><p><strong>截断 (sat)</strong></p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; bitfield a overflow sat incrby u8 0 1
+1) (integer) 255
+127.0.0.1:6379&gt; get a
+&quot;\xff&quot;
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div> <footer><div style="text-align: center;">
+            © 2020 小小郭的博客
+            <a href="http://www.beian.miit.gov.cn/">粤ICP备16016910号</a> <br><br></div></footer></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.158714e6.js" defer></script><script src="/assets/js/2.a806d99a.js" defer></script><script src="/assets/js/57.30af5fe9.js" defer></script>
+  </body>
+</html>

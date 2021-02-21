@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>使用cgroup限制内存 | 小小郭的博客</title>
+    <meta name="generator" content="VuePress 1.5.2">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="description" content="小小郭">
+    <link rel="preload" href="/assets/css/0.styles.f333096b.css" as="style"><link rel="preload" href="/assets/js/app.158714e6.js" as="script"><link rel="preload" href="/assets/js/2.a806d99a.js" as="script"><link rel="preload" href="/assets/js/22.151f504b.js" as="script"><link rel="prefetch" href="/assets/js/10.ceb6da30.js"><link rel="prefetch" href="/assets/js/11.f6fcdde7.js"><link rel="prefetch" href="/assets/js/12.c1ccc7c5.js"><link rel="prefetch" href="/assets/js/13.2e80b5f4.js"><link rel="prefetch" href="/assets/js/14.86580eea.js"><link rel="prefetch" href="/assets/js/15.ec8bc9ac.js"><link rel="prefetch" href="/assets/js/16.ffe6c259.js"><link rel="prefetch" href="/assets/js/17.f11cefb5.js"><link rel="prefetch" href="/assets/js/18.ba7fa50a.js"><link rel="prefetch" href="/assets/js/19.d98194cd.js"><link rel="prefetch" href="/assets/js/20.b3e3e3ba.js"><link rel="prefetch" href="/assets/js/21.0560925d.js"><link rel="prefetch" href="/assets/js/23.c0dd585a.js"><link rel="prefetch" href="/assets/js/24.5ac8c4b5.js"><link rel="prefetch" href="/assets/js/25.57989e7c.js"><link rel="prefetch" href="/assets/js/26.19ae4c70.js"><link rel="prefetch" href="/assets/js/27.7b7a4013.js"><link rel="prefetch" href="/assets/js/28.c02de8fb.js"><link rel="prefetch" href="/assets/js/29.be98b5ac.js"><link rel="prefetch" href="/assets/js/3.f9a5341d.js"><link rel="prefetch" href="/assets/js/30.151ce4ad.js"><link rel="prefetch" href="/assets/js/31.e3b05220.js"><link rel="prefetch" href="/assets/js/32.48233f51.js"><link rel="prefetch" href="/assets/js/33.cdf1ba85.js"><link rel="prefetch" href="/assets/js/34.8e175bdf.js"><link rel="prefetch" href="/assets/js/35.53e76add.js"><link rel="prefetch" href="/assets/js/36.2588db5d.js"><link rel="prefetch" href="/assets/js/37.904d3476.js"><link rel="prefetch" href="/assets/js/38.1424f189.js"><link rel="prefetch" href="/assets/js/39.0e05003b.js"><link rel="prefetch" href="/assets/js/4.84d9a9b8.js"><link rel="prefetch" href="/assets/js/40.e4b36098.js"><link rel="prefetch" href="/assets/js/41.13258ed7.js"><link rel="prefetch" href="/assets/js/42.6f5a7cbb.js"><link rel="prefetch" href="/assets/js/43.7898149d.js"><link rel="prefetch" href="/assets/js/44.37b08732.js"><link rel="prefetch" href="/assets/js/45.17998593.js"><link rel="prefetch" href="/assets/js/46.055bc79a.js"><link rel="prefetch" href="/assets/js/47.6df10fa7.js"><link rel="prefetch" href="/assets/js/48.2660180a.js"><link rel="prefetch" href="/assets/js/49.4625a12a.js"><link rel="prefetch" href="/assets/js/5.501f4465.js"><link rel="prefetch" href="/assets/js/50.b3b348da.js"><link rel="prefetch" href="/assets/js/51.dcb3be6c.js"><link rel="prefetch" href="/assets/js/52.7dd04b5b.js"><link rel="prefetch" href="/assets/js/53.20259b4b.js"><link rel="prefetch" href="/assets/js/54.c876d67f.js"><link rel="prefetch" href="/assets/js/55.52c8359c.js"><link rel="prefetch" href="/assets/js/56.ab71b89a.js"><link rel="prefetch" href="/assets/js/57.30af5fe9.js"><link rel="prefetch" href="/assets/js/58.d1f3acb8.js"><link rel="prefetch" href="/assets/js/59.0c65a864.js"><link rel="prefetch" href="/assets/js/6.56baaf4e.js"><link rel="prefetch" href="/assets/js/60.cc2dc3eb.js"><link rel="prefetch" href="/assets/js/61.bc3d577e.js"><link rel="prefetch" href="/assets/js/62.88dedbc6.js"><link rel="prefetch" href="/assets/js/63.5403d296.js"><link rel="prefetch" href="/assets/js/64.cdcabf93.js"><link rel="prefetch" href="/assets/js/65.7fba108e.js"><link rel="prefetch" href="/assets/js/66.51641258.js"><link rel="prefetch" href="/assets/js/67.f408a0b2.js"><link rel="prefetch" href="/assets/js/68.326016eb.js"><link rel="prefetch" href="/assets/js/69.9dde49ee.js"><link rel="prefetch" href="/assets/js/7.86ee5bb7.js"><link rel="prefetch" href="/assets/js/70.76be6feb.js"><link rel="prefetch" href="/assets/js/71.8bb3d5a3.js"><link rel="prefetch" href="/assets/js/72.3d340b56.js"><link rel="prefetch" href="/assets/js/73.94ae8b58.js"><link rel="prefetch" href="/assets/js/74.c38b2bf5.js"><link rel="prefetch" href="/assets/js/75.ab88131c.js"><link rel="prefetch" href="/assets/js/76.b15fc67e.js"><link rel="prefetch" href="/assets/js/8.77896323.js"><link rel="prefetch" href="/assets/js/9.1bb7c316.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.f333096b.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="global-layout"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">小小郭的博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav>  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="使用cgroup限制内存"><a href="#使用cgroup限制内存" class="header-anchor">#</a> 使用cgroup限制内存</h1> <p>有些场景下需要限制下程序的内存，可以用cgroup来实现。
+本次操作的系统为 CentOS 6 或 7</p> <h2 id="准备下环境"><a href="#准备下环境" class="header-anchor">#</a> 准备下环境</h2> <div class="language- extra-class"><pre class="language-text"><code>yum install -y libcgroup libcgroup-tools 
+</code></pre></div><p>修改下内核，让程序可以随便申请内存</p> <div class="language- extra-class"><pre class="language-text"><code>echo 1 &gt; /proc/sys/vm/overcommit_memory
+</code></pre></div><p>关闭交换分区</p> <div class="language- extra-class"><pre class="language-text"><code>swapoff -a
+</code></pre></div><h2 id="实验一"><a href="#实验一" class="header-anchor">#</a> 实验一</h2> <p><strong>1</strong>.创建一个cgroup限制</p> <div class="language- extra-class"><pre class="language-text"><code>cd /sys/fs/cgroup/memory/
+mkdir test
+cd test
+</code></pre></div><p>进入test会看到自动产生了很多文件
+<strong>2</strong>.修改配置，限制内存在100M内</p> <div class="language- extra-class"><pre class="language-text"><code>echo $((100*1024*1024)) &gt; memory.limit_in_bytes
+</code></pre></div><p><strong>3</strong>.编译一个程序来测试下，看能否限制在100M内，代码如下</p> <div class="language- extra-class"><pre class="language-text"><code>#include &lt;stdlib.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main(int argc, char **argv)
+{
+	int max = -1;
+	int mb = 0;
+	char *buffer;
+	int i;
+#define SIZE 500
+	unsigned int *p = malloc(1024 * 1024 * SIZE);
+
+	printf(&quot;malloc buffer: %p\n&quot;, p);
+
+	for (i = 0; i &lt; 1024 * 1024 * (SIZE/sizeof(int)); i++) {
+		p[i] = 123;
+		if ((i &amp; 0xFFFFF) == 0) {
+			printf(&quot;%dMB written\n&quot;, i &gt;&gt; 18);
+			usleep(100000);
+		}
+	}
+	pause();
+	return 0;
+}
+</code></pre></div><p>编译一下</p> <div class="language- extra-class"><pre class="language-text"><code>gcc oom.c
+</code></pre></div><p>使用cgroup来测试下</p> <div class="language- extra-class"><pre class="language-text"><code>[root@localhost ~]# cgexec -g memory:test ./a.out 
+malloc buffer: 0x7fdbc67e2010
+0MB written
+4MB written
+8MB written
+12MB written
+16MB written
+20MB written
+24MB written
+28MB written
+32MB written
+36MB written
+40MB written
+44MB written
+48MB written
+52MB written
+56MB written
+60MB written
+64MB written
+68MB written
+72MB written
+76MB written
+80MB written
+84MB written
+88MB written
+92MB written
+96MB written
+Killed
+</code></pre></div><p>可以看到要超过100M时，程序被结束掉了。
+改成50M再测试下</p> <div class="language- extra-class"><pre class="language-text"><code>echo $((50*1024*1024)) &gt; /sys/fs/cgroup/memory/test/memory.limit_in_bytes
+</code></pre></div><div class="language- extra-class"><pre class="language-text"><code>[root@localhost ~]# cgexec -g memory:test ./a.out 
+malloc buffer: 0x7f7b9fec0010
+0MB written
+4MB written
+8MB written
+12MB written
+16MB written
+20MB written
+24MB written
+28MB written
+32MB written
+36MB written
+40MB written
+44MB written
+48MB written
+Killed
+</code></pre></div><p>可以看到要超过50M时，程序被结束掉了。</p> <p><strong>打扫环境</strong></p> <p>删除cgroup下的test目录的步骤如下：</p> <div class="language- extra-class"><pre class="language-text"><code>rmdir /sys/fs/cgroup/memory/test
+</code></pre></div><p>如果报错没权限，看看是不是把当前会话的pid放进去了，如果是则把它移出来，命令如下：</p> <div class="language- extra-class"><pre class="language-text"><code>echo $$ &gt; /sys/fs/cgroup/memory/tasks 
+</code></pre></div><p>之后再删除test目录。</p> <h2 id="实验二"><a href="#实验二" class="header-anchor">#</a> 实验二</h2> <p>使用配置文件来限制
+<strong>增加内存限制的配置</strong></p> <div class="language- extra-class"><pre class="language-text"><code>vim /etc/cgconfig.conf 
+</code></pre></div><p>添加如下内容</p> <div class="language- extra-class"><pre class="language-text"><code>group TestGroup {
+    memory {
+        memory.limit_in_bytes = &quot;52428800&quot;;
+        memory.swappiness = 0;
+    }
+}
+</code></pre></div><p>这里定义了一个TestGroup组，这个组限制的内存为50M，50<em>1024</em>1024。</p> <div class="language- extra-class"><pre class="language-text"><code>vim /etc/cgrules.conf 
+</code></pre></div><p>增加如下配置</p> <div class="language- extra-class"><pre class="language-text"><code>*:a.out    memory      TestGroup/
+</code></pre></div><p>这里简单说明下：</p> <div class="language- extra-class"><pre class="language-text"><code>*:a.out 程序名，也就是我们要限制的实例
+memory: 要限制的内容，比如这里要限制内存
+TestGroup:限制的规则，这里使用的是刚才配置的限制50M的规则
+</code></pre></div><p><strong>启动服务</strong></p> <div class="language- extra-class"><pre class="language-text"><code>service cgconfig start
+service cgred start
+或
+systemctl start cgconfig
+systemctl start cgred
+</code></pre></div><p>至此就配置完成了，跑一下程序，观察下内存的使用情况。</p> <div class="language- extra-class"><pre class="language-text"><code>[root@localhost opt]# ./a.out 
+malloc buffer: 0x7f42cf62d010
+0MB written
+4MB written
+8MB written
+12MB written
+16MB written
+20MB written
+24MB written
+28MB written
+32MB written
+36MB written
+40MB written
+44MB written
+48MB written
+Killed
+</code></pre></div><p>改成限制20M，再测试下。更改/etc/cgconfig.conf配置文件，将内存限制在20M，重启cgconfig服务，看内存使用情况：</p> <div class="language- extra-class"><pre class="language-text"><code>[root@localhost opt]# ./a.out 
+malloc buffer: 0x7fc5521ca010
+0MB written
+4MB written
+8MB written
+12MB written
+16MB written
+20MB written
+Killed
+</code></pre></div><p>可以看到内存超过20M时，程序被结束掉了。</p> <h2 id="关于cgroup"><a href="#关于cgroup" class="header-anchor">#</a> 关于cgroup</h2> <p>cgroups（Control Groups）最初叫Process Container，由Google工程师（Paul Menage和Rohit Seth）于2006年提出，后来因为Container有多重含义容易引起误解，就在2007年更名为Control Groups，并被整合进Linux内核。
+cgroups可以限制、记录、隔离进程组所使用的物理资源（包括：CPU、memory、IO等），是lxc （linux container）的基础之一。
+看到这里是不是隐约感觉到了什么？是的，docker也用了它。
+<a href="http://www.infoq.com/cn/articles/docker-kernel-knowledge-cgroups-resource-isolation" target="_blank" rel="noopener noreferrer">Docker背后的内核知识——cgroups资源限制<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div> <footer><div style="text-align: center;">
+            © 2020 小小郭的博客
+            <a href="http://www.beian.miit.gov.cn/">粤ICP备16016910号</a> <br><br></div></footer></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.158714e6.js" defer></script><script src="/assets/js/2.a806d99a.js" defer></script><script src="/assets/js/22.151f504b.js" defer></script>
+  </body>
+</html>

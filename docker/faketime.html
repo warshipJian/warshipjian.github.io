@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>使用faketime修改docker内的时间,解决cannot set date Operation not permitted问题 | 小小郭的博客</title>
+    <meta name="generator" content="VuePress 1.5.2">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="description" content="小小郭">
+    <link rel="preload" href="/assets/css/0.styles.f333096b.css" as="style"><link rel="preload" href="/assets/js/app.158714e6.js" as="script"><link rel="preload" href="/assets/js/2.a806d99a.js" as="script"><link rel="preload" href="/assets/js/11.f6fcdde7.js" as="script"><link rel="prefetch" href="/assets/js/10.ceb6da30.js"><link rel="prefetch" href="/assets/js/12.c1ccc7c5.js"><link rel="prefetch" href="/assets/js/13.2e80b5f4.js"><link rel="prefetch" href="/assets/js/14.86580eea.js"><link rel="prefetch" href="/assets/js/15.ec8bc9ac.js"><link rel="prefetch" href="/assets/js/16.ffe6c259.js"><link rel="prefetch" href="/assets/js/17.f11cefb5.js"><link rel="prefetch" href="/assets/js/18.ba7fa50a.js"><link rel="prefetch" href="/assets/js/19.d98194cd.js"><link rel="prefetch" href="/assets/js/20.b3e3e3ba.js"><link rel="prefetch" href="/assets/js/21.0560925d.js"><link rel="prefetch" href="/assets/js/22.151f504b.js"><link rel="prefetch" href="/assets/js/23.c0dd585a.js"><link rel="prefetch" href="/assets/js/24.5ac8c4b5.js"><link rel="prefetch" href="/assets/js/25.57989e7c.js"><link rel="prefetch" href="/assets/js/26.19ae4c70.js"><link rel="prefetch" href="/assets/js/27.7b7a4013.js"><link rel="prefetch" href="/assets/js/28.c02de8fb.js"><link rel="prefetch" href="/assets/js/29.be98b5ac.js"><link rel="prefetch" href="/assets/js/3.f9a5341d.js"><link rel="prefetch" href="/assets/js/30.151ce4ad.js"><link rel="prefetch" href="/assets/js/31.e3b05220.js"><link rel="prefetch" href="/assets/js/32.48233f51.js"><link rel="prefetch" href="/assets/js/33.cdf1ba85.js"><link rel="prefetch" href="/assets/js/34.8e175bdf.js"><link rel="prefetch" href="/assets/js/35.53e76add.js"><link rel="prefetch" href="/assets/js/36.2588db5d.js"><link rel="prefetch" href="/assets/js/37.904d3476.js"><link rel="prefetch" href="/assets/js/38.1424f189.js"><link rel="prefetch" href="/assets/js/39.0e05003b.js"><link rel="prefetch" href="/assets/js/4.84d9a9b8.js"><link rel="prefetch" href="/assets/js/40.e4b36098.js"><link rel="prefetch" href="/assets/js/41.13258ed7.js"><link rel="prefetch" href="/assets/js/42.6f5a7cbb.js"><link rel="prefetch" href="/assets/js/43.7898149d.js"><link rel="prefetch" href="/assets/js/44.37b08732.js"><link rel="prefetch" href="/assets/js/45.17998593.js"><link rel="prefetch" href="/assets/js/46.055bc79a.js"><link rel="prefetch" href="/assets/js/47.6df10fa7.js"><link rel="prefetch" href="/assets/js/48.2660180a.js"><link rel="prefetch" href="/assets/js/49.4625a12a.js"><link rel="prefetch" href="/assets/js/5.501f4465.js"><link rel="prefetch" href="/assets/js/50.b3b348da.js"><link rel="prefetch" href="/assets/js/51.dcb3be6c.js"><link rel="prefetch" href="/assets/js/52.7dd04b5b.js"><link rel="prefetch" href="/assets/js/53.20259b4b.js"><link rel="prefetch" href="/assets/js/54.c876d67f.js"><link rel="prefetch" href="/assets/js/55.52c8359c.js"><link rel="prefetch" href="/assets/js/56.ab71b89a.js"><link rel="prefetch" href="/assets/js/57.30af5fe9.js"><link rel="prefetch" href="/assets/js/58.d1f3acb8.js"><link rel="prefetch" href="/assets/js/59.0c65a864.js"><link rel="prefetch" href="/assets/js/6.56baaf4e.js"><link rel="prefetch" href="/assets/js/60.cc2dc3eb.js"><link rel="prefetch" href="/assets/js/61.bc3d577e.js"><link rel="prefetch" href="/assets/js/62.88dedbc6.js"><link rel="prefetch" href="/assets/js/63.5403d296.js"><link rel="prefetch" href="/assets/js/64.cdcabf93.js"><link rel="prefetch" href="/assets/js/65.7fba108e.js"><link rel="prefetch" href="/assets/js/66.51641258.js"><link rel="prefetch" href="/assets/js/67.f408a0b2.js"><link rel="prefetch" href="/assets/js/68.326016eb.js"><link rel="prefetch" href="/assets/js/69.9dde49ee.js"><link rel="prefetch" href="/assets/js/7.86ee5bb7.js"><link rel="prefetch" href="/assets/js/70.76be6feb.js"><link rel="prefetch" href="/assets/js/71.8bb3d5a3.js"><link rel="prefetch" href="/assets/js/72.3d340b56.js"><link rel="prefetch" href="/assets/js/73.94ae8b58.js"><link rel="prefetch" href="/assets/js/74.c38b2bf5.js"><link rel="prefetch" href="/assets/js/75.ab88131c.js"><link rel="prefetch" href="/assets/js/76.b15fc67e.js"><link rel="prefetch" href="/assets/js/8.77896323.js"><link rel="prefetch" href="/assets/js/9.1bb7c316.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.f333096b.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="global-layout"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">小小郭的博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav>  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="使用faketime修改docker内的时间-解决cannot-set-date-operation-not-permitted问题"><a href="#使用faketime修改docker内的时间-解决cannot-set-date-operation-not-permitted问题" class="header-anchor">#</a> 使用faketime修改docker内的时间,解决cannot set date Operation not permitted问题</h1> <p>docker本质是个进程，有很多资源是使用宿主机的，比如系统时间。正常使用时是会觉得很方便，但涉及到对系统资源的修改时，就比较麻烦了。</p> <h3 id="场景"><a href="#场景" class="header-anchor">#</a> 场景</h3> <p>使用docker部署了一个后端服务，测试需要改系统时间，如果直接改宿主机时间则会影响到其他的docker(不管是在宿主机上改还是通过--cap-add SYS_TIME参数在docker中修改)。有没有什么既能满足测试要求又不影响其他docker的方法呢？答案就是通过faketime来欺骗docker，达到此目的。</p> <h3 id="faketime"><a href="#faketime" class="header-anchor">#</a> faketime</h3> <h4 id="github地址"><a href="#github地址" class="header-anchor">#</a> github地址</h4> <p>https://github.com/wolfcw/libfaketime</p> <h4 id="安装"><a href="#安装" class="header-anchor">#</a> 安装</h4> <div class="language- extra-class"><pre class="language-text"><code>git clone https://github.com/wolfcw/libfaketime
+cd libfaketime
+make
+make install
+</code></pre></div><p>安装完成后，在/usr/local/lib/下有个kaketime的目录</p> <h4 id="使用"><a href="#使用" class="header-anchor">#</a> 使用</h4> <p>比如想修改时间为2019-08-12 10:30:22，执行如下命令</p> <div class="language- extra-class"><pre class="language-text"><code>export LD_PRELOAD=/usr/local/lib/faketime/libfaketime.so.1 FAKETIME=&quot;2019-08-12 10:30:22&quot; 
+</code></pre></div><h3 id="docker实践"><a href="#docker实践" class="header-anchor">#</a> docker实践</h3> <h4 id="dockerfile"><a href="#dockerfile" class="header-anchor">#</a> dockerfile</h4> <p>先看一个使用Ubuntu基础镜像做的，可用于laravel的dockerfile</p> <div class="language-dockerfile extra-class"><pre class="language-dockerfile"><code><span class="token keyword">FROM</span> ubuntu<span class="token punctuation">:</span>16.04
+
+<span class="token comment"># 设置时区</span>
+<span class="token keyword">ENV</span> TZ=Asia/Shanghai
+<span class="token keyword">RUN</span> ln <span class="token punctuation">-</span>snf /usr/share/zoneinfo/$TZ /etc/localtime &amp;&amp; echo $TZ <span class="token punctuation">&gt;</span> /etc/timezone
+
+<span class="token keyword">COPY</span> php<span class="token punctuation">-</span>7.3.0.tar.bz2 php<span class="token punctuation">-</span>7.3.0.tar.bz2
+
+<span class="token comment"># 更新源，安装nginx</span>
+<span class="token keyword">RUN</span> sed <span class="token punctuation">-</span>i <span class="token string">'s/archive.ubuntu.com/mirrors.aliyun.com/g'</span> /etc/apt/sources.list \
+    &amp;&amp; sed <span class="token punctuation">-</span>i <span class="token string">'s/security.ubuntu.com/mirrors.aliyun.com/g'</span> /etc/apt/sources.list \
+    &amp;&amp; apt<span class="token punctuation">-</span>get clean \
+    &amp;&amp; rm <span class="token punctuation">-</span>fR /var/lib/apt/lists/* \
+    &amp;&amp; mkdir /var/lib/apt/lists/partial \
+    &amp;&amp; apt<span class="token punctuation">-</span>get update  \
+    &amp;&amp; apt<span class="token punctuation">-</span>get upgrade <span class="token punctuation">-</span>y \
+    &amp;&amp; apt<span class="token punctuation">-</span>get install <span class="token punctuation">-</span>y wget autoconf make gcc nginx procps libfreetype6<span class="token punctuation">-</span>dev libpng<span class="token punctuation">-</span>dev libzip<span class="token punctuation">-</span>dev libcurl3<span class="token punctuation">-</span>openssl<span class="token punctuation">-</span>dev libbz2<span class="token punctuation">-</span>dev libjpeg<span class="token punctuation">-</span>dev libxpm<span class="token punctuation">-</span>dev libfreetype6<span class="token punctuation">-</span>dev libmcrypt<span class="token punctuation">-</span>dev libmysql++<span class="token punctuation">-</span>dev libxslt1<span class="token punctuation">-</span>dev  pkg<span class="token punctuation">-</span>config libssl<span class="token punctuation">-</span>dev libsslcommon2<span class="token punctuation">-</span>dev zip unzip \
+    &amp;&amp; tar xvf php<span class="token punctuation">-</span>7.3.0.tar.bz2 \
+    &amp;&amp; cd php<span class="token punctuation">-</span>7.3.0/ \
+    &amp;&amp; ./configure  <span class="token punctuation">-</span><span class="token punctuation">-</span>prefix=/usr/local/php <span class="token punctuation">-</span><span class="token punctuation">-</span>enable<span class="token punctuation">-</span>fpm <span class="token punctuation">-</span><span class="token punctuation">-</span>enable<span class="token punctuation">-</span>sockets <span class="token punctuation">-</span><span class="token punctuation">-</span>enable<span class="token punctuation">-</span>mbstring=all  <span class="token punctuation">-</span>enable<span class="token punctuation">-</span>mysqlnd  <span class="token punctuation">-</span><span class="token punctuation">-</span>with<span class="token punctuation">-</span>config<span class="token punctuation">-</span>file<span class="token punctuation">-</span>path=/usr/local/php/etc <span class="token punctuation">-</span><span class="token punctuation">-</span>with<span class="token punctuation">-</span>mysqli=mysqlnd <span class="token punctuation">-</span><span class="token punctuation">-</span>with<span class="token punctuation">-</span>pdo<span class="token punctuation">-</span>mysql=mysqlnd <span class="token punctuation">-</span><span class="token punctuation">-</span>with<span class="token punctuation">-</span>curl <span class="token punctuation">-</span><span class="token punctuation">-</span>with<span class="token punctuation">-</span>gd  <span class="token punctuation">-</span><span class="token punctuation">-</span>with<span class="token punctuation">-</span>openssl \
+    &amp;&amp; make \
+    &amp;&amp; make install \
+    &amp;&amp; cd ext/zip \
+    &amp;&amp; /usr/local/php/bin/phpize \
+    &amp;&amp; ./configure <span class="token punctuation">-</span><span class="token punctuation">-</span>with<span class="token punctuation">-</span>php<span class="token punctuation">-</span>config=/usr/local/php/bin/php<span class="token punctuation">-</span>config \
+    &amp;&amp; make ; make install \
+    &amp;&amp; cd ../../ext/bcmath \
+    &amp;&amp; /usr/local/php/bin/phpize \
+    &amp;&amp; ./configure <span class="token punctuation">-</span><span class="token punctuation">-</span>with<span class="token punctuation">-</span>php<span class="token punctuation">-</span>config=/usr/local/php/bin/php<span class="token punctuation">-</span>config \
+    &amp;&amp; make ; make install \
+    &amp;&amp; cd ../../.. ; rm <span class="token punctuation">-</span>fr php<span class="token punctuation">-</span>7.3.0 ; rm <span class="token punctuation">-</span>fr php<span class="token punctuation">-</span>7.3.0.tar.bz2 
+
+<span class="token comment"># 安装 Composer</span>
+<span class="token keyword">ENV</span> COMPOSER_HOME /root/composer
+<span class="token keyword">COPY</span> composer /usr/bin/composer
+<span class="token keyword">COPY</span> composer /usr/local/bin/composer
+<span class="token keyword">RUN</span> cp /usr/local/php/bin/php /usr/bin &amp;&amp; composer config <span class="token punctuation">-</span>g repo.packagist composer https<span class="token punctuation">:</span>//mirrors.aliyun.com/composer/
+
+<span class="token comment"># 复制文件和代码</span>
+<span class="token keyword">WORKDIR</span> /data
+<span class="token keyword">COPY</span> app/ /data/
+<span class="token keyword">COPY</span> php.ini /usr/local/etc/php/php.ini
+<span class="token keyword">COPY</span> libfaketime/ /data/
+<span class="token keyword">RUN</span> echo <span class="token string">'extension=zip.so'</span> <span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span> /usr/local/php/etc/php.ini \
+    &amp;&amp; echo <span class="token string">'extension=bcmath.so'</span> <span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span> /usr/local/php/etc/php.ini \
+    &amp;&amp; cd /data/libfaketime &amp;&amp; make ; make install \
+    &amp;&amp; rm <span class="token punctuation">-</span>fr /data/libfaketime
+<span class="token keyword">COPY</span> php<span class="token punctuation">-</span>fpm.conf /usr/local/php/etc/php<span class="token punctuation">-</span>fpm.conf
+<span class="token keyword">COPY</span> nginx.conf /etc/nginx/nginx.conf
+<span class="token keyword">COPY</span> env<span class="token punctuation">-</span>example /data/.env
+
+<span class="token comment"># Write Permission</span>
+<span class="token keyword">RUN</span> chmod <span class="token punctuation">-</span>R 777 /data &amp;&amp; usermod <span class="token punctuation">-</span>u 1000 www<span class="token punctuation">-</span>data
+<span class="token keyword">CMD</span> <span class="token punctuation">[</span><span class="token string">&quot;nginx&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;-g&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;daemon off;&quot;</span><span class="token punctuation">]</span>
+</code></pre></div><h4 id="说明"><a href="#说明" class="header-anchor">#</a> 说明</h4> <ol><li>dockerfile的大概过程是：安装基本工具和依赖；编译安装php；复制composer，faketime到docker，编译安装faktime；复制项目代码，nginx配置，php配置到docker；使用nginx做前台进程启动docker。</li> <li>用Ubuntu而不用PHP做docker基础镜像的原因是: 测试修改时间时要重启php-fpm，如果直接使用PHP的docker则重启php-fpm后docker会重启，faketime修改无效。</li> <li>在docker里面下载php-7.3.0.tar.bz2，composer和faketime，如果网络不好则时间会比较长，这改成先下载好，然后拷贝到docker里打包，节省点时间。nginx，php-fpm的配置也要事先准备好。</li> <li>由于是编译安装php，时间会长一点</li></ol> <h4 id="使用-2"><a href="#使用-2" class="header-anchor">#</a> 使用</h4> <p>先使用该dockerfile打个包</p> <div class="language- extra-class"><pre class="language-text"><code>docker build -t laravel:v1 .
+</code></pre></div><p>打完之后运行起来</p> <div class="language- extra-class"><pre class="language-text"><code>docker run -itd  -p 9091:80 laravel:v1
+
+docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                  NAMES
+d5fcc8f42bd4        laravel:v1          &quot;nginx -g 'daemon of…&quot;   37 seconds ago      Up 35 seconds       0.0.0.0:9091-&gt;80/tcp   trusting_darwin
+</code></pre></div><p>进入docker</p> <div class="language- extra-class"><pre class="language-text"><code>docker exec -it d5fcc8f42bd4 /bin/bash
+root@d5fcc8f42bd4:/data# 
+</code></pre></div><p>修改时间下时间</p> <div class="language- extra-class"><pre class="language-text"><code>root@d5fcc8f42bd4:/data# date
+Sun Aug 25 15:24:40 Asia 2019
+root@d5fcc8f42bd4:/data# 
+root@d5fcc8f42bd4:/data# export LD_PRELOAD=/usr/local/lib/faketime/libfaketime.so.1 FAKETIME=&quot;2019-08-12 10:30:22&quot; 
+root@d5fcc8f42bd4:/data# date
+Mon Aug 12 10:30:22 Asia 2019
+</code></pre></div><p>可以看到当前终端的时间已经改了。
+看看当前终端下php的时间是不是也改了：</p> <div class="language- extra-class"><pre class="language-text"><code>root@d5fcc8f42bd4:/data# echo &quot;&lt;?php echo date('Y-m-d H:i:s'); &quot; &gt; time.php
+root@d5fcc8f42bd4:/data# echo 'echo &quot;\n&quot;;' &gt;&gt; time.php
+root@d5fcc8f42bd4:/data# date
+Mon Aug 12 10:30:22 Asia 2019
+root@d5fcc8f42bd4:/data# php time.php 
+2019-08-12 10:30:22
+</code></pre></div><p>可以看到也修改了。
+再来改下php-fpm的时间</p> <div class="language- extra-class"><pre class="language-text"><code>pkill php-fpm ; /usr/local/php/sbin/php-fpm 
+</code></pre></div><p>访问http://127.0.0.1:9091/time.php ，可以看到当前的运行时间也改了。</p> <p><s>不过目前测试php-fpm的生效时间比较短，只有10秒左右，之后会还原，后续在找下原因完善下。</s></p> <p>------------- 关于php-fpm时间还原问题的更新</p> <p>对于php-fpm模式，可以在配置文件中加一个参数clear_env = no，启动php-fpm时则不会清空环境变量，修改的时间就能一直生效了。</p> <p>对于CLI或swoole模式则没有这个问题，修改时间后重启即可。</p></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div> <footer><div style="text-align: center;">
+            © 2020 小小郭的博客
+            <a href="http://www.beian.miit.gov.cn/">粤ICP备16016910号</a> <br><br></div></footer></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.158714e6.js" defer></script><script src="/assets/js/2.a806d99a.js" defer></script><script src="/assets/js/11.f6fcdde7.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>linux-进程-01-进程和fork | 小小郭的博客</title>
+    <meta name="generator" content="VuePress 1.5.2">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="description" content="小小郭">
+    <link rel="preload" href="/assets/css/0.styles.f333096b.css" as="style"><link rel="preload" href="/assets/js/app.158714e6.js" as="script"><link rel="preload" href="/assets/js/2.a806d99a.js" as="script"><link rel="preload" href="/assets/js/29.be98b5ac.js" as="script"><link rel="prefetch" href="/assets/js/10.ceb6da30.js"><link rel="prefetch" href="/assets/js/11.f6fcdde7.js"><link rel="prefetch" href="/assets/js/12.c1ccc7c5.js"><link rel="prefetch" href="/assets/js/13.2e80b5f4.js"><link rel="prefetch" href="/assets/js/14.86580eea.js"><link rel="prefetch" href="/assets/js/15.ec8bc9ac.js"><link rel="prefetch" href="/assets/js/16.ffe6c259.js"><link rel="prefetch" href="/assets/js/17.f11cefb5.js"><link rel="prefetch" href="/assets/js/18.ba7fa50a.js"><link rel="prefetch" href="/assets/js/19.d98194cd.js"><link rel="prefetch" href="/assets/js/20.b3e3e3ba.js"><link rel="prefetch" href="/assets/js/21.0560925d.js"><link rel="prefetch" href="/assets/js/22.151f504b.js"><link rel="prefetch" href="/assets/js/23.c0dd585a.js"><link rel="prefetch" href="/assets/js/24.5ac8c4b5.js"><link rel="prefetch" href="/assets/js/25.57989e7c.js"><link rel="prefetch" href="/assets/js/26.19ae4c70.js"><link rel="prefetch" href="/assets/js/27.7b7a4013.js"><link rel="prefetch" href="/assets/js/28.c02de8fb.js"><link rel="prefetch" href="/assets/js/3.f9a5341d.js"><link rel="prefetch" href="/assets/js/30.151ce4ad.js"><link rel="prefetch" href="/assets/js/31.e3b05220.js"><link rel="prefetch" href="/assets/js/32.48233f51.js"><link rel="prefetch" href="/assets/js/33.cdf1ba85.js"><link rel="prefetch" href="/assets/js/34.8e175bdf.js"><link rel="prefetch" href="/assets/js/35.53e76add.js"><link rel="prefetch" href="/assets/js/36.2588db5d.js"><link rel="prefetch" href="/assets/js/37.904d3476.js"><link rel="prefetch" href="/assets/js/38.1424f189.js"><link rel="prefetch" href="/assets/js/39.0e05003b.js"><link rel="prefetch" href="/assets/js/4.84d9a9b8.js"><link rel="prefetch" href="/assets/js/40.e4b36098.js"><link rel="prefetch" href="/assets/js/41.13258ed7.js"><link rel="prefetch" href="/assets/js/42.6f5a7cbb.js"><link rel="prefetch" href="/assets/js/43.7898149d.js"><link rel="prefetch" href="/assets/js/44.37b08732.js"><link rel="prefetch" href="/assets/js/45.17998593.js"><link rel="prefetch" href="/assets/js/46.055bc79a.js"><link rel="prefetch" href="/assets/js/47.6df10fa7.js"><link rel="prefetch" href="/assets/js/48.2660180a.js"><link rel="prefetch" href="/assets/js/49.4625a12a.js"><link rel="prefetch" href="/assets/js/5.501f4465.js"><link rel="prefetch" href="/assets/js/50.b3b348da.js"><link rel="prefetch" href="/assets/js/51.dcb3be6c.js"><link rel="prefetch" href="/assets/js/52.7dd04b5b.js"><link rel="prefetch" href="/assets/js/53.20259b4b.js"><link rel="prefetch" href="/assets/js/54.c876d67f.js"><link rel="prefetch" href="/assets/js/55.52c8359c.js"><link rel="prefetch" href="/assets/js/56.ab71b89a.js"><link rel="prefetch" href="/assets/js/57.30af5fe9.js"><link rel="prefetch" href="/assets/js/58.d1f3acb8.js"><link rel="prefetch" href="/assets/js/59.0c65a864.js"><link rel="prefetch" href="/assets/js/6.56baaf4e.js"><link rel="prefetch" href="/assets/js/60.cc2dc3eb.js"><link rel="prefetch" href="/assets/js/61.bc3d577e.js"><link rel="prefetch" href="/assets/js/62.88dedbc6.js"><link rel="prefetch" href="/assets/js/63.5403d296.js"><link rel="prefetch" href="/assets/js/64.cdcabf93.js"><link rel="prefetch" href="/assets/js/65.7fba108e.js"><link rel="prefetch" href="/assets/js/66.51641258.js"><link rel="prefetch" href="/assets/js/67.f408a0b2.js"><link rel="prefetch" href="/assets/js/68.326016eb.js"><link rel="prefetch" href="/assets/js/69.9dde49ee.js"><link rel="prefetch" href="/assets/js/7.86ee5bb7.js"><link rel="prefetch" href="/assets/js/70.76be6feb.js"><link rel="prefetch" href="/assets/js/71.8bb3d5a3.js"><link rel="prefetch" href="/assets/js/72.3d340b56.js"><link rel="prefetch" href="/assets/js/73.94ae8b58.js"><link rel="prefetch" href="/assets/js/74.c38b2bf5.js"><link rel="prefetch" href="/assets/js/75.ab88131c.js"><link rel="prefetch" href="/assets/js/76.b15fc67e.js"><link rel="prefetch" href="/assets/js/8.77896323.js"><link rel="prefetch" href="/assets/js/9.1bb7c316.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.f333096b.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="global-layout"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">小小郭的博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav>  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="linux-进程-01-进程和fork"><a href="#linux-进程-01-进程和fork" class="header-anchor">#</a> linux-进程-01-进程和fork</h1> <p>linux有三座大山：进程，内存，io。跨过了这三座大山，你就能看到更精彩的世界！
+今天开始总结进程。</p> <h2 id="linux源码"><a href="#linux源码" class="header-anchor">#</a> linux源码</h2> <p>linux源码在/usr/src下，主要目录的用途：</p> <div class="language- extra-class"><pre class="language-text"><code>include/ 建立内核代码时所需要的大部分包含文件
+init/ 内核的初始化代码
+arch/ 所有硬件结构的内核代码
+drivers/ 所有设备驱动程序
+fs/ 所有的文件系统代码
+net/ 内核中关于网络的代码
+mm/ 内存管理的代码
+ipc/ 进程间通信的代码
+kernel/ 内核的主体代码
+</code></pre></div><h2 id="进程和线程"><a href="#进程和线程" class="header-anchor">#</a> 进程和线程</h2> <h3 id="进程是什么"><a href="#进程是什么" class="header-anchor">#</a> 进程是什么</h3> <p>在linux中，进程是资源的分配单位，它关注的是资源方面的内容，如：内存，文件系统，打开的文件，信号等。linux是通过task_struct来管理进程，该结构体定义在include/linux/sched.h文件中，包含的主要内容有：</p> <div class="language- extra-class"><pre class="language-text"><code>pid;   // 进程的pid
+*mm;  // 内存资源
+*fs;  // 文件系统
+*files;  // 文件资源，如打开的文件
+*signal; // 信号
+...
+</code></pre></div><p><img src="https://img.xiaoxiaoguo.cn/usr/uploads/2019/02/708950447.png" alt="task_struct.png">
+当我们说到进程时，就是说一个包含了内存，句柄文件，pid等的东西。假设linux的内存是一个蛋糕，则某个进程占用的内存就是在这个蛋糕上切下的一小块。</p> <h3 id="线程是什么"><a href="#线程是什么" class="header-anchor">#</a> 线程是什么</h3> <p>从资源的角度来说，线程是粒度比进程更细的单位。同一个进程中，可能会有多个线程，它们共享资源。</p> <p>怎么理解呢？</p> <p>假设有两个程序A和B，当linux执行A时，会先加载A的上下文，然后执行A，完成后保存A的上下文，然后加载B的上下文，执行B。</p> <p>假设A由a,b,c三个模块组成，则在进行A时，会执行a,b,c，这些模块的执行不需要上下文切换，共享A的上下文，即共享A的资源。</p> <p>A的整个执行过程为：A获得CPU -&gt; CPU加载A的上下文 -&gt; 执行a -&gt; 执行b -&gt; 执行c -&gt; CPU保存A的上下文 。</p> <p><strong>A和B就是进程，a,b,c就是线程</strong></p> <p><strong>在linux中，所有符合task_struct结构体的程序，都可以被调度运行。</strong> 在后面的表述中，不会去纠结叫线程还是进程，关注task_struct结构体即可。</p> <h2 id="pid"><a href="#pid" class="header-anchor">#</a> pid</h2> <p>每个进程都会有一个pid。linux的pid数量是有限的，具体数量在<code>/proc/sys/kernel/pid_max</code>中。</p> <div class="language- extra-class"><pre class="language-text"><code>[root@localhost ~]# cat /proc/sys/kernel/pid_max 
+32768
+</code></pre></div><p>当某个进程结束后，该pid会回收，之后分配给新的进程。</p> <p>pid的分配规则如下：</p> <div class="language- extra-class"><pre class="language-text"><code>1). 进程pid分配范围为(300, pid_max)，这是由于pid&lt;300的情况值允许分配一次。
+2). 每个pid分配成功，便会把当前的pid设置到last_pid， 那么下次pid的分配便是从last_pid+1开始往下查找。也就是说pid的分配是从300开始累加的，比如当前最大pid为2035，则下一个进程获得的pid为2036。
+3). 当pid分配完最大值时，则从之前回收的最小pid分配，如此循环利用。
+</code></pre></div><p>如果所有的pid都分配完了，没有可用的pid时会怎么样呢？答案是无法创建新的进程，以及你可能要重启系统^_^。</p> <p>最典型的一个列子是fork炸弹：</p> <div class="language- extra-class"><pre class="language-text"><code>:(){:|:&amp;};:
+
+// 冒号表示一个函数，你可以用其他任意字符代替它，这个函数的内容是调用自己，即递归调用，&amp;是将该函数放到后台执行，分号结束后，使用冒号执行该函数。
+</code></pre></div><p>在linux执行这段命令，不一会儿系统就会崩溃。它的原理就是不断地fork新进程，将系统的pid耗尽。</p> <h2 id="fork"><a href="#fork" class="header-anchor">#</a> fork</h2> <p>在linux中，有个fork函数，它的作用是创建一个与原来进程几乎完全相同的进程。为什么说是几乎呢，因为fork之后，它们可能会执行不同的代码。</p> <p>先看个简单的fork例子：</p> <div class="language-c extra-class"><pre class="language-c"><code><span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token function">fork</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;hello\n&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">fork</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>	
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;hello\n&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>运行这段代码，你会看到最终打印了6个hello。</p> <p>第一次fork时，产生了两个进程，所以打印两次hello，之后第二次fork，每个进程又产生一个，最终有四个进程，所以第二次打印时，会看到打印了4个hello。</p> <p>如何做到fork后，这两个进程做不同的事情呢，一个简单的例子如下：</p> <div class="language-c extra-class"><pre class="language-c"><code><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;sys/wait.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h&gt;</span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	pid_t pid<span class="token punctuation">,</span>wait_pid<span class="token punctuation">;</span>
+	<span class="token keyword">int</span> status<span class="token punctuation">;</span>
+
+	pid <span class="token operator">=</span> <span class="token function">fork</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>pid<span class="token operator">==</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>	<span class="token punctuation">{</span>
+		<span class="token function">perror</span><span class="token punctuation">(</span><span class="token string">&quot;Cannot create new process&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span> <span class="token keyword">else</span> 	<span class="token keyword">if</span> <span class="token punctuation">(</span>pid<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;a\n&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;b\n&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;c\n&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>运行这段代码，你会看到屏幕会打印ac,bc，原因是fork有如下特性：</p> <div class="language- extra-class"><pre class="language-text"><code>1). 在父进程中，fork返回新创建子进程的进程ID；
+2). 在子进程中，fork返回0；
+3). 如果出现错误，fork返回一个负值；
+</code></pre></div><p>利用fork的返回值，我们就可以做不同的事情了。</p> <h2 id="小结"><a href="#小结" class="header-anchor">#</a> 小结</h2> <p>本次主要总结了：</p> <ol><li>进程的定义</li> <li>task_struct结构体</li> <li>pid</li> <li>fork</li></ol> <p>顺带说了下linux源码的位置即个目录用途，方便阅读查找。</p> <p>下次我们看下进程的生命周期。</p></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div> <footer><div style="text-align: center;">
+            © 2020 小小郭的博客
+            <a href="http://www.beian.miit.gov.cn/">粤ICP备16016910号</a> <br><br></div></footer></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.158714e6.js" defer></script><script src="/assets/js/2.a806d99a.js" defer></script><script src="/assets/js/29.be98b5ac.js" defer></script>
+  </body>
+</html>

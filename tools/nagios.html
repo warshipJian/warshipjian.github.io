@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>nagios下用grafana绘图(二) | 小小郭的博客</title>
+    <meta name="generator" content="VuePress 1.5.2">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="description" content="小小郭">
+    <link rel="preload" href="/assets/css/0.styles.f333096b.css" as="style"><link rel="preload" href="/assets/js/app.158714e6.js" as="script"><link rel="preload" href="/assets/js/2.a806d99a.js" as="script"><link rel="preload" href="/assets/js/74.c38b2bf5.js" as="script"><link rel="prefetch" href="/assets/js/10.ceb6da30.js"><link rel="prefetch" href="/assets/js/11.f6fcdde7.js"><link rel="prefetch" href="/assets/js/12.c1ccc7c5.js"><link rel="prefetch" href="/assets/js/13.2e80b5f4.js"><link rel="prefetch" href="/assets/js/14.86580eea.js"><link rel="prefetch" href="/assets/js/15.ec8bc9ac.js"><link rel="prefetch" href="/assets/js/16.ffe6c259.js"><link rel="prefetch" href="/assets/js/17.f11cefb5.js"><link rel="prefetch" href="/assets/js/18.ba7fa50a.js"><link rel="prefetch" href="/assets/js/19.d98194cd.js"><link rel="prefetch" href="/assets/js/20.b3e3e3ba.js"><link rel="prefetch" href="/assets/js/21.0560925d.js"><link rel="prefetch" href="/assets/js/22.151f504b.js"><link rel="prefetch" href="/assets/js/23.c0dd585a.js"><link rel="prefetch" href="/assets/js/24.5ac8c4b5.js"><link rel="prefetch" href="/assets/js/25.57989e7c.js"><link rel="prefetch" href="/assets/js/26.19ae4c70.js"><link rel="prefetch" href="/assets/js/27.7b7a4013.js"><link rel="prefetch" href="/assets/js/28.c02de8fb.js"><link rel="prefetch" href="/assets/js/29.be98b5ac.js"><link rel="prefetch" href="/assets/js/3.f9a5341d.js"><link rel="prefetch" href="/assets/js/30.151ce4ad.js"><link rel="prefetch" href="/assets/js/31.e3b05220.js"><link rel="prefetch" href="/assets/js/32.48233f51.js"><link rel="prefetch" href="/assets/js/33.cdf1ba85.js"><link rel="prefetch" href="/assets/js/34.8e175bdf.js"><link rel="prefetch" href="/assets/js/35.53e76add.js"><link rel="prefetch" href="/assets/js/36.2588db5d.js"><link rel="prefetch" href="/assets/js/37.904d3476.js"><link rel="prefetch" href="/assets/js/38.1424f189.js"><link rel="prefetch" href="/assets/js/39.0e05003b.js"><link rel="prefetch" href="/assets/js/4.84d9a9b8.js"><link rel="prefetch" href="/assets/js/40.e4b36098.js"><link rel="prefetch" href="/assets/js/41.13258ed7.js"><link rel="prefetch" href="/assets/js/42.6f5a7cbb.js"><link rel="prefetch" href="/assets/js/43.7898149d.js"><link rel="prefetch" href="/assets/js/44.37b08732.js"><link rel="prefetch" href="/assets/js/45.17998593.js"><link rel="prefetch" href="/assets/js/46.055bc79a.js"><link rel="prefetch" href="/assets/js/47.6df10fa7.js"><link rel="prefetch" href="/assets/js/48.2660180a.js"><link rel="prefetch" href="/assets/js/49.4625a12a.js"><link rel="prefetch" href="/assets/js/5.501f4465.js"><link rel="prefetch" href="/assets/js/50.b3b348da.js"><link rel="prefetch" href="/assets/js/51.dcb3be6c.js"><link rel="prefetch" href="/assets/js/52.7dd04b5b.js"><link rel="prefetch" href="/assets/js/53.20259b4b.js"><link rel="prefetch" href="/assets/js/54.c876d67f.js"><link rel="prefetch" href="/assets/js/55.52c8359c.js"><link rel="prefetch" href="/assets/js/56.ab71b89a.js"><link rel="prefetch" href="/assets/js/57.30af5fe9.js"><link rel="prefetch" href="/assets/js/58.d1f3acb8.js"><link rel="prefetch" href="/assets/js/59.0c65a864.js"><link rel="prefetch" href="/assets/js/6.56baaf4e.js"><link rel="prefetch" href="/assets/js/60.cc2dc3eb.js"><link rel="prefetch" href="/assets/js/61.bc3d577e.js"><link rel="prefetch" href="/assets/js/62.88dedbc6.js"><link rel="prefetch" href="/assets/js/63.5403d296.js"><link rel="prefetch" href="/assets/js/64.cdcabf93.js"><link rel="prefetch" href="/assets/js/65.7fba108e.js"><link rel="prefetch" href="/assets/js/66.51641258.js"><link rel="prefetch" href="/assets/js/67.f408a0b2.js"><link rel="prefetch" href="/assets/js/68.326016eb.js"><link rel="prefetch" href="/assets/js/69.9dde49ee.js"><link rel="prefetch" href="/assets/js/7.86ee5bb7.js"><link rel="prefetch" href="/assets/js/70.76be6feb.js"><link rel="prefetch" href="/assets/js/71.8bb3d5a3.js"><link rel="prefetch" href="/assets/js/72.3d340b56.js"><link rel="prefetch" href="/assets/js/73.94ae8b58.js"><link rel="prefetch" href="/assets/js/75.ab88131c.js"><link rel="prefetch" href="/assets/js/76.b15fc67e.js"><link rel="prefetch" href="/assets/js/8.77896323.js"><link rel="prefetch" href="/assets/js/9.1bb7c316.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.f333096b.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="global-layout"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">小小郭的博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav>  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="nagios下用grafana绘图-二"><a href="#nagios下用grafana绘图-二" class="header-anchor">#</a> nagios下用grafana绘图(二)</h1> <p>现在不需要安装elasticsearch了,所以省去了很多步骤.</p> <p>使用如下工具:</p> <div class="language- extra-class"><pre class="language-text"><code>graphite
+grafana-3.1.1-1470047149.x86_64
+graphios
+</code></pre></div><p>部署环境:</p> <div class="language- extra-class"><pre class="language-text"><code>Centos 6.5
+python 2.6
+nagios 4.1.1
+</code></pre></div><h2 id="一-安装graphite"><a href="#一-安装graphite" class="header-anchor">#</a> 一.安装graphite</h2> <p>1.关闭selinux</p> <p>2.安装依赖工具</p> <div class="language- extra-class"><pre class="language-text"><code>yum install epel-release -y
+yum install bitmap bitmap-fonts-compat Django django-tagging fontconfig cairo python-devel python-memcached python-twisted  pycairo mod_python python-ldap python-simplejson memcached python-zope-interface mod_wsgi python-sqlite2  Django MySQL-python  -y
+</code></pre></div><p>安装pytz</p> <div class="language- extra-class"><pre class="language-text"><code> pip install pytz
+</code></pre></div><p>carbon依赖Twisted,如果是python2.6,新版的Twisted不支持python2.6,需手动安装支持2.6的版本,这里用Twisted-15</p> <div class="language- extra-class"><pre class="language-text"><code>wget https://pypi.python.org/packages/76/9a/ed7a9cabefd919c861249d39d11111d5d8fba2e8d0b2a1bce7ee8933a8fd/Twisted-15.0.0.tar.bz2#md5=f52bfe112a3aa33dd1d323c7c1e99f16
+tar jxvf Twisted-15.0.0.tar.bz2
+cd Twisted-15.0.0
+python setup.py install
+</code></pre></div><p>3.安装graphite</p> <p>使用pip安装</p> <div class="language- extra-class"><pre class="language-text"><code>pip install whisper
+pip install carbon
+pip install graphite-web
+</code></pre></div><p>添加配置文件</p> <div class="language- extra-class"><pre class="language-text"><code>cd /opt/graphite/conf/
+cp carbon.conf.example carbon.conf
+cp storage-schemas.conf.example storage-schemas.conf
+cp graphite.wsgi.example graphite.wsgi
+</code></pre></div><p>4.配置apache</p> <div class="language- extra-class"><pre class="language-text"><code>cat /opt/graphite/examples/example-graphite-vhost.conf  &gt;&gt; /etc/httpd/conf/httpd.conf
+
+vim /etc/httpd/conf/httpd.conf
+添加 
+Listen 8081
+
+修改端口为8081
+&lt;VirtualHost *:8081&gt;
+
+修改WSGISocketPrefix 为 
+WSGISocketPrefix /var/run/httpd/wsgi
+
+初始化数据库
+cd /opt/graphite/webapp/graphite/
+cp local_settings.py.example local_settings.py
+python manage.py syncdb
+chown -R apache:apache /opt/graphite
+</code></pre></div><p>5.启动graphite</p> <div class="language- extra-class"><pre class="language-text"><code>/opt/graphite/bin/carbon-cache.py start
+service  httpd restart
+</code></pre></div><p>访问http://ip:8081 即可进入graphite</p> <h2 id="二-安装配置graphios"><a href="#二-安装配置graphios" class="header-anchor">#</a> 二.安装配置graphios</h2> <h3 id="_1-安装"><a href="#_1-安装" class="header-anchor">#</a> 1.安装</h3> <div class="language- extra-class"><pre class="language-text"><code>git clone https://github.com/shawn-sterling/graphios.git
+cd graphios
+python setup.py install
+
+mkdir -p /var/spool/nagios/graphios
+chown nagios:nagios -R /var/spool/nagios
+</code></pre></div><h3 id="_2-配置"><a href="#_2-配置" class="header-anchor">#</a> 2.配置</h3> <p>安装完成后,会自动在/usr/local/nagios/etc/nagios.cfg中添加graphios的配置</p> <p>注释掉这行,避免配置冲突</p> <div class="language- extra-class"><pre class="language-text"><code>cfg_dir=/usr/local/nagios/etc/objects
+</code></pre></div><p>手动添加command的配置</p> <div class="language- extra-class"><pre class="language-text"><code>vim /usr/local/nagios/etc/objects/commands.cfg
+define command {
+        command_name    graphite_perf_host
+        command_line    /bin/mv /var/spool/nagios/graphios/host-perfdata /var/spool/nagios/graphios/host-perfdata.$TIMET$
+        }
+
+define command {
+        command_name    graphite_perf_service
+        command_line    /bin/mv /var/spool/nagios/graphios/service-perfdata /var/spool/nagios/graphios/service-perfdata.$TIMET$
+        }
+
+在nagios对应的主机或服务中,添加 _graphiteprefix 值
+如
+define host {
+    host_name                   gzimg110
+    check_command               check_ping
+    _graphiteprefix                ping
+}
+</code></pre></div><h3 id="_3-配置graphios"><a href="#_3-配置graphios" class="header-anchor">#</a> 3.配置graphios</h3> <p>vim /etc/graphios/graphios.cfg</p> <p>修改如下内容</p> <div class="language- extra-class"><pre class="language-text"><code>debug = False
+enable_carbon = True
+sleep_max = 3
+</code></pre></div><p>vim /usr/bin/graphios.py</p> <p>将对应值修改为如下内容</p> <div class="language- extra-class"><pre class="language-text"><code>config_file = '/etc/graphios/graphios.cfg'
+debug = False
+</code></pre></div><p>启动graphios</p> <div class="language- extra-class"><pre class="language-text"><code>service graphios start
+service nagios restart
+</code></pre></div><p>可以查看日志,看是否正常</p> <p>tail /usr/local/nagios/var/graphios.log</p> <p>查看/opt/graphite/storage/whisper/下是否有对应的文件产生</p> <h2 id="三-安装配置grafana"><a href="#三-安装配置grafana" class="header-anchor">#</a> 三.安装配置grafana</h2> <h3 id="_1-安装-2"><a href="#_1-安装-2" class="header-anchor">#</a> 1.安装</h3> <p>可以访问官网获取最新的版本</p> <p>http://docs.grafana.org/</p> <p>本次使用3.1.1</p> <div class="language- extra-class"><pre class="language-text"><code>wget https://grafanarel.s3.amazonaws.com/builds/grafana-3.1.1-1470047149.x86_64.rpm
+
+rpm -ivh grafana-3.1.1-1470047149.x86_64.rpm
+</code></pre></div><h3 id="_2-配置-2"><a href="#_2-配置-2" class="header-anchor">#</a> 2.配置</h3> <p>grafana默认使用3000端口</p> <p>vim /etc/grafana/grafana.ini</p> <p>开启如下选项</p> <div class="language- extra-class"><pre class="language-text"><code>protocol = http
+http_port = 3000
+admin_user = admin
+admin_password = admin
+</code></pre></div><h3 id="_3-使用"><a href="#_3-使用" class="header-anchor">#</a> 3.使用</h3> <p>启动grafana</p> <div class="language- extra-class"><pre class="language-text"><code>service  grafana-server start
+</code></pre></div><p>打开浏览器,访问grafana</p> <p>http://ip:3000</p> <p>按如下步骤,添加graphite数据源</p> <p><img src="https://img.xiaoxiaoguo.cn/usr/uploads/2017/07/1653710540.jpg" alt="nagios1.jpg"></p> <p>添加完成后,点开dashborads,即可添加对应的服务了.</p> <p><img src="https://img.xiaoxiaoguo.cn/usr/uploads/2017/07/696676816.jpg" alt="nagios2.jpg"></p> <p>最终效果:</p> <p><img src="https://img.xiaoxiaoguo.cn/usr/uploads/2017/07/3364498227.jpg" alt="nagios3.jpg"></p></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div> <footer><div style="text-align: center;">
+            © 2020 小小郭的博客
+            <a href="http://www.beian.miit.gov.cn/">粤ICP备16016910号</a> <br><br></div></footer></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.158714e6.js" defer></script><script src="/assets/js/2.a806d99a.js" defer></script><script src="/assets/js/74.c38b2bf5.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>在centos7下安装使用kvm | 小小郭的博客</title>
+    <meta name="generator" content="VuePress 1.5.2">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="description" content="小小郭">
+    <link rel="preload" href="/assets/css/0.styles.f333096b.css" as="style"><link rel="preload" href="/assets/js/app.158714e6.js" as="script"><link rel="preload" href="/assets/js/2.a806d99a.js" as="script"><link rel="preload" href="/assets/js/28.c02de8fb.js" as="script"><link rel="prefetch" href="/assets/js/10.ceb6da30.js"><link rel="prefetch" href="/assets/js/11.f6fcdde7.js"><link rel="prefetch" href="/assets/js/12.c1ccc7c5.js"><link rel="prefetch" href="/assets/js/13.2e80b5f4.js"><link rel="prefetch" href="/assets/js/14.86580eea.js"><link rel="prefetch" href="/assets/js/15.ec8bc9ac.js"><link rel="prefetch" href="/assets/js/16.ffe6c259.js"><link rel="prefetch" href="/assets/js/17.f11cefb5.js"><link rel="prefetch" href="/assets/js/18.ba7fa50a.js"><link rel="prefetch" href="/assets/js/19.d98194cd.js"><link rel="prefetch" href="/assets/js/20.b3e3e3ba.js"><link rel="prefetch" href="/assets/js/21.0560925d.js"><link rel="prefetch" href="/assets/js/22.151f504b.js"><link rel="prefetch" href="/assets/js/23.c0dd585a.js"><link rel="prefetch" href="/assets/js/24.5ac8c4b5.js"><link rel="prefetch" href="/assets/js/25.57989e7c.js"><link rel="prefetch" href="/assets/js/26.19ae4c70.js"><link rel="prefetch" href="/assets/js/27.7b7a4013.js"><link rel="prefetch" href="/assets/js/29.be98b5ac.js"><link rel="prefetch" href="/assets/js/3.f9a5341d.js"><link rel="prefetch" href="/assets/js/30.151ce4ad.js"><link rel="prefetch" href="/assets/js/31.e3b05220.js"><link rel="prefetch" href="/assets/js/32.48233f51.js"><link rel="prefetch" href="/assets/js/33.cdf1ba85.js"><link rel="prefetch" href="/assets/js/34.8e175bdf.js"><link rel="prefetch" href="/assets/js/35.53e76add.js"><link rel="prefetch" href="/assets/js/36.2588db5d.js"><link rel="prefetch" href="/assets/js/37.904d3476.js"><link rel="prefetch" href="/assets/js/38.1424f189.js"><link rel="prefetch" href="/assets/js/39.0e05003b.js"><link rel="prefetch" href="/assets/js/4.84d9a9b8.js"><link rel="prefetch" href="/assets/js/40.e4b36098.js"><link rel="prefetch" href="/assets/js/41.13258ed7.js"><link rel="prefetch" href="/assets/js/42.6f5a7cbb.js"><link rel="prefetch" href="/assets/js/43.7898149d.js"><link rel="prefetch" href="/assets/js/44.37b08732.js"><link rel="prefetch" href="/assets/js/45.17998593.js"><link rel="prefetch" href="/assets/js/46.055bc79a.js"><link rel="prefetch" href="/assets/js/47.6df10fa7.js"><link rel="prefetch" href="/assets/js/48.2660180a.js"><link rel="prefetch" href="/assets/js/49.4625a12a.js"><link rel="prefetch" href="/assets/js/5.501f4465.js"><link rel="prefetch" href="/assets/js/50.b3b348da.js"><link rel="prefetch" href="/assets/js/51.dcb3be6c.js"><link rel="prefetch" href="/assets/js/52.7dd04b5b.js"><link rel="prefetch" href="/assets/js/53.20259b4b.js"><link rel="prefetch" href="/assets/js/54.c876d67f.js"><link rel="prefetch" href="/assets/js/55.52c8359c.js"><link rel="prefetch" href="/assets/js/56.ab71b89a.js"><link rel="prefetch" href="/assets/js/57.30af5fe9.js"><link rel="prefetch" href="/assets/js/58.d1f3acb8.js"><link rel="prefetch" href="/assets/js/59.0c65a864.js"><link rel="prefetch" href="/assets/js/6.56baaf4e.js"><link rel="prefetch" href="/assets/js/60.cc2dc3eb.js"><link rel="prefetch" href="/assets/js/61.bc3d577e.js"><link rel="prefetch" href="/assets/js/62.88dedbc6.js"><link rel="prefetch" href="/assets/js/63.5403d296.js"><link rel="prefetch" href="/assets/js/64.cdcabf93.js"><link rel="prefetch" href="/assets/js/65.7fba108e.js"><link rel="prefetch" href="/assets/js/66.51641258.js"><link rel="prefetch" href="/assets/js/67.f408a0b2.js"><link rel="prefetch" href="/assets/js/68.326016eb.js"><link rel="prefetch" href="/assets/js/69.9dde49ee.js"><link rel="prefetch" href="/assets/js/7.86ee5bb7.js"><link rel="prefetch" href="/assets/js/70.76be6feb.js"><link rel="prefetch" href="/assets/js/71.8bb3d5a3.js"><link rel="prefetch" href="/assets/js/72.3d340b56.js"><link rel="prefetch" href="/assets/js/73.94ae8b58.js"><link rel="prefetch" href="/assets/js/74.c38b2bf5.js"><link rel="prefetch" href="/assets/js/75.ab88131c.js"><link rel="prefetch" href="/assets/js/76.b15fc67e.js"><link rel="prefetch" href="/assets/js/8.77896323.js"><link rel="prefetch" href="/assets/js/9.1bb7c316.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.f333096b.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="global-layout"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">小小郭的博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav>  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="在centos7下安装使用kvm"><a href="#在centos7下安装使用kvm" class="header-anchor">#</a> 在centos7下安装使用kvm</h1> <h2 id="一-前期准备"><a href="#一-前期准备" class="header-anchor">#</a> 一.前期准备</h2> <p>1.确定机器有VT</p> <p>终端输入命令：</p> <div class="language- extra-class"><pre class="language-text"><code>grep -E -o '(vmx|svm)' /proc/cpuinfo
+</code></pre></div><p>如果flags: 里有vmx 或者svm就说明支持VT；如果没有任何的输出，说明你的cpu不支持，将无法使用KVM虚拟机。</p> <p>2.确保BIOS里开启VT:</p> <p>Intel(R) Virtualization Tech [Enabled]</p> <p>使用如下命令确定</p> <div class="language- extra-class"><pre class="language-text"><code>lsmod | grep kvm 
+如果无相关信息，手动加载下
+modprobe kvm-intel
+</code></pre></div><hr> <h2 id="二-桥接网络"><a href="#二-桥接网络" class="header-anchor">#</a> 二.桥接网络</h2> <p>使用桥接网络，虚拟机即可与其他机器互相访问。</p> <p>安装下工具</p> <div class="language- extra-class"><pre class="language-text"><code>yum install bridge-utils
+</code></pre></div><p>1.复制ifcfg-em1 为 ifcfg-br1，并将ifcfg-br1改为如下配置</p> <div class="language- extra-class"><pre class="language-text"><code>TYPE=Bridge
+BOOTPROTO=static
+DEFROUTE=yes
+PEERDNS=yes
+PEERROUTES=yes
+IPV4_FAILURE_FATAL=no
+NAME=br1
+DEVICE=br1
+ONBOOT=yes
+IPADDR=192.168.1.116
+NETMASK=255.255.255.0
+GATEWAY=192.168.1.1
+</code></pre></div><p>2.原网卡ifcfg-em1只保留如下配置,其他都注释掉：</p> <div class="language- extra-class"><pre class="language-text"><code>NAME=em1
+DEVICE=em1
+ONBOOT=yes
+BRIDGE=br1
+</code></pre></div><p>3.重启网络</p> <div class="language- extra-class"><pre class="language-text"><code>systemctl restart network
+</code></pre></div><hr> <h2 id="三-安装kvm"><a href="#三-安装kvm" class="header-anchor">#</a> 三.安装kvm</h2> <p>1.安装kvm</p> <div class="language- extra-class"><pre class="language-text"><code> yum -y install libcanberra-gtk2 qemu-kvm.x86_64 qemu-kvm-tools.x86_64    libvirt.x86_64 libvirt-cim.x86_64 libvirt-client.x86_64 libvirt-java.noarch  libvirt-python.x86_64 libiscsi device-mapper-libs  dbus-devel  virt-clone tunctl virt-manager libvirt libvirt-python python-virtinst
+</code></pre></div><p>2.安装x-windows,使用图形界面管理虚拟机</p> <div class="language- extra-class"><pre class="language-text"><code>yum groupinstall &quot;X Window System&quot;
+yum install &quot;@X Window System&quot;
+</code></pre></div><p>3.安装中文字符，解决界面乱码问题</p> <div class="language- extra-class"><pre class="language-text"><code> yum install dejavu-lgc-sans-fonts
+ yum groupinstall &quot;Fonts&quot; -y
+</code></pre></div><p>4.启动kvm</p> <div class="language- extra-class"><pre class="language-text"><code> centos7 下
+ systemctl start libvirtd 
+ systemctl enable libvirtd 
+
+ centos6 下
+ service libvirtd start
+ chkconfig libvirtd  on
+</code></pre></div><p>5.错误集锦：</p> <div class="language- extra-class"><pre class="language-text"><code>couldn't connect to accessibility bus failed to connect to socket /tmp/dbus
+解决方法：
+export NO_AT_BRIDGE=1
+
+virGetHostname:1957 : getaddrinfo failed for 'test': Name or service not known
+解决方法：
+vim /etc/hosts
+添加hostname  test 的本地解析
+192.168.1.116 test
+</code></pre></div><h2 id="四-使用"><a href="#四-使用" class="header-anchor">#</a> 四.使用</h2> <p><strong>1.</strong> 使用virt-manager管理虚拟机，可以完成克隆，安装，开启，关闭等大部分的动作</p> <p>如是ssh命令登录服务器，需加上XC参数。</p> <p>如是在windows环境下通过putty登录服务器，需打开x-windows，方法如下:</p> <div class="language- extra-class"><pre class="language-text"><code>在http://sourceforge.net/projects/xming/下载Xming，并安装运行。
+putty.exe ==&gt; Connection/SSH/X11 ==&gt; X11 forwarding/Enable打勾即可,X dispaly location可以空着
+</code></pre></div><p><strong>2.</strong> 创建预分配文件</p> <div class="language- extra-class"><pre class="language-text"><code>qemu-img create -f qcow2 -o preallocation=metadata /data/test.qcow2 80G
+</code></pre></div><p>这里也可以使用存储池来做,方便使用,步骤参考如下:</p> <div class="language- extra-class"><pre class="language-text"><code>定义存储池
+virsh pool-define-as optimg --type dir --target /opt/kvm
+
+构建
+virsh pool-build optimg
+
+查看
+virsh pool-list --all
+
+开启
+virsh pool-start optimg
+
+开机自动启动
+virsh pool-autostart optimg
+</code></pre></div><p><strong>3</strong>. 让虚拟机开机自动启动</p> <div class="language- extra-class"><pre class="language-text"><code>virsh list --all  查看虚拟机名称及状态
+virsh autostart +虚拟机名称
+</code></pre></div><p>设置后可在/etc/libvirt/qemu/autostart下看到已设置自动启动KVM配置文件链接</p> <p><strong>4.</strong> 在桥接网络下给虚拟机做NAT</p> <p>有种情况是:服务器有两张网卡，一张外网，一张内网。当我们给kvm桥接的是内网时，虚拟机只能访问内网，无法访问外网。这时就可以利用iptables做NAT，让虚拟机也能访问外网。</p> <p>首先开启转发</p> <div class="language- extra-class"><pre class="language-text"><code>echo &quot;net.ipv4.ip_forward = 1&quot; &gt;&gt;/etc/sysctl.conf
+sysctl -p
+</code></pre></div><p>配置防火墙</p> <div class="language- extra-class"><pre class="language-text"><code>#虚拟机ip 192.168.1.120 公网ip 1.1.1.1 公网网卡em1
+iptables -t nat -A POSTROUTING -s 192.168.1.120 -o em1 -j SNAT --to 1.1.1.1
+iptables -A FORWARD -d 192.168.1.120 -j ACCEPT
+iptables -A FORWARD -s 192.168.1.120 -j ACCEPT
+#注意新增的iptables -A FORWARD两条链要在下面这条之上
+#-A FORWARD -j REJECT --reject-with icmp-host-prohibited
+#如不想单独配置每个虚拟机的ip，可把192.168.1.120改为网段192.168.1.0/24
+
+#保存配置
+service iptables save
+</code></pre></div><p>虚拟机的网关指向桥接ip,配置完成后虚拟机即可上网</p> <div class="language- extra-class"><pre class="language-text"><code>GATEWAY=192.168.1.116
+</code></pre></div><p><strong>5.</strong> 克隆虚拟机的网卡问题</p> <p>如果虚拟机是centos6.x的,克隆虚拟机后会有mac地址冲突的问题,导致克隆出来的虚拟机无法启动网卡.</p> <p>centos7没有这个问题.</p> <p>简单的处理步骤如下</p> <div class="language- extra-class"><pre class="language-text"><code>删除/etc/udev/rules.d/70-persistent-net.rules这个文件
+将ifcfg-eth0文件中的mac地址和UUID这两行内容注释掉
+重启虚拟机，网卡恢复正常。
+如果还是无法启动，查看新产生的/etc/udev/rules.d/70-persistent-net.rules内容,并将网卡的配置文件改成相应的内容
+</code></pre></div><p><strong>6.</strong> 虚拟机备份问题
+采用qcow2格式的虚拟机镜像,通过scp备份到其他机器时,假如文件变成预分配的大小.比如预分配一个200G的qcow2文件,实际使用20G,备份文件变成200G时,可尝试用rsync的方式避免这个问题</p> <div class="language- extra-class"><pre class="language-text"><code>rsync --progress --sparse -avhze 'ssh -p12220' centos6.6-x86-1.qcow2 root@192.168.1.100:/data/backups/kvm/
+</code></pre></div><p>建议用存储池来放镜像，另外格式还是建议使用qcow2。</p> <p><strong>7.</strong> kvm克隆问题
+除了使用系统自带的virt-lone外,也可以通过cp镜像文件来实现,方法如下:</p> <div class="language- extra-class"><pre class="language-text"><code>关闭虚拟机
+复制镜像文件
+#cp -av source.img new.img
+复制模板配置文件为new.xml
+#cd /etc/libvirtd/qemu
+#cp -av source.xml  new.xml
+修改如下选项
+修改虚拟机的名称，如：&lt;name&gt;new&lt;/name&gt;
+修改disk位置：&lt;source file='/data1/vmdisk/new.img'/&gt; 
+修改uuid编号 ，如：&lt;uuid&gt;de8d962a-6334-a652-f66b-4da87d852343&lt;/uuid&gt;
+修改mac地址，如：&lt;mac address='52:54:00:11:12:1f'/&gt;
+重启libvirt
+#service libvirtd restart
+</code></pre></div><p><strong>8.</strong> 快照使用</p> <div class="language- extra-class"><pre class="language-text"><code>virsh snapshot-create-as --domain xxx  xxx-snap1 --disk-only --atomic --quiesce
+</code></pre></div><p>这里需要注意的是,如果用了快照,镜像文件会变大.</p> <p><strong>9</strong> 转换镜像格式</p> <p>查看镜像文件信息</p> <p>qemu-img info /var/lib/libvirt/images/ATE1.img</p> <p>转换镜像文件</p> <p>关闭虚拟机,将raw转换为qcow2</p> <p>qemu-img convert -f raw -O qcow2 old.raw new.qcow2</p> <p>修改配置文件</p> <p>vim /etc/libvirt/qemu/old.xml</p> <p>将disk的路径和type改下</p> <p>重启libvirt服务</p> <p>service libvirtd restart</p> <p><strong>10</strong> 在终端进入虚拟机</p> <p>有时候想在终端上直接进入虚拟机，可以使用virsh console 命令。</p> <div class="language- extra-class"><pre class="language-text"><code>进入：
+virsh console + 虚拟机名称
+
+退出：
+按右ctrl + ]
+</code></pre></div><p><strong>11</strong> Unable to read from monitor: Connection reset by peer</p> <p>有时候宿主机重启后,再去开虚拟机会提示如上错误信息,使用如下命令处理</p> <div class="language- extra-class"><pre class="language-text"><code>virsh managedsave-remove domain
+</code></pre></div><p>重置完成后,再启动虚拟机即可.</p> <p><strong>12</strong> 默认的网卡驱动模式是virtio，是百兆的，而现在的服务器基本都是千兆和万兆了，所以可以改为e1000，让虚拟机的网卡也是千兆的。</p> <p>打开对应的虚拟机配置文件，找到网卡配置，将</p> <div class="language- extra-class"><pre class="language-text"><code>&lt;model type='virtio'/&gt;
+</code></pre></div><p>改为</p> <div class="language- extra-class"><pre class="language-text"><code>&lt;model type='e1000'/&gt;
+</code></pre></div><p>然后更新下配置，重启虚拟机即可</p> <div class="language- extra-class"><pre class="language-text"><code> virsh define 虚拟机.xml
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div> <footer><div style="text-align: center;">
+            © 2020 小小郭的博客
+            <a href="http://www.beian.miit.gov.cn/">粤ICP备16016910号</a> <br><br></div></footer></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.158714e6.js" defer></script><script src="/assets/js/2.a806d99a.js" defer></script><script src="/assets/js/28.c02de8fb.js" defer></script>
+  </body>
+</html>

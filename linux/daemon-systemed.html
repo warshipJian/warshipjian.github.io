@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>守护进程-03-systemed | 小小郭的博客</title>
+    <meta name="generator" content="VuePress 1.5.2">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="description" content="小小郭">
+    <link rel="preload" href="/assets/css/0.styles.f333096b.css" as="style"><link rel="preload" href="/assets/js/app.158714e6.js" as="script"><link rel="preload" href="/assets/js/2.a806d99a.js" as="script"><link rel="preload" href="/assets/js/25.57989e7c.js" as="script"><link rel="prefetch" href="/assets/js/10.ceb6da30.js"><link rel="prefetch" href="/assets/js/11.f6fcdde7.js"><link rel="prefetch" href="/assets/js/12.c1ccc7c5.js"><link rel="prefetch" href="/assets/js/13.2e80b5f4.js"><link rel="prefetch" href="/assets/js/14.86580eea.js"><link rel="prefetch" href="/assets/js/15.ec8bc9ac.js"><link rel="prefetch" href="/assets/js/16.ffe6c259.js"><link rel="prefetch" href="/assets/js/17.f11cefb5.js"><link rel="prefetch" href="/assets/js/18.ba7fa50a.js"><link rel="prefetch" href="/assets/js/19.d98194cd.js"><link rel="prefetch" href="/assets/js/20.b3e3e3ba.js"><link rel="prefetch" href="/assets/js/21.0560925d.js"><link rel="prefetch" href="/assets/js/22.151f504b.js"><link rel="prefetch" href="/assets/js/23.c0dd585a.js"><link rel="prefetch" href="/assets/js/24.5ac8c4b5.js"><link rel="prefetch" href="/assets/js/26.19ae4c70.js"><link rel="prefetch" href="/assets/js/27.7b7a4013.js"><link rel="prefetch" href="/assets/js/28.c02de8fb.js"><link rel="prefetch" href="/assets/js/29.be98b5ac.js"><link rel="prefetch" href="/assets/js/3.f9a5341d.js"><link rel="prefetch" href="/assets/js/30.151ce4ad.js"><link rel="prefetch" href="/assets/js/31.e3b05220.js"><link rel="prefetch" href="/assets/js/32.48233f51.js"><link rel="prefetch" href="/assets/js/33.cdf1ba85.js"><link rel="prefetch" href="/assets/js/34.8e175bdf.js"><link rel="prefetch" href="/assets/js/35.53e76add.js"><link rel="prefetch" href="/assets/js/36.2588db5d.js"><link rel="prefetch" href="/assets/js/37.904d3476.js"><link rel="prefetch" href="/assets/js/38.1424f189.js"><link rel="prefetch" href="/assets/js/39.0e05003b.js"><link rel="prefetch" href="/assets/js/4.84d9a9b8.js"><link rel="prefetch" href="/assets/js/40.e4b36098.js"><link rel="prefetch" href="/assets/js/41.13258ed7.js"><link rel="prefetch" href="/assets/js/42.6f5a7cbb.js"><link rel="prefetch" href="/assets/js/43.7898149d.js"><link rel="prefetch" href="/assets/js/44.37b08732.js"><link rel="prefetch" href="/assets/js/45.17998593.js"><link rel="prefetch" href="/assets/js/46.055bc79a.js"><link rel="prefetch" href="/assets/js/47.6df10fa7.js"><link rel="prefetch" href="/assets/js/48.2660180a.js"><link rel="prefetch" href="/assets/js/49.4625a12a.js"><link rel="prefetch" href="/assets/js/5.501f4465.js"><link rel="prefetch" href="/assets/js/50.b3b348da.js"><link rel="prefetch" href="/assets/js/51.dcb3be6c.js"><link rel="prefetch" href="/assets/js/52.7dd04b5b.js"><link rel="prefetch" href="/assets/js/53.20259b4b.js"><link rel="prefetch" href="/assets/js/54.c876d67f.js"><link rel="prefetch" href="/assets/js/55.52c8359c.js"><link rel="prefetch" href="/assets/js/56.ab71b89a.js"><link rel="prefetch" href="/assets/js/57.30af5fe9.js"><link rel="prefetch" href="/assets/js/58.d1f3acb8.js"><link rel="prefetch" href="/assets/js/59.0c65a864.js"><link rel="prefetch" href="/assets/js/6.56baaf4e.js"><link rel="prefetch" href="/assets/js/60.cc2dc3eb.js"><link rel="prefetch" href="/assets/js/61.bc3d577e.js"><link rel="prefetch" href="/assets/js/62.88dedbc6.js"><link rel="prefetch" href="/assets/js/63.5403d296.js"><link rel="prefetch" href="/assets/js/64.cdcabf93.js"><link rel="prefetch" href="/assets/js/65.7fba108e.js"><link rel="prefetch" href="/assets/js/66.51641258.js"><link rel="prefetch" href="/assets/js/67.f408a0b2.js"><link rel="prefetch" href="/assets/js/68.326016eb.js"><link rel="prefetch" href="/assets/js/69.9dde49ee.js"><link rel="prefetch" href="/assets/js/7.86ee5bb7.js"><link rel="prefetch" href="/assets/js/70.76be6feb.js"><link rel="prefetch" href="/assets/js/71.8bb3d5a3.js"><link rel="prefetch" href="/assets/js/72.3d340b56.js"><link rel="prefetch" href="/assets/js/73.94ae8b58.js"><link rel="prefetch" href="/assets/js/74.c38b2bf5.js"><link rel="prefetch" href="/assets/js/75.ab88131c.js"><link rel="prefetch" href="/assets/js/76.b15fc67e.js"><link rel="prefetch" href="/assets/js/8.77896323.js"><link rel="prefetch" href="/assets/js/9.1bb7c316.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.f333096b.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="global-layout"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">小小郭的博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav>  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="守护进程-03-systemed"><a href="#守护进程-03-systemed" class="header-anchor">#</a> 守护进程-03-systemed</h1> <p>看当前shell的pid</p> <div class="language- extra-class"><pre class="language-text"><code>echo $$ 
+</code></pre></div><p>看某个进程的pid可以用pidof，比如看nginx的</p> <div class="language- extra-class"><pre class="language-text"><code>pidof nginx
+</code></pre></div><p>在<code>centos 6</code>时代我们要配置一个开机启动的程序时，可以在<code>/etc/rc.local</code>中添加启动命令，在<code>/etc/init.d</code>中添加启动脚本。到了<code>centos 7</code> 时发现不推荐用<code>init</code>了，有了一个船新的系统systemed。</p> <h3 id="systemed"><a href="#systemed" class="header-anchor">#</a> systemed</h3> <p>还是拿之前的例子：</p> <div class="language-c extra-class"><pre class="language-c"><code><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> d <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;hello %d \n&quot;</span><span class="token punctuation">,</span>d<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">fflush</span><span class="token punctuation">(</span><span class="token constant">stdout</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        d <span class="token operator">+=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>编译下得到a.out。</p> <p>我们利用systemctl工具，将a.out添加到systemed系统中。</p> <p>在<code>/lib/systemd/system</code>中创建一个文件<code>test-server.service</code>，内容如下：</p> <div class="language- extra-class"><pre class="language-text"><code>[Unit]
+Description=my test service
+
+[Service]
+ExecStart= /root/test/a.out
+
+[Install]
+WantedBy=multi-user.target
+</code></pre></div><p>通过<code>systemctl</code>命令启用它</p> <div class="language- extra-class"><pre class="language-text"><code>root@lan-dev-215:~/test# systemctl enable /lib/systemd/system/test-server.service
+Created symlink from /etc/systemd/system/multi-user.target.wants/test-server.service to /lib/systemd/system/test-server.service.
+</code></pre></div><p>此时看下它的状态</p> <div class="language- extra-class"><pre class="language-text"><code>root@lan-dev-215:~/test# systemctl status test-server
+● test-server.service - my test service
+   Loaded: loaded (/lib/systemd/system/test-server.service; enabled; vendor preset: enabled)
+   Active: inactive (dead)
+</code></pre></div><p>启动</p> <div class="language- extra-class"><pre class="language-text"><code>systemctl start test-server
+</code></pre></div><p>再看下它的状态</p> <div class="language- extra-class"><pre class="language-text"><code>root@lan-dev-215:~/test# systemctl status test-server
+● test-server.service - my test service
+   Loaded: loaded (/lib/systemd/system/test-server.service; enabled; vendor preset: enabled)
+   Active: active (running) since Fri 2020-01-31 21:09:01 CST; 3s ago
+ Main PID: 5110 (a.out)
+    Tasks: 1
+   Memory: 188.0K
+      CPU: 2ms
+   CGroup: /system.slice/test-server.service
+           └─5110 /root/test/a.out
+
+Jan 31 21:09:01 lan-dev-215 systemd[1]: Started my test service.
+Jan 31 21:09:01 lan-dev-215 a.out[5110]: hello 1
+Jan 31 21:09:02 lan-dev-215 a.out[5110]: hello 2
+Jan 31 21:09:03 lan-dev-215 a.out[5110]: hello 3
+Jan 31 21:09:04 lan-dev-215 a.out[5110]: hello 4
+</code></pre></div><p>可以看到正常运行了。</p> <h3 id="systemed-service-配置文件"><a href="#systemed-service-配置文件" class="header-anchor">#</a> systemed.service 配置文件</h3> <p>主要是三部分：[Unit]， [Service]，[Install]。
+简单介绍下:
+<strong>[Unit]</strong>
+主要是对这个服务的说明，内容， 文档介绍以及对一些依赖服务定义
+<strong>[Service]</strong>
+服务的主体定义，主要定义服务的一些运行参数，及操作动作
+<strong>[Install]</strong>
+服务安装的相关设置，一般可设置为多用户的
+更多在这里：https://www.freedesktop.org/software/systemd/man/systemd.service.html</p> <p>这里关注Service中的Restart参数。
+Restart有这些值：always（总是重启）、no 、on-success、on-failure、on-abnormal、on-abort、on-watchdog
+每个值对应支持的事件如下：</p> <table><thead><tr><th>Restart settings/Exit causes</th> <th>no</th> <th>always</th> <th>on-success</th> <th>on-failure</th> <th>on-abnormal</th> <th>on-abort</th> <th>on-watchdog</th></tr></thead> <tbody><tr><td>Clean exit code or signal</td> <td></td> <td>X</td> <td>X</td> <td></td> <td></td> <td></td> <td></td></tr> <tr><td>Unclean exit code</td> <td></td> <td>X</td> <td></td> <td>X</td> <td></td> <td></td> <td></td></tr> <tr><td>Unclean signal</td> <td></td> <td>X</td> <td></td> <td>X</td> <td>X</td> <td>X</td> <td></td></tr> <tr><td>Timeout</td> <td></td> <td>X</td> <td></td> <td>X</td> <td>X</td> <td></td> <td></td></tr> <tr><td>Watchdog</td> <td></td> <td>X</td> <td></td> <td>X</td> <td>X</td> <td></td> <td>X</td></tr></tbody></table> <p>回到刚才的service配置文件，里面没有Restart参数，我们去kill一下看看：</p> <div class="language- extra-class"><pre class="language-text"><code>root@lan-dev-215:~/test# kill 5110
+root@lan-dev-215:~/test# systemctl status test-server
+● test-server.service - my test service
+   Loaded: loaded (/lib/systemd/system/test-server.service; enabled; vendor preset: enabled)
+   Active: inactive (dead) since Fri 2020-01-31 21:34:53 CST; 2s ago
+  Process: 5506 ExecStart=/root/test/a.out (code=killed, signal=TERM)
+ Main PID: 5506 (code=killed, signal=TERM)
+
+Jan 31 21:34:43 lan-dev-215 a.out[5506]: hello 5
+Jan 31 21:34:44 lan-dev-215 a.out[5506]: hello 6
+Jan 31 21:34:45 lan-dev-215 a.out[5506]: hello 7
+Jan 31 21:34:46 lan-dev-215 a.out[5506]: hello 8
+Jan 31 21:34:47 lan-dev-215 a.out[5506]: hello 9
+Jan 31 21:34:48 lan-dev-215 a.out[5506]: hello 10
+Jan 31 21:34:49 lan-dev-215 a.out[5506]: hello 11
+Jan 31 21:34:50 lan-dev-215 a.out[5506]: hello 12
+Jan 31 21:34:51 lan-dev-215 a.out[5506]: hello 13
+Jan 31 21:34:52 lan-dev-215 a.out[5506]: hello 14
+
+root@lan-dev-215:~/test# ps aux | grep a.out
+root      5562  0.0  0.0  14428  1056 pts/2    S+   21:37   0:00 grep --color=auto a.out
+</code></pre></div><p>可以看到test-server变成了inactive状态，a.out 也没有了。
+在test-server.service中增加Restart配置，配置为always</p> <div class="language- extra-class"><pre class="language-text"><code>[Unit]
+Description=my test service
+
+[Service]
+ExecStart= /root/test/a.out
+Restart= always
+
+[Install]
+WantedBy=multi-user.target
+</code></pre></div><p>reload一下，让配置生效</p> <div class="language- extra-class"><pre class="language-text"><code>systemctl daemon-reload
+</code></pre></div><p>此时test-server是运行状态了</p> <div class="language- extra-class"><pre class="language-text"><code>root@lan-dev-215:~/test# systemctl status test-server
+● test-server.service - my test service
+   Loaded: loaded (/lib/systemd/system/test-server.service; enabled; vendor preset: enabled)
+   Active: active (running) since Fri 2020-01-31 21:42:05 CST; 34s ago
+ Main PID: 5737 (a.out)
+   CGroup: /system.slice/test-server.service
+           └─5737 /root/test/a.out
+
+Jan 31 21:42:30 lan-dev-215 a.out[5737]: hello 26
+Jan 31 21:42:31 lan-dev-215 a.out[5737]: hello 27
+Jan 31 21:42:32 lan-dev-215 a.out[5737]: hello 28
+Jan 31 21:42:33 lan-dev-215 a.out[5737]: hello 29
+Jan 31 21:42:34 lan-dev-215 a.out[5737]: hello 30
+Jan 31 21:42:35 lan-dev-215 a.out[5737]: hello 31
+Jan 31 21:42:36 lan-dev-215 a.out[5737]: hello 32
+Jan 31 21:42:37 lan-dev-215 a.out[5737]: hello 33
+Jan 31 21:42:38 lan-dev-215 a.out[5737]: hello 34
+Jan 31 21:42:39 lan-dev-215 a.out[5737]: hello 35
+</code></pre></div><p>kill掉再看下</p> <div class="language- extra-class"><pre class="language-text"><code>root@lan-dev-215:~/test# kill 5737
+root@lan-dev-215:~/test# systemctl status test-server
+● test-server.service - my test service
+   Loaded: loaded (/lib/systemd/system/test-server.service; enabled; vendor preset: enabled)
+   Active: active (running) since Fri 2020-01-31 21:47:29 CST; 845ms ago
+ Main PID: 5941 (a.out)
+    Tasks: 1
+   Memory: 128.0K
+      CPU: 2ms
+   CGroup: /system.slice/test-server.service
+           └─5941 /root/test/a.out
+
+Jan 31 21:47:29 lan-dev-215 systemd[1]: Started my test service.
+Jan 31 21:47:29 lan-dev-215 a.out[5941]: hello 1
+</code></pre></div><p>可以看到a.out重新运行了，实现了守护进程。</p></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div> <footer><div style="text-align: center;">
+            © 2020 小小郭的博客
+            <a href="http://www.beian.miit.gov.cn/">粤ICP备16016910号</a> <br><br></div></footer></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.158714e6.js" defer></script><script src="/assets/js/2.a806d99a.js" defer></script><script src="/assets/js/25.57989e7c.js" defer></script>
+  </body>
+</html>

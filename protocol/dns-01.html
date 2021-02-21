@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>DNS全解析 | 小小郭的博客</title>
+    <meta name="generator" content="VuePress 1.5.2">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="description" content="小小郭">
+    <link rel="preload" href="/assets/css/0.styles.f333096b.css" as="style"><link rel="preload" href="/assets/js/app.158714e6.js" as="script"><link rel="preload" href="/assets/js/2.a806d99a.js" as="script"><link rel="preload" href="/assets/js/50.b3b348da.js" as="script"><link rel="prefetch" href="/assets/js/10.ceb6da30.js"><link rel="prefetch" href="/assets/js/11.f6fcdde7.js"><link rel="prefetch" href="/assets/js/12.c1ccc7c5.js"><link rel="prefetch" href="/assets/js/13.2e80b5f4.js"><link rel="prefetch" href="/assets/js/14.86580eea.js"><link rel="prefetch" href="/assets/js/15.ec8bc9ac.js"><link rel="prefetch" href="/assets/js/16.ffe6c259.js"><link rel="prefetch" href="/assets/js/17.f11cefb5.js"><link rel="prefetch" href="/assets/js/18.ba7fa50a.js"><link rel="prefetch" href="/assets/js/19.d98194cd.js"><link rel="prefetch" href="/assets/js/20.b3e3e3ba.js"><link rel="prefetch" href="/assets/js/21.0560925d.js"><link rel="prefetch" href="/assets/js/22.151f504b.js"><link rel="prefetch" href="/assets/js/23.c0dd585a.js"><link rel="prefetch" href="/assets/js/24.5ac8c4b5.js"><link rel="prefetch" href="/assets/js/25.57989e7c.js"><link rel="prefetch" href="/assets/js/26.19ae4c70.js"><link rel="prefetch" href="/assets/js/27.7b7a4013.js"><link rel="prefetch" href="/assets/js/28.c02de8fb.js"><link rel="prefetch" href="/assets/js/29.be98b5ac.js"><link rel="prefetch" href="/assets/js/3.f9a5341d.js"><link rel="prefetch" href="/assets/js/30.151ce4ad.js"><link rel="prefetch" href="/assets/js/31.e3b05220.js"><link rel="prefetch" href="/assets/js/32.48233f51.js"><link rel="prefetch" href="/assets/js/33.cdf1ba85.js"><link rel="prefetch" href="/assets/js/34.8e175bdf.js"><link rel="prefetch" href="/assets/js/35.53e76add.js"><link rel="prefetch" href="/assets/js/36.2588db5d.js"><link rel="prefetch" href="/assets/js/37.904d3476.js"><link rel="prefetch" href="/assets/js/38.1424f189.js"><link rel="prefetch" href="/assets/js/39.0e05003b.js"><link rel="prefetch" href="/assets/js/4.84d9a9b8.js"><link rel="prefetch" href="/assets/js/40.e4b36098.js"><link rel="prefetch" href="/assets/js/41.13258ed7.js"><link rel="prefetch" href="/assets/js/42.6f5a7cbb.js"><link rel="prefetch" href="/assets/js/43.7898149d.js"><link rel="prefetch" href="/assets/js/44.37b08732.js"><link rel="prefetch" href="/assets/js/45.17998593.js"><link rel="prefetch" href="/assets/js/46.055bc79a.js"><link rel="prefetch" href="/assets/js/47.6df10fa7.js"><link rel="prefetch" href="/assets/js/48.2660180a.js"><link rel="prefetch" href="/assets/js/49.4625a12a.js"><link rel="prefetch" href="/assets/js/5.501f4465.js"><link rel="prefetch" href="/assets/js/51.dcb3be6c.js"><link rel="prefetch" href="/assets/js/52.7dd04b5b.js"><link rel="prefetch" href="/assets/js/53.20259b4b.js"><link rel="prefetch" href="/assets/js/54.c876d67f.js"><link rel="prefetch" href="/assets/js/55.52c8359c.js"><link rel="prefetch" href="/assets/js/56.ab71b89a.js"><link rel="prefetch" href="/assets/js/57.30af5fe9.js"><link rel="prefetch" href="/assets/js/58.d1f3acb8.js"><link rel="prefetch" href="/assets/js/59.0c65a864.js"><link rel="prefetch" href="/assets/js/6.56baaf4e.js"><link rel="prefetch" href="/assets/js/60.cc2dc3eb.js"><link rel="prefetch" href="/assets/js/61.bc3d577e.js"><link rel="prefetch" href="/assets/js/62.88dedbc6.js"><link rel="prefetch" href="/assets/js/63.5403d296.js"><link rel="prefetch" href="/assets/js/64.cdcabf93.js"><link rel="prefetch" href="/assets/js/65.7fba108e.js"><link rel="prefetch" href="/assets/js/66.51641258.js"><link rel="prefetch" href="/assets/js/67.f408a0b2.js"><link rel="prefetch" href="/assets/js/68.326016eb.js"><link rel="prefetch" href="/assets/js/69.9dde49ee.js"><link rel="prefetch" href="/assets/js/7.86ee5bb7.js"><link rel="prefetch" href="/assets/js/70.76be6feb.js"><link rel="prefetch" href="/assets/js/71.8bb3d5a3.js"><link rel="prefetch" href="/assets/js/72.3d340b56.js"><link rel="prefetch" href="/assets/js/73.94ae8b58.js"><link rel="prefetch" href="/assets/js/74.c38b2bf5.js"><link rel="prefetch" href="/assets/js/75.ab88131c.js"><link rel="prefetch" href="/assets/js/76.b15fc67e.js"><link rel="prefetch" href="/assets/js/8.77896323.js"><link rel="prefetch" href="/assets/js/9.1bb7c316.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.f333096b.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="global-layout"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">小小郭的博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav>  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="dns全解析"><a href="#dns全解析" class="header-anchor">#</a> DNS全解析</h1> <h2 id="一-dns来源"><a href="#一-dns来源" class="header-anchor">#</a> 一.DNS来源</h2> <p>最开始世界上的机器比较少，使用host文件来解析就够了。</p> <p>到后来机器变的多了，改用由中心服务器统一更新host文件，各地的机器通过ftp从中心服务器更新host文件到本地</p> <p>再到后来，机器更多了，只由中心服务器来更新host文件也力不从心了，于是改成分布式的，并逐渐演化到了今天的DNS系统</p> <h2 id="二-dns服务器分类"><a href="#二-dns服务器分类" class="header-anchor">#</a> 二.DNS服务器分类</h2> <p>与域名对应，分根域名服务器，顶级域名服务器和权威服务器。作用如下</p> <table><thead><tr><th>类别</th> <th>作用</th></tr></thead> <tbody><tr><td>根域名服务器</td> <td>只关心所有顶级域名服务器的域名和IP地址</td></tr> <tr><td>顶级域名服务器</td> <td>自己的顶级域名下的所有二级域名和地址</td></tr> <tr><td>权威域名服务器</td> <td>负责自己区域的所有域名和地址(一主多备)</td></tr></tbody></table> <h3 id="_1-根域名服务器"><a href="#_1-根域名服务器" class="header-anchor">#</a> 1.根域名服务器</h3> <p>根域名服务器只记录所有顶级域名服务器的域名和IP地址。比如它们只记录.cn，.com等这些顶级域名的服务器的解析。</p> <p>全球有13组根域名，从a.root-servers.net 到m.root-servers.net。注意是根域名，不是根域名服务器。全世界各地都有根域名服务器，国内的话北京和上海有。根域名的分布可以在www.root-servers.org查看。</p> <p>根域名是最重要，最关键</p> <h3 id="_2-顶级域名服务器"><a href="#_2-顶级域名服务器" class="header-anchor">#</a> 2.顶级域名服务器</h3> <p>顶级域名服务器只负责自己的顶级域名解析。比.cn的顶级域名，它只解析和.cn相关的域名，并且只解析到xxx.cn</p> <h3 id="_3-权威域名服务器"><a href="#_3-权威域名服务器" class="header-anchor">#</a> 3.权威域名服务器</h3> <p>权威域名服务器就是负责具体的域名解析了。比xiaoxiaoguo.cn就有一台权威域名服务器，它只解析和xiaoxiaoguo.cn相关的域名。</p> <h3 id="_4-本地域名服务器"><a href="#_4-本地域名服务器" class="header-anchor">#</a> 4.本地域名服务器</h3> <p>还有种dns服务器叫本地域名服务器(也可能有其他叫法)，它不属于上面任何一种。但它也解析域名，如家用路由器上的192.168.1.1，114.114.114.114或者一些运营商的dns。本地域名服务器发挥了很大的作用，分担了整个dns系统的压力。</p> <h2 id="三-dns记录"><a href="#三-dns记录" class="header-anchor">#</a> 三.DNS记录</h2> <p>主要了解A记录，4A记录，MX记录，CNAME记录， NS记录即可。</p> <h2 id="四-dns解析过程"><a href="#四-dns解析过程" class="header-anchor">#</a> 四.DNS解析过程</h2> <p>当我们去解析一个域名时，比如解析xiaoxiaoguo.cn,会经过如下步骤:</p> <ol><li>查看本机的缓存有无该域名记录，如果没有，查看本机的host文件有无该域名记录，如果没有，则发个请求到本地DNS服务器。</li> <li>本地DNS服务器收到请求后，查看是否有该域名的解析，如果有，返回解析记录给主机，如果没有，则请求根域名服务器</li> <li>根域名服务器收到请求后，返回该域名对应的顶级域名服务器,比如这次请求返回.cn的服务器地址</li> <li>本地域名服务器接到顶级域名服务器地址后，向该顶级域名服务器请求</li> <li>顶级域名服务器返回该域名的权威服务器地址，比如这次返回xiaoxiaoguo.cn对应的权威服务器地址</li> <li>本地域名服务器获得该地址后，发请求到该域名的权威服务器。</li> <li>权威服务器返回该域名对应的解析。</li> <li>本地域名服务器获取该解析后，返回给主机，解析完成。</li></ol> <p>这里可能会有个疑问：本地DNS服务器是怎么知道根域名服务器的地址？如果安装了bind服务，可以看到默认有个name.ca的文件，里面记录了13组根域的解析。所以本地域名服务器默认就有根域的解析。</p> <h2 id="五-dns报文结构"><a href="#五-dns报文结构" class="header-anchor">#</a> 五.DNS报文结构</h2> <p>现在的DNS主要还是通过UDP来通讯，大小不超过1500个字节。报文结构如下：</p> <div class="language- extra-class"><pre class="language-text"><code>  +--+--+--+--+--+--+--+
+  |      Header        |
+  +--+--+--+--+--+--+--+
+  |      Question      |
+  +--+--+--+--+--+--+--+
+  |      Answer        |
+  +--+--+--+--+--+--+--+
+  |      Authority     |
+  +--+--+--+--+--+--+--+
+  |      Additional    |
+  +--+--+--+--+--+--+--+
+</code></pre></div><p>按格式来区分的话，可以分为三部分：头部Header,查询部分Question，应答部分:Answer,Authority,Additional</p> <h3 id="_1-头部header"><a href="#_1-头部header" class="header-anchor">#</a> 1.头部Header</h3> <p>报文格式如下</p> <div class="language- extra-class"><pre class="language-text"><code>Header format
+
+    0  1  2  3  4  5  6  7  0  1  2  3  4  5  6  7
+  +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+  |                      ID                       |
+  +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+  |QR|  opcode   |AA|TC|RD|RA|   Z    |   RCODE   |
+  +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+  |                    QDCOUNT                    |
+  +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+  |                    ANCOUNT                    |
+  +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+  |                    NSCOUNT                    |
+  +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+  |                    ARCOUNT                    |
+  +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+</code></pre></div><p>各字段作用如下</p> <div class="language- extra-class"><pre class="language-text"><code>ID: 2个字节(16bit)，标识字段，客户端会解析服务器返回的DNS应答报文，获取ID值与请求报文设置的ID值做比较，如果相同，则认为是同一个DNS会话。
+FLAGS: 2个字节(16bit)的标志字段。包含以下属性:
+QR: 0表示查询报文，1表示响应报文;
+opcode: 通常值为0（标准查询），其他值为1（反向查询）和2（服务器状态请求）,[3,15]保留值;
+AA: 表示授权回答（authoritative answer）– 这个比特位在应答的时候才有意义，指出给出应答的服务器是查询域名的授权解析服务器;
+TC: 表示可截断的（truncated）–用来指出报文比允许的长度还要长，导致被截断;
+RD: 表示期望递归(Recursion Desired) – 这个比特位被请求设置，应答的时候使用的相同的值返回。如果设置了RD，就建议域名服务器进行递归解析，递归查询的支持是可选的;
+RA: 表示支持递归(Recursion Available) – 这个比特位在应答中设置或取消，用来代表服务器是否支持递归查询;
+Z : 保留值，暂未使用;
+RCODE: 应答码(Response code) - 这4个比特位在应答报文中设置，代表的含义如下:
+0 : 没有错误。
+1 : 报文格式错误(Format error) - 服务器不能理解请求的报文;
+2 : 服务器失败(Server failure) - 因为服务器的原因导致没办法处理这个请求;
+3 : 名字错误(Name Error) - 只有对授权域名解析服务器有意义，指出解析的域名不存在;
+4 : 没有实现(Not Implemented) - 域名服务器不支持查询类型;
+5 : 拒绝(Refused) - 服务器由于设置的策略拒绝给出应答.比如，服务器不希望对某些请求者给出应答，或者服务器不希望进行某些操作（比如区域传送zone transfer）;
+[6,15] : 保留值，暂未使用。
+QDCOUNT: 无符号16bit整数表示报文请求段中的问题记录数。
+ANCOUNT: 无符号16bit整数表示报文回答段中的回答记录数。
+NSCOUNT: 无符号16bit整数表示报文授权段中的授权记录数。
+ARCOUNT: 无符号16bit整数表示报文附加段中的附加记录数。
+</code></pre></div><h3 id="_2-question-查询字段"><a href="#_2-question-查询字段" class="header-anchor">#</a> 2.Question 查询字段</h3> <p>报文格式如下：</p> <div class="language- extra-class"><pre class="language-text"><code>  Question format
+
+    0  1  2  3  4  5  6  7  0  1  2  3  4  5  6  7
+  +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+  |                     ...                       |
+  |                    QNAME                      |
+  |                     ...                       |
+  +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+  |                    QTYPE                      |
+  +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+  |                    QCLASS                     |
+  +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+</code></pre></div><p>各字段作用如下</p> <div class="language- extra-class"><pre class="language-text"><code>QNAME 8bit为单位表示的查询名(广泛的说就是：域名).
+QTYPE 无符号16bit整数表示查询的协议类型.
+QCLASS 无符号16bit整数表示查询的类,比如，IN代表Internet.
+</code></pre></div><h3 id="_3-应答部分answer-authority-additional"><a href="#_3-应答部分answer-authority-additional" class="header-anchor">#</a> 3.应答部分Answer/Authority/Additional</h3> <p>它们的结构如下</p> <div class="language- extra-class"><pre class="language-text"><code>Answer/Authority/Additional format
+
+    0  1  2  3  4  5  6  7  0  1  2  3  4  5  6  7
+  +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+  |                    NAME                       |
+  +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+  |                    TYPE                       |
+  +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+  |                    CLASS                      |
+  +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+  |                    TTL                        |
+  +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+  |                    RDLENGTH                   |
+  +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+  |                    RDATA                      |
+  +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+</code></pre></div><p>各字段作用如下</p> <div class="language- extra-class"><pre class="language-text"><code>NAME 资源记录包含的域名.
+TYPE 表示DNS协议的类型.
+CLASS 表示RDATA的类.
+TTL 4字节无符号整数表示资源记录可以缓存的时间。0代表只能被传输，但是不能被缓存。
+RDLENGTH 2个字节无符号整数表示RDATA的长度
+RDATA 不定长字符串来表示记录，格式根TYPE和CLASS有关。比如，TYPE是A，CLASS 是 IN，那么RDATA就是一个4个字节的ARPA网络地址。
+</code></pre></div><p>对这部分，可以通过wireshark等抓包软件抓个包看看，抓包的过程就不赘述了。</p> <h2 id="六-搭建dns服务器"><a href="#六-搭建dns服务器" class="header-anchor">#</a> 六.搭建DNS服务器</h2> <p>参考：http://blog.csdn.net/u012375924/article/details/50779891</p></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div> <footer><div style="text-align: center;">
+            © 2020 小小郭的博客
+            <a href="http://www.beian.miit.gov.cn/">粤ICP备16016910号</a> <br><br></div></footer></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.158714e6.js" defer></script><script src="/assets/js/2.a806d99a.js" defer></script><script src="/assets/js/50.b3b348da.js" defer></script>
+  </body>
+</html>

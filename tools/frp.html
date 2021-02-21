@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>使用frp做内网穿透 | 小小郭的博客</title>
+    <meta name="generator" content="VuePress 1.5.2">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="description" content="小小郭">
+    <link rel="preload" href="/assets/css/0.styles.f333096b.css" as="style"><link rel="preload" href="/assets/js/app.158714e6.js" as="script"><link rel="preload" href="/assets/js/2.a806d99a.js" as="script"><link rel="preload" href="/assets/js/68.326016eb.js" as="script"><link rel="prefetch" href="/assets/js/10.ceb6da30.js"><link rel="prefetch" href="/assets/js/11.f6fcdde7.js"><link rel="prefetch" href="/assets/js/12.c1ccc7c5.js"><link rel="prefetch" href="/assets/js/13.2e80b5f4.js"><link rel="prefetch" href="/assets/js/14.86580eea.js"><link rel="prefetch" href="/assets/js/15.ec8bc9ac.js"><link rel="prefetch" href="/assets/js/16.ffe6c259.js"><link rel="prefetch" href="/assets/js/17.f11cefb5.js"><link rel="prefetch" href="/assets/js/18.ba7fa50a.js"><link rel="prefetch" href="/assets/js/19.d98194cd.js"><link rel="prefetch" href="/assets/js/20.b3e3e3ba.js"><link rel="prefetch" href="/assets/js/21.0560925d.js"><link rel="prefetch" href="/assets/js/22.151f504b.js"><link rel="prefetch" href="/assets/js/23.c0dd585a.js"><link rel="prefetch" href="/assets/js/24.5ac8c4b5.js"><link rel="prefetch" href="/assets/js/25.57989e7c.js"><link rel="prefetch" href="/assets/js/26.19ae4c70.js"><link rel="prefetch" href="/assets/js/27.7b7a4013.js"><link rel="prefetch" href="/assets/js/28.c02de8fb.js"><link rel="prefetch" href="/assets/js/29.be98b5ac.js"><link rel="prefetch" href="/assets/js/3.f9a5341d.js"><link rel="prefetch" href="/assets/js/30.151ce4ad.js"><link rel="prefetch" href="/assets/js/31.e3b05220.js"><link rel="prefetch" href="/assets/js/32.48233f51.js"><link rel="prefetch" href="/assets/js/33.cdf1ba85.js"><link rel="prefetch" href="/assets/js/34.8e175bdf.js"><link rel="prefetch" href="/assets/js/35.53e76add.js"><link rel="prefetch" href="/assets/js/36.2588db5d.js"><link rel="prefetch" href="/assets/js/37.904d3476.js"><link rel="prefetch" href="/assets/js/38.1424f189.js"><link rel="prefetch" href="/assets/js/39.0e05003b.js"><link rel="prefetch" href="/assets/js/4.84d9a9b8.js"><link rel="prefetch" href="/assets/js/40.e4b36098.js"><link rel="prefetch" href="/assets/js/41.13258ed7.js"><link rel="prefetch" href="/assets/js/42.6f5a7cbb.js"><link rel="prefetch" href="/assets/js/43.7898149d.js"><link rel="prefetch" href="/assets/js/44.37b08732.js"><link rel="prefetch" href="/assets/js/45.17998593.js"><link rel="prefetch" href="/assets/js/46.055bc79a.js"><link rel="prefetch" href="/assets/js/47.6df10fa7.js"><link rel="prefetch" href="/assets/js/48.2660180a.js"><link rel="prefetch" href="/assets/js/49.4625a12a.js"><link rel="prefetch" href="/assets/js/5.501f4465.js"><link rel="prefetch" href="/assets/js/50.b3b348da.js"><link rel="prefetch" href="/assets/js/51.dcb3be6c.js"><link rel="prefetch" href="/assets/js/52.7dd04b5b.js"><link rel="prefetch" href="/assets/js/53.20259b4b.js"><link rel="prefetch" href="/assets/js/54.c876d67f.js"><link rel="prefetch" href="/assets/js/55.52c8359c.js"><link rel="prefetch" href="/assets/js/56.ab71b89a.js"><link rel="prefetch" href="/assets/js/57.30af5fe9.js"><link rel="prefetch" href="/assets/js/58.d1f3acb8.js"><link rel="prefetch" href="/assets/js/59.0c65a864.js"><link rel="prefetch" href="/assets/js/6.56baaf4e.js"><link rel="prefetch" href="/assets/js/60.cc2dc3eb.js"><link rel="prefetch" href="/assets/js/61.bc3d577e.js"><link rel="prefetch" href="/assets/js/62.88dedbc6.js"><link rel="prefetch" href="/assets/js/63.5403d296.js"><link rel="prefetch" href="/assets/js/64.cdcabf93.js"><link rel="prefetch" href="/assets/js/65.7fba108e.js"><link rel="prefetch" href="/assets/js/66.51641258.js"><link rel="prefetch" href="/assets/js/67.f408a0b2.js"><link rel="prefetch" href="/assets/js/69.9dde49ee.js"><link rel="prefetch" href="/assets/js/7.86ee5bb7.js"><link rel="prefetch" href="/assets/js/70.76be6feb.js"><link rel="prefetch" href="/assets/js/71.8bb3d5a3.js"><link rel="prefetch" href="/assets/js/72.3d340b56.js"><link rel="prefetch" href="/assets/js/73.94ae8b58.js"><link rel="prefetch" href="/assets/js/74.c38b2bf5.js"><link rel="prefetch" href="/assets/js/75.ab88131c.js"><link rel="prefetch" href="/assets/js/76.b15fc67e.js"><link rel="prefetch" href="/assets/js/8.77896323.js"><link rel="prefetch" href="/assets/js/9.1bb7c316.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.f333096b.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="global-layout"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">小小郭的博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav>  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="使用frp做内网穿透"><a href="#使用frp做内网穿透" class="header-anchor">#</a> 使用frp做内网穿透</h1> <h2 id="简述"><a href="#简述" class="header-anchor">#</a> 简述</h2> <p>之前用过ngrok，将内网的某个http服务暴露到公网。今天试试frp，将内网的服务器的ssh端口暴露到公网，实现外网直接访问内网服务器。
+过程和ngrok一样：
+<img src="https://img.xiaoxiaoguo.cn/usr/uploads/2018/10/2723643911.png" alt="frp.png"></p> <ol><li>内网服务器(192.168.5.211)可以上网</li> <li>外网有一台服务器，固定ip是1.2.3.4</li> <li>通过frp将这两台服务器连接起来，1.2.3.4这台服务器会暴露出一个端口8090,用户通过这个端口，即可连接到内网服务器192.168.5.211的22端口</li></ol> <h2 id="配置过程"><a href="#配置过程" class="header-anchor">#</a> 配置过程</h2> <p>服务器需要安装好go</p> <p>本次使用的go版本是：go1.6.2</p> <p>frp版本是：frp_0.21.0_linux_amd64</p> <p>frp的地址是https://github.com/fatedier/frp，在上面下载好对应的版本，解压后的文件如下：</p> <div class="language- extra-class"><pre class="language-text"><code>frpc           frpc_full.ini  frpc.ini       frps           frps_full.ini  frps.ini
+</code></pre></div><p>各个文件的作用如下：</p> <table><thead><tr><th>文件名</th> <th>用途</th></tr></thead> <tbody><tr><td>frpc</td> <td>客户端</td></tr> <tr><td>frpc_full</td> <td>客户端的详细配置</td></tr> <tr><td>frpc.ini</td> <td>客户端的简洁配置</td></tr> <tr><td>frps</td> <td>服务端</td></tr> <tr><td>frps_full.ini</td> <td>服务端的详细配置</td></tr> <tr><td>frps.ini</td> <td>服务端的简洁配置</td></tr></tbody></table> <h3 id="服务端配置"><a href="#服务端配置" class="header-anchor">#</a> 服务端配置</h3> <p>进入frp_0.21.0_linux_amd64目录，修改frps.ini内容如下：</p> <div class="language- extra-class"><pre class="language-text"><code>[common]
+bind_addr = 0.0.0.0
+bind_port = 9090 #客户端连接的端口
+log_file = ./frps.log
+log_level = info
+log_max_days = 3
+token = 123456 #token验证
+allow_ports = 2000-3000,3001,3003,4000-50000,8090 #用于暴露到公网的端口
+max_pool_count = 5
+max_ports_per_client = 0
+authentication_timeout = 900
+tcp_mux = true
+</code></pre></div><p>启动服务</p> <div class="language- extra-class"><pre class="language-text"><code>./frps -c ./frps.ini
+</code></pre></div><p>如果看到类似如下信息，则是启动成功</p> <div class="language- extra-class"><pre class="language-text"><code>2018/10/11 18:17:54 [I] [service.go:130] frps tcp listen on 0.0.0.0:9090
+2018/10/11 18:17:54 [I] [root.go:207] Start frps success
+</code></pre></div><p>可用nohup来启动，这样即使终端断开了，服务也会继续运行</p> <div class="language- extra-class"><pre class="language-text"><code>nohup ./frps -c ./frps.ini &amp;
+</code></pre></div><h3 id="客户端配置"><a href="#客户端配置" class="header-anchor">#</a> 客户端配置</h3> <p>进入frp_0.21.0_linux_amd64目录，修改frpc.ini内容如下：</p> <div class="language- extra-class"><pre class="language-text"><code>[common]
+server_addr = 1.2.3.4 
+server_port = 9090
+token = 123456 #和服务端设置的token一致
+
+[ssh]
+type = tcp
+local_ip = 127.0.0.1
+local_port = 22
+remote_port = 8090 #暴露在公网的端口
+</code></pre></div><p>启动客户端</p> <div class="language- extra-class"><pre class="language-text"><code>./frpc -c ./frpc.ini
+</code></pre></div><p>如果看到类似如下信息，则是启动成功</p> <div class="language- extra-class"><pre class="language-text"><code>2018/10/11 06:31:23 [I] [proxy_manager.go:300] proxy removed: []
+2018/10/11 06:31:23 [I] [proxy_manager.go:310] proxy added: [ssh]
+2018/10/11 06:31:23 [I] [proxy_manager.go:333] visitor removed: []
+2018/10/11 06:31:23 [I] [proxy_manager.go:342] visitor added: []
+2018/10/11 06:31:23 [I] [control.go:246] [0a66cb717f83f5dd] login to server success, get run id [0a66cb717f83f5dd], server udp port [0]
+2018/10/11 06:31:23 [I] [control.go:169] [0a66cb717f83f5dd] [ssh] start proxy success
+</code></pre></div><p>在另一台外网机器上连接1.2.3.4的8090端口，如果能正常连接，并且访问的是192.168.5.211，则是配置成功了。
+同样，也可用nohup来启动，保证服务正常运行。</p> <div class="language- extra-class"><pre class="language-text"><code>nohup ./frpc -c ./frpc.ini &amp;
+</code></pre></div><p>如果要映射多个端口，需要启动多个frp服务，一个服务对应一组端口</p> <h2 id="参考"><a href="#参考" class="header-anchor">#</a> 参考</h2> <p>https://www.hi-linux.com/posts/25686.html</p></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div> <footer><div style="text-align: center;">
+            © 2020 小小郭的博客
+            <a href="http://www.beian.miit.gov.cn/">粤ICP备16016910号</a> <br><br></div></footer></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.158714e6.js" defer></script><script src="/assets/js/2.a806d99a.js" defer></script><script src="/assets/js/68.326016eb.js" defer></script>
+  </body>
+</html>

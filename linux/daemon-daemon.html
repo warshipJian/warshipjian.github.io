@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>守护进程-02-daemon | 小小郭的博客</title>
+    <meta name="generator" content="VuePress 1.5.2">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="description" content="小小郭">
+    <link rel="preload" href="/assets/css/0.styles.f333096b.css" as="style"><link rel="preload" href="/assets/js/app.158714e6.js" as="script"><link rel="preload" href="/assets/js/2.a806d99a.js" as="script"><link rel="preload" href="/assets/js/23.c0dd585a.js" as="script"><link rel="prefetch" href="/assets/js/10.ceb6da30.js"><link rel="prefetch" href="/assets/js/11.f6fcdde7.js"><link rel="prefetch" href="/assets/js/12.c1ccc7c5.js"><link rel="prefetch" href="/assets/js/13.2e80b5f4.js"><link rel="prefetch" href="/assets/js/14.86580eea.js"><link rel="prefetch" href="/assets/js/15.ec8bc9ac.js"><link rel="prefetch" href="/assets/js/16.ffe6c259.js"><link rel="prefetch" href="/assets/js/17.f11cefb5.js"><link rel="prefetch" href="/assets/js/18.ba7fa50a.js"><link rel="prefetch" href="/assets/js/19.d98194cd.js"><link rel="prefetch" href="/assets/js/20.b3e3e3ba.js"><link rel="prefetch" href="/assets/js/21.0560925d.js"><link rel="prefetch" href="/assets/js/22.151f504b.js"><link rel="prefetch" href="/assets/js/24.5ac8c4b5.js"><link rel="prefetch" href="/assets/js/25.57989e7c.js"><link rel="prefetch" href="/assets/js/26.19ae4c70.js"><link rel="prefetch" href="/assets/js/27.7b7a4013.js"><link rel="prefetch" href="/assets/js/28.c02de8fb.js"><link rel="prefetch" href="/assets/js/29.be98b5ac.js"><link rel="prefetch" href="/assets/js/3.f9a5341d.js"><link rel="prefetch" href="/assets/js/30.151ce4ad.js"><link rel="prefetch" href="/assets/js/31.e3b05220.js"><link rel="prefetch" href="/assets/js/32.48233f51.js"><link rel="prefetch" href="/assets/js/33.cdf1ba85.js"><link rel="prefetch" href="/assets/js/34.8e175bdf.js"><link rel="prefetch" href="/assets/js/35.53e76add.js"><link rel="prefetch" href="/assets/js/36.2588db5d.js"><link rel="prefetch" href="/assets/js/37.904d3476.js"><link rel="prefetch" href="/assets/js/38.1424f189.js"><link rel="prefetch" href="/assets/js/39.0e05003b.js"><link rel="prefetch" href="/assets/js/4.84d9a9b8.js"><link rel="prefetch" href="/assets/js/40.e4b36098.js"><link rel="prefetch" href="/assets/js/41.13258ed7.js"><link rel="prefetch" href="/assets/js/42.6f5a7cbb.js"><link rel="prefetch" href="/assets/js/43.7898149d.js"><link rel="prefetch" href="/assets/js/44.37b08732.js"><link rel="prefetch" href="/assets/js/45.17998593.js"><link rel="prefetch" href="/assets/js/46.055bc79a.js"><link rel="prefetch" href="/assets/js/47.6df10fa7.js"><link rel="prefetch" href="/assets/js/48.2660180a.js"><link rel="prefetch" href="/assets/js/49.4625a12a.js"><link rel="prefetch" href="/assets/js/5.501f4465.js"><link rel="prefetch" href="/assets/js/50.b3b348da.js"><link rel="prefetch" href="/assets/js/51.dcb3be6c.js"><link rel="prefetch" href="/assets/js/52.7dd04b5b.js"><link rel="prefetch" href="/assets/js/53.20259b4b.js"><link rel="prefetch" href="/assets/js/54.c876d67f.js"><link rel="prefetch" href="/assets/js/55.52c8359c.js"><link rel="prefetch" href="/assets/js/56.ab71b89a.js"><link rel="prefetch" href="/assets/js/57.30af5fe9.js"><link rel="prefetch" href="/assets/js/58.d1f3acb8.js"><link rel="prefetch" href="/assets/js/59.0c65a864.js"><link rel="prefetch" href="/assets/js/6.56baaf4e.js"><link rel="prefetch" href="/assets/js/60.cc2dc3eb.js"><link rel="prefetch" href="/assets/js/61.bc3d577e.js"><link rel="prefetch" href="/assets/js/62.88dedbc6.js"><link rel="prefetch" href="/assets/js/63.5403d296.js"><link rel="prefetch" href="/assets/js/64.cdcabf93.js"><link rel="prefetch" href="/assets/js/65.7fba108e.js"><link rel="prefetch" href="/assets/js/66.51641258.js"><link rel="prefetch" href="/assets/js/67.f408a0b2.js"><link rel="prefetch" href="/assets/js/68.326016eb.js"><link rel="prefetch" href="/assets/js/69.9dde49ee.js"><link rel="prefetch" href="/assets/js/7.86ee5bb7.js"><link rel="prefetch" href="/assets/js/70.76be6feb.js"><link rel="prefetch" href="/assets/js/71.8bb3d5a3.js"><link rel="prefetch" href="/assets/js/72.3d340b56.js"><link rel="prefetch" href="/assets/js/73.94ae8b58.js"><link rel="prefetch" href="/assets/js/74.c38b2bf5.js"><link rel="prefetch" href="/assets/js/75.ab88131c.js"><link rel="prefetch" href="/assets/js/76.b15fc67e.js"><link rel="prefetch" href="/assets/js/8.77896323.js"><link rel="prefetch" href="/assets/js/9.1bb7c316.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.f333096b.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="global-layout"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">小小郭的博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav>  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="守护进程-02-daemon"><a href="#守护进程-02-daemon" class="header-anchor">#</a> 守护进程-02-daemon</h1> <p>如何看一个进程是不是守护进程呢？一个简单的方式是看下它的tty是不是？
+比如nginx的</p> <div class="language- extra-class"><pre class="language-text"><code>root@lan-dev-215:~/test# ps -e -o pid,ppid,cmd,tty | grep nginx
+ 1436     1 nginx: master process /usr/ ?
+ 1437  1436 nginx: worker process       ?
+ 1438  1436 nginx: worker process       ?
+ 1439  1436 nginx: worker process       ?
+ 1440  1436 nginx: worker process       ?
+ 1441  1436 nginx: worker process       ?
+ 1442  1436 nginx: worker process       ?
+ 1443  1436 nginx: worker process       ?
+ 1444  1436 nginx: worker process       ?
+ 1445  1436 nginx: worker process       ?
+ 1446  1436 nginx: worker process       ?
+ 1447  1436 nginx: worker process       ?
+ 1448  1436 nginx: worker process       ?
+ 1449  1436 nginx: worker process       ?
+ 1450  1436 nginx: worker process       ?
+ 1451  1436 nginx: worker process       ?
+ 1452  1436 nginx: worker process       ?
+</code></pre></div><p>可以看到它的tty都是？
+上次介绍了守护进程的一个工具tmux，今天介绍linux的daemon</p> <h3 id="daemon"><a href="#daemon" class="header-anchor">#</a> daemon</h3> <p>daemon是干啥的，man看一下</p> <div class="language- extra-class"><pre class="language-text"><code>man daemon
+</code></pre></div><p>回到上次那个例子，我们改下代码便于观察。</p> <div class="language-c extra-class"><pre class="language-c"><code><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> d <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;hello %d \n&quot;</span><span class="token punctuation">,</span>d<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">fflush</span><span class="token punctuation">(</span><span class="token constant">stdout</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        d <span class="token operator">+=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>gcc编译后，使用daemon命令运行a.out</p> <div class="language- extra-class"><pre class="language-text"><code>daemon  --name=test_daemon --respawn -o /tmp/test.log -- /root/test/a.out 
+</code></pre></div><p>这里用了三个参数：name 和 -o 。name是取个daemon的名字，-o是指定标准输出的文件，--respawn 重启进程</p> <div class="language- extra-class"><pre class="language-text"><code>root@lan-dev-215:~/test#  ps aux | grep a.out
+root      2544  0.0  0.0  20388   188 ?        S    18:47   0:00 daemon --name=test_daemon --respawn -o /tmp/test.log -- /root/test/a.out
+root      2545  0.0  0.0   4508   740 ?        S    18:47   0:00 /root/test/a.out
+</code></pre></div><p>此时查看/tmp/test.log会看到有相关的输出</p> <div class="language- extra-class"><pre class="language-text"><code>root@lan-dev-215:~/test# tail /tmp/test.log 
+hello 7 
+hello 8 
+hello 9 
+hello 10 
+hello 11 
+hello 12 
+</code></pre></div><p>杀掉a.out，看下是否还有</p> <div class="language- extra-class"><pre class="language-text"><code>root@lan-dev-215:~/test# kill 2545
+root@lan-dev-215:~/test# ps aux | grep a.out
+root      2544  0.0  0.0  20388  1764 ?        S    18:47   0:00 daemon --name=test_daemon --respawn -o /tmp/test.log -- /root/test/a.out
+root      2549  0.0  0.0   4508   744 ?        S    18:47   0:00 /root/test/a.out
+</code></pre></div><p>可以看到a.out重启了，分配了一个新的pid，而且tty是？</p> <p>除了使用daemon命令，在C里面也可以直接调用daemon，让a.out变成守护进程。我们把代码改下，增加一行daemon调用：</p> <div class="language-c extra-class"><pre class="language-c"><code><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token function">daemon</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> d <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;hello %d \n&quot;</span><span class="token punctuation">,</span>d<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">fflush</span><span class="token punctuation">(</span><span class="token constant">stdout</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        d <span class="token operator">+=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>此时重新gcc编译一下，运行a.out，可以看到该进程变成了守护进程。</p> <h3 id="daemon是怎么实现的"><a href="#daemon是怎么实现的" class="header-anchor">#</a> daemon是怎么实现的</h3> <p>看下daemon的主函数 https://github.com/lattera/glibc/blob/master/misc/daemon.c
+直接注释着来看吧。</p> <div class="language-c extra-class"><pre class="language-c"><code><span class="token function">daemon</span> <span class="token punctuation">(</span><span class="token keyword">int</span> nochdir<span class="token punctuation">,</span> <span class="token keyword">int</span> noclose<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token keyword">int</span> fd<span class="token punctuation">;</span>
+
+	<span class="token keyword">switch</span> <span class="token punctuation">(</span><span class="token function">__fork</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> 
+	<span class="token keyword">case</span> <span class="token operator">-</span><span class="token number">1</span><span class="token operator">:</span>
+		<span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">case</span> <span class="token number">0</span><span class="token operator">:</span>
+		<span class="token keyword">break</span><span class="token punctuation">;</span>
+	<span class="token keyword">default</span><span class="token operator">:</span>
+	    <span class="token comment">// fork成功后，父进程正常退出，子进程托孤，继续往下走</span>
+		<span class="token function">_exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">__setsid</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> 
+	<span class="token comment">/*
+	调用setsid，将自己改成一个新的sid，即变成一组新的会话，不受到原sid的影响。
+	比如在terminal上运行普通程序时，sid是shell的，此时该程序受到terminal的影响 
+	这里调用setsid后，sid是新的了，不再依赖原sid
+	*/</span>
+		<span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 后面是修改程序运行路径，标准输入输出等</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>nochdir<span class="token punctuation">)</span>
+		<span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token function">__chdir</span><span class="token punctuation">(</span><span class="token string">&quot;/&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>noclose<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">struct</span> <span class="token class-name">stat64</span> st<span class="token punctuation">;</span>
+
+		<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>fd <span class="token operator">=</span> <span class="token function">__open_nocancel</span><span class="token punctuation">(</span>_PATH_DEVNULL<span class="token punctuation">,</span> O_RDWR<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token operator">-</span><span class="token number">1</span>
+		    <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span><span class="token function">__builtin_expect</span> <span class="token punctuation">(</span><span class="token function">__fxstat64</span> <span class="token punctuation">(</span>_STAT_VER<span class="token punctuation">,</span> fd<span class="token punctuation">,</span> <span class="token operator">&amp;</span>st<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
+			<span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">__builtin_expect</span> <span class="token punctuation">(</span><span class="token function">S_ISCHR</span> <span class="token punctuation">(</span>st<span class="token punctuation">.</span>st_mode<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token number">0</span>
+<span class="token macro property">#<span class="token directive keyword">if</span> defined DEV_NULL_MAJOR &amp;&amp; defined DEV_NULL_MINOR</span>
+			    <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span>st<span class="token punctuation">.</span>st_rdev
+				<span class="token operator">==</span> <span class="token function">makedev</span> <span class="token punctuation">(</span>DEV_NULL_MAJOR<span class="token punctuation">,</span> DEV_NULL_MINOR<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token macro property">#<span class="token directive keyword">endif</span></span>
+			    <span class="token punctuation">)</span> <span class="token punctuation">{</span>
+				<span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token function">__dup2</span><span class="token punctuation">(</span>fd<span class="token punctuation">,</span> STDIN_FILENO<span class="token punctuation">)</span><span class="token punctuation">;</span>
+				<span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token function">__dup2</span><span class="token punctuation">(</span>fd<span class="token punctuation">,</span> STDOUT_FILENO<span class="token punctuation">)</span><span class="token punctuation">;</span>
+				<span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token function">__dup2</span><span class="token punctuation">(</span>fd<span class="token punctuation">,</span> STDERR_FILENO<span class="token punctuation">)</span><span class="token punctuation">;</span>
+				<span class="token keyword">if</span> <span class="token punctuation">(</span>fd <span class="token operator">&gt;</span> <span class="token number">2</span><span class="token punctuation">)</span>
+					<span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token function">__close</span> <span class="token punctuation">(</span>fd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+				<span class="token comment">/* We must set an errno value since no
+				   function call actually failed.  */</span>
+				<span class="token function">__close_nocancel_nostatus</span> <span class="token punctuation">(</span>fd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+				<span class="token function">__set_errno</span> <span class="token punctuation">(</span>ENODEV<span class="token punctuation">)</span><span class="token punctuation">;</span>
+				<span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+			<span class="token punctuation">}</span>
+		<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+			<span class="token function">__close_nocancel_nostatus</span> <span class="token punctuation">(</span>fd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div> <footer><div style="text-align: center;">
+            © 2020 小小郭的博客
+            <a href="http://www.beian.miit.gov.cn/">粤ICP备16016910号</a> <br><br></div></footer></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.158714e6.js" defer></script><script src="/assets/js/2.a806d99a.js" defer></script><script src="/assets/js/23.c0dd585a.js" defer></script>
+  </body>
+</html>

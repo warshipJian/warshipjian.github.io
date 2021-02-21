@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>linux-进程-02-进程的生命周期 | 小小郭的博客</title>
+    <meta name="generator" content="VuePress 1.5.2">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="description" content="小小郭">
+    <link rel="preload" href="/assets/css/0.styles.f333096b.css" as="style"><link rel="preload" href="/assets/js/app.158714e6.js" as="script"><link rel="preload" href="/assets/js/2.a806d99a.js" as="script"><link rel="preload" href="/assets/js/30.151ce4ad.js" as="script"><link rel="prefetch" href="/assets/js/10.ceb6da30.js"><link rel="prefetch" href="/assets/js/11.f6fcdde7.js"><link rel="prefetch" href="/assets/js/12.c1ccc7c5.js"><link rel="prefetch" href="/assets/js/13.2e80b5f4.js"><link rel="prefetch" href="/assets/js/14.86580eea.js"><link rel="prefetch" href="/assets/js/15.ec8bc9ac.js"><link rel="prefetch" href="/assets/js/16.ffe6c259.js"><link rel="prefetch" href="/assets/js/17.f11cefb5.js"><link rel="prefetch" href="/assets/js/18.ba7fa50a.js"><link rel="prefetch" href="/assets/js/19.d98194cd.js"><link rel="prefetch" href="/assets/js/20.b3e3e3ba.js"><link rel="prefetch" href="/assets/js/21.0560925d.js"><link rel="prefetch" href="/assets/js/22.151f504b.js"><link rel="prefetch" href="/assets/js/23.c0dd585a.js"><link rel="prefetch" href="/assets/js/24.5ac8c4b5.js"><link rel="prefetch" href="/assets/js/25.57989e7c.js"><link rel="prefetch" href="/assets/js/26.19ae4c70.js"><link rel="prefetch" href="/assets/js/27.7b7a4013.js"><link rel="prefetch" href="/assets/js/28.c02de8fb.js"><link rel="prefetch" href="/assets/js/29.be98b5ac.js"><link rel="prefetch" href="/assets/js/3.f9a5341d.js"><link rel="prefetch" href="/assets/js/31.e3b05220.js"><link rel="prefetch" href="/assets/js/32.48233f51.js"><link rel="prefetch" href="/assets/js/33.cdf1ba85.js"><link rel="prefetch" href="/assets/js/34.8e175bdf.js"><link rel="prefetch" href="/assets/js/35.53e76add.js"><link rel="prefetch" href="/assets/js/36.2588db5d.js"><link rel="prefetch" href="/assets/js/37.904d3476.js"><link rel="prefetch" href="/assets/js/38.1424f189.js"><link rel="prefetch" href="/assets/js/39.0e05003b.js"><link rel="prefetch" href="/assets/js/4.84d9a9b8.js"><link rel="prefetch" href="/assets/js/40.e4b36098.js"><link rel="prefetch" href="/assets/js/41.13258ed7.js"><link rel="prefetch" href="/assets/js/42.6f5a7cbb.js"><link rel="prefetch" href="/assets/js/43.7898149d.js"><link rel="prefetch" href="/assets/js/44.37b08732.js"><link rel="prefetch" href="/assets/js/45.17998593.js"><link rel="prefetch" href="/assets/js/46.055bc79a.js"><link rel="prefetch" href="/assets/js/47.6df10fa7.js"><link rel="prefetch" href="/assets/js/48.2660180a.js"><link rel="prefetch" href="/assets/js/49.4625a12a.js"><link rel="prefetch" href="/assets/js/5.501f4465.js"><link rel="prefetch" href="/assets/js/50.b3b348da.js"><link rel="prefetch" href="/assets/js/51.dcb3be6c.js"><link rel="prefetch" href="/assets/js/52.7dd04b5b.js"><link rel="prefetch" href="/assets/js/53.20259b4b.js"><link rel="prefetch" href="/assets/js/54.c876d67f.js"><link rel="prefetch" href="/assets/js/55.52c8359c.js"><link rel="prefetch" href="/assets/js/56.ab71b89a.js"><link rel="prefetch" href="/assets/js/57.30af5fe9.js"><link rel="prefetch" href="/assets/js/58.d1f3acb8.js"><link rel="prefetch" href="/assets/js/59.0c65a864.js"><link rel="prefetch" href="/assets/js/6.56baaf4e.js"><link rel="prefetch" href="/assets/js/60.cc2dc3eb.js"><link rel="prefetch" href="/assets/js/61.bc3d577e.js"><link rel="prefetch" href="/assets/js/62.88dedbc6.js"><link rel="prefetch" href="/assets/js/63.5403d296.js"><link rel="prefetch" href="/assets/js/64.cdcabf93.js"><link rel="prefetch" href="/assets/js/65.7fba108e.js"><link rel="prefetch" href="/assets/js/66.51641258.js"><link rel="prefetch" href="/assets/js/67.f408a0b2.js"><link rel="prefetch" href="/assets/js/68.326016eb.js"><link rel="prefetch" href="/assets/js/69.9dde49ee.js"><link rel="prefetch" href="/assets/js/7.86ee5bb7.js"><link rel="prefetch" href="/assets/js/70.76be6feb.js"><link rel="prefetch" href="/assets/js/71.8bb3d5a3.js"><link rel="prefetch" href="/assets/js/72.3d340b56.js"><link rel="prefetch" href="/assets/js/73.94ae8b58.js"><link rel="prefetch" href="/assets/js/74.c38b2bf5.js"><link rel="prefetch" href="/assets/js/75.ab88131c.js"><link rel="prefetch" href="/assets/js/76.b15fc67e.js"><link rel="prefetch" href="/assets/js/8.77896323.js"><link rel="prefetch" href="/assets/js/9.1bb7c316.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.f333096b.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="global-layout"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">小小郭的博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav>  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="linux-进程-02-进程的生命周期"><a href="#linux-进程-02-进程的生命周期" class="header-anchor">#</a> linux-进程-02-进程的生命周期</h1> <p>进程的整个生命周期如下:</p> <p><img src="https://img.xiaoxiaoguo.cn/usr/uploads/2019/02/2183690430.png" alt="lifecycle.png"></p> <p>一个进程被fork出来后，进入<strong>就绪态</strong>；当被调度到获得CPU执行时，进入<strong>执行态</strong>；如果时间片用完或被强占时，进入<strong>就绪态</strong>；资源得不到满足时，进入<strong>睡眠态</strong>(<strong>深度睡眠</strong>或<strong>浅度睡眠</strong>)，比如一个网络程序，在等对方发包，此时不能占着CPU，进入睡眠态，当包发过来时，进程被唤醒，进入就绪态；如果被暂停，进入<strong>停止态</strong>；执行完成后，资源释放，此时父进程wait4还未收到它的信号，进入<strong>僵死态</strong>。</p> <p>即整个周期可能会涉及的状态有：<strong>就绪态</strong>，<strong>执行态</strong>，<strong>僵死态</strong>，<strong>停止态</strong>，<strong>睡眠态</strong>。</p> <h3 id="就绪态和执行态"><a href="#就绪态和执行态" class="header-anchor">#</a> 就绪态和执行态</h3> <p>就绪态：进程准备就绪，等待被CPU执行时的状态。即进程已经具备运行条件，但是CPU还没有分配过来，需等待被CPU调度到，进入执行态。</p> <p>执行态：占用CPU，在CPU上执行。</p> <h3 id="僵死态"><a href="#僵死态" class="header-anchor">#</a> 僵死态</h3> <p>僵死态：进程结束时，其他资源都释放，只留下了task_struct，等待父进程wait4函数处理时的状态。</p> <p>一个进程如果进入僵死态时，它占用的系统资源都已释放了，只是保留了task_struct等待父进程处理。</p> <p>如果一个进程一直是僵死态，通过kill是无法杀掉的，除非将它的父进程杀掉，它才会消失。</p> <p>系统中有僵尸态的进程对系统资源来说没影响，可能是你写的程序有问题，未正常退出，使得父进程无法处理。</p> <p>实验下：</p> <div class="language-c extra-class"><pre class="language-c"><code><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;sys/wait.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h&gt;</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h&gt;</span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	pid_t pid<span class="token punctuation">,</span>wait_pid<span class="token punctuation">;</span>
+	<span class="token keyword">int</span> status<span class="token punctuation">;</span>
+
+	pid <span class="token operator">=</span> <span class="token function">fork</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>pid<span class="token operator">==</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>	<span class="token punctuation">{</span>
+		<span class="token function">perror</span><span class="token punctuation">(</span><span class="token string">&quot;Cannot create new process&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span> <span class="token keyword">else</span> 	<span class="token keyword">if</span> <span class="token punctuation">(</span>pid<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;child process id: %ld\n&quot;</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">long</span><span class="token punctuation">)</span> <span class="token function">getpid</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token function">pause</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token function">_exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+<span class="token macro property">#<span class="token directive keyword">if</span> 1 </span><span class="token comment">/* define 1 to make child process always a zomie */</span>
+		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;ppid:%d\n&quot;</span><span class="token punctuation">,</span> <span class="token function">getpid</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token macro property">#<span class="token directive keyword">endif</span></span>
+		<span class="token keyword">do</span> <span class="token punctuation">{</span>
+			wait_pid<span class="token operator">=</span><span class="token function">waitpid</span><span class="token punctuation">(</span>pid<span class="token punctuation">,</span> <span class="token operator">&amp;</span>status<span class="token punctuation">,</span> WUNTRACED <span class="token operator">|</span> WCONTINUED<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+			<span class="token keyword">if</span> <span class="token punctuation">(</span>wait_pid <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+				<span class="token function">perror</span><span class="token punctuation">(</span><span class="token string">&quot;cannot using waitpid function&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+				<span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token punctuation">}</span>
+
+			<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">WIFEXITED</span><span class="token punctuation">(</span>status<span class="token punctuation">)</span><span class="token punctuation">)</span>
+				<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;child process exites, status=%d\n&quot;</span><span class="token punctuation">,</span> <span class="token function">WEXITSTATUS</span><span class="token punctuation">(</span>status<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+			<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">WIFSIGNALED</span><span class="token punctuation">(</span>status<span class="token punctuation">)</span><span class="token punctuation">)</span>
+				<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;child process is killed by signal %d\n&quot;</span><span class="token punctuation">,</span> <span class="token function">WTERMSIG</span><span class="token punctuation">(</span>status<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+			<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">WIFSTOPPED</span><span class="token punctuation">(</span>status<span class="token punctuation">)</span><span class="token punctuation">)</span>
+				<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;child process is stopped by signal %d\n&quot;</span><span class="token punctuation">,</span> <span class="token function">WSTOPSIG</span><span class="token punctuation">(</span>status<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+			<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">WIFCONTINUED</span><span class="token punctuation">(</span>status<span class="token punctuation">)</span><span class="token punctuation">)</span>
+				<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;child process resume running....\n&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+		<span class="token punctuation">}</span> <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">WIFEXITED</span><span class="token punctuation">(</span>status<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span><span class="token function">WIFSIGNALED</span><span class="token punctuation">(</span>status<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+		<span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>这段代码的关键是waitpid函数，当子进程结束时，会返回一个状态status，父进程可对该状态进行处理。</p> <p>gcc编译下，运行a.out，会看到系统有两个a.out:</p> <div class="language- extra-class"><pre class="language-text"><code>root     27934 94.0  0.0   4212   344 pts/1    R+   14:50   0:05 ./a.out
+root     27935  0.0  0.0   4212    84 pts/1    S+   14:50   0:00 ./a.out
+</code></pre></div><p>此时将子进程杀掉，会看到子进程变成了僵尸进程：</p> <div class="language- extra-class"><pre class="language-text"><code>[root@localhost process]# kill 27935
+[root@localhost process]# ps aux | grep a.out
+root     27934 98.7  0.0   4212   344 pts/1    R+   14:50   0:13 ./a.out
+root     27935  0.0  0.0      0     0 pts/1    Z+   14:50   0:00 [a.out] &lt;defunct&gt;
+</code></pre></div><p>无论你怎么去杀27935，它始终都存在</p> <div class="language- extra-class"><pre class="language-text"><code>[root@localhost process]# kill -9 27935
+[root@localhost process]# kill -9 27935
+[root@localhost process]# kill -9 27935
+[root@localhost process]# kill -9 27935
+[root@localhost process]# ps aux | grep a.out
+root     27934 98.7  0.0   4212   344 pts/1    R+   14:50   0:13 ./a.out
+root     27935  0.0  0.0      0     0 pts/1    Z+   14:50   0:00 [a.out] &lt;defunct&gt;
+</code></pre></div><p>此时将父进程结束，它们就一起消失了</p> <div class="language- extra-class"><pre class="language-text"><code>[root@localhost process]# ps aux | grep a.out
+root     28335  0.0  0.1 112704   996 pts/0    S+   14:58   0:00 grep --color=auto a.out
+</code></pre></div><h3 id="停止态"><a href="#停止态" class="header-anchor">#</a> 停止态</h3> <p>停止态：人为地暂停进程时的状态。</p> <p>在linux中，按ctrl+z，当前终端下运行的进程就会进入停止态。</p> <p>按fg或bg恢复该进程的运行。</p> <p>fg与bg的区别是：fg是前台运行，bg是后台运行。</p> <p>有个工具叫cpulimit，它限制进程的原理就是不断地停止进程，恢复进程，最终达到限制进程资源的效果。</p> <p>编译运行如下代码</p> <div class="language-c extra-class"><pre class="language-c"><code><span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>通过top可以看到该进程占用了近100%的CPU：</p> <div class="language- extra-class"><pre class="language-text"><code>top - 15:05:25 up  4:38,  2 users,  load average: 0.22, 0.06, 0.06
+Tasks: 118 total,   3 running, 115 sleeping,   0 stopped,   0 zombie
+%Cpu(s): 41.9 us,  0.0 sy,  0.0 ni, 58.1 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+KiB Mem :   499256 total,    52248 free,    68688 used,   378320 buff/cache
+KiB Swap:  1572860 total,  1504420 free,    68440 used.   393644 avail Mem 
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND                                                                                                                                        
+28717 root      20   0    4208    348    272 R 100.0  0.1   0:13.89 a.out  
+</code></pre></div><p>此时用cpulimit将它限制到20%</p> <div class="language- extra-class"><pre class="language-text"><code>[root@localhost opt]# cpulimit -l 20 -p 28717
+Process 28717 found
+</code></pre></div><p>再通过top命令看时，它已经被限制到20%了：</p> <div class="language- extra-class"><pre class="language-text"><code>top - 15:09:56 up  4:42,  3 users,  load average: 0.56, 0.50, 0.25
+Tasks: 124 total,   1 running, 122 sleeping,   1 stopped,   0 zombie
+%Cpu(s):  8.6 us,  0.2 sy,  0.0 ni, 91.2 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+KiB Mem :   499256 total,    40720 free,    77464 used,   381072 buff/cache
+KiB Swap:  1572860 total,  1504676 free,    68184 used.   384452 avail Mem 
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND                                                                                                                                        
+28717 root      20   0    4208    348    272 T  19.3  0.1   4:00.92 a.out  
+</code></pre></div><h3 id="睡眠态"><a href="#睡眠态" class="header-anchor">#</a> 睡眠态</h3> <p>睡眠态分浅度睡眠和深度睡眠，区别在于：</p> <p>浅度睡眠：<strong>可以被资源和信号唤醒</strong></p> <p>深度睡眠：<strong>只能被资源唤醒</strong>，比如你挂载一个NFS，当NFS服务器挂了时，你对这个挂载做不了任何操作，比如用kill命令发送任何信号都无效，处理的方法是：1.等待NFS服务器恢复；2.重启你的服务器。</p> <p>睡眠态涉及到中断等内容，后面还会继续总结，这里先介绍下概念。</p> <h3 id="小结"><a href="#小结" class="header-anchor">#</a> 小结</h3> <p>这次总结了进程生命周期的各个状态：就绪态，运行态，停止态，僵尸态，睡眠态，以及它们之间的转换关系。</p> <p>下次我们来看看进程的管理方式。</p></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div> <footer><div style="text-align: center;">
+            © 2020 小小郭的博客
+            <a href="http://www.beian.miit.gov.cn/">粤ICP备16016910号</a> <br><br></div></footer></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.158714e6.js" defer></script><script src="/assets/js/2.a806d99a.js" defer></script><script src="/assets/js/30.151ce4ad.js" defer></script>
+  </body>
+</html>

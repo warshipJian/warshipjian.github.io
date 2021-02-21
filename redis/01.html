@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>redis-01-常用操作 | 小小郭的博客</title>
+    <meta name="generator" content="VuePress 1.5.2">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="description" content="小小郭">
+    <link rel="preload" href="/assets/css/0.styles.f333096b.css" as="style"><link rel="preload" href="/assets/js/app.158714e6.js" as="script"><link rel="preload" href="/assets/js/2.a806d99a.js" as="script"><link rel="preload" href="/assets/js/54.c876d67f.js" as="script"><link rel="prefetch" href="/assets/js/10.ceb6da30.js"><link rel="prefetch" href="/assets/js/11.f6fcdde7.js"><link rel="prefetch" href="/assets/js/12.c1ccc7c5.js"><link rel="prefetch" href="/assets/js/13.2e80b5f4.js"><link rel="prefetch" href="/assets/js/14.86580eea.js"><link rel="prefetch" href="/assets/js/15.ec8bc9ac.js"><link rel="prefetch" href="/assets/js/16.ffe6c259.js"><link rel="prefetch" href="/assets/js/17.f11cefb5.js"><link rel="prefetch" href="/assets/js/18.ba7fa50a.js"><link rel="prefetch" href="/assets/js/19.d98194cd.js"><link rel="prefetch" href="/assets/js/20.b3e3e3ba.js"><link rel="prefetch" href="/assets/js/21.0560925d.js"><link rel="prefetch" href="/assets/js/22.151f504b.js"><link rel="prefetch" href="/assets/js/23.c0dd585a.js"><link rel="prefetch" href="/assets/js/24.5ac8c4b5.js"><link rel="prefetch" href="/assets/js/25.57989e7c.js"><link rel="prefetch" href="/assets/js/26.19ae4c70.js"><link rel="prefetch" href="/assets/js/27.7b7a4013.js"><link rel="prefetch" href="/assets/js/28.c02de8fb.js"><link rel="prefetch" href="/assets/js/29.be98b5ac.js"><link rel="prefetch" href="/assets/js/3.f9a5341d.js"><link rel="prefetch" href="/assets/js/30.151ce4ad.js"><link rel="prefetch" href="/assets/js/31.e3b05220.js"><link rel="prefetch" href="/assets/js/32.48233f51.js"><link rel="prefetch" href="/assets/js/33.cdf1ba85.js"><link rel="prefetch" href="/assets/js/34.8e175bdf.js"><link rel="prefetch" href="/assets/js/35.53e76add.js"><link rel="prefetch" href="/assets/js/36.2588db5d.js"><link rel="prefetch" href="/assets/js/37.904d3476.js"><link rel="prefetch" href="/assets/js/38.1424f189.js"><link rel="prefetch" href="/assets/js/39.0e05003b.js"><link rel="prefetch" href="/assets/js/4.84d9a9b8.js"><link rel="prefetch" href="/assets/js/40.e4b36098.js"><link rel="prefetch" href="/assets/js/41.13258ed7.js"><link rel="prefetch" href="/assets/js/42.6f5a7cbb.js"><link rel="prefetch" href="/assets/js/43.7898149d.js"><link rel="prefetch" href="/assets/js/44.37b08732.js"><link rel="prefetch" href="/assets/js/45.17998593.js"><link rel="prefetch" href="/assets/js/46.055bc79a.js"><link rel="prefetch" href="/assets/js/47.6df10fa7.js"><link rel="prefetch" href="/assets/js/48.2660180a.js"><link rel="prefetch" href="/assets/js/49.4625a12a.js"><link rel="prefetch" href="/assets/js/5.501f4465.js"><link rel="prefetch" href="/assets/js/50.b3b348da.js"><link rel="prefetch" href="/assets/js/51.dcb3be6c.js"><link rel="prefetch" href="/assets/js/52.7dd04b5b.js"><link rel="prefetch" href="/assets/js/53.20259b4b.js"><link rel="prefetch" href="/assets/js/55.52c8359c.js"><link rel="prefetch" href="/assets/js/56.ab71b89a.js"><link rel="prefetch" href="/assets/js/57.30af5fe9.js"><link rel="prefetch" href="/assets/js/58.d1f3acb8.js"><link rel="prefetch" href="/assets/js/59.0c65a864.js"><link rel="prefetch" href="/assets/js/6.56baaf4e.js"><link rel="prefetch" href="/assets/js/60.cc2dc3eb.js"><link rel="prefetch" href="/assets/js/61.bc3d577e.js"><link rel="prefetch" href="/assets/js/62.88dedbc6.js"><link rel="prefetch" href="/assets/js/63.5403d296.js"><link rel="prefetch" href="/assets/js/64.cdcabf93.js"><link rel="prefetch" href="/assets/js/65.7fba108e.js"><link rel="prefetch" href="/assets/js/66.51641258.js"><link rel="prefetch" href="/assets/js/67.f408a0b2.js"><link rel="prefetch" href="/assets/js/68.326016eb.js"><link rel="prefetch" href="/assets/js/69.9dde49ee.js"><link rel="prefetch" href="/assets/js/7.86ee5bb7.js"><link rel="prefetch" href="/assets/js/70.76be6feb.js"><link rel="prefetch" href="/assets/js/71.8bb3d5a3.js"><link rel="prefetch" href="/assets/js/72.3d340b56.js"><link rel="prefetch" href="/assets/js/73.94ae8b58.js"><link rel="prefetch" href="/assets/js/74.c38b2bf5.js"><link rel="prefetch" href="/assets/js/75.ab88131c.js"><link rel="prefetch" href="/assets/js/76.b15fc67e.js"><link rel="prefetch" href="/assets/js/8.77896323.js"><link rel="prefetch" href="/assets/js/9.1bb7c316.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.f333096b.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="global-layout"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">小小郭的博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav>  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="redis-01-常用操作"><a href="#redis-01-常用操作" class="header-anchor">#</a> redis-01-常用操作</h1> <p>如今是8102年了，作为一个老牌的缓存数据库redis，依然非常强劲。准备把它系统地过一遍，计划分两部分来进行：</p> <p>1.redis使用</p> <p>2.redis原理分析</p> <h2 id="redis通识"><a href="#redis通识" class="header-anchor">#</a> redis通识</h2> <p><strong>命令</strong></p> <p>这些是通用命令，对所有redis的数据结构都可以操作</p> <div class="language- extra-class"><pre class="language-text"><code>expire 设置过期时间
+del 删除键值
+</code></pre></div><p><strong>操作结果</strong></p> <p>正常操作返回OK 或 (integer) 加数字</p> <p>更新操作返回(integer) 0</p> <p>空值是 (nil)</p> <h2 id="redis的数据结构"><a href="#redis的数据结构" class="header-anchor">#</a> redis的数据结构</h2> <p>Redis 有 5 种常用的基础数据结构，分别为：string (字符串)、list (列表)、set (集合)、hash (哈希) 和 zset (有序集合)</p> <p>除了这5种还有bitmap，hyperloglog等，本次只介绍这5种。</p> <p>Redis 所有的数据结构都是以唯一的 key 字符串作为名称，然后通过这个唯一 key 值来获取相应的 value 数据。不同类型的数据结构的差异就在于 value 的结构不一样。</p> <h2 id="字符串"><a href="#字符串" class="header-anchor">#</a> 字符串</h2> <p><strong>设置键值对</strong></p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; set name1 boy
+OK
+</code></pre></div><p><strong>获取该键值</strong></p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; get name1
+&quot;boy&quot;
+</code></pre></div><p><strong>批量设置</strong></p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; mset name1 boy name2 girl name3 none
+OK
+</code></pre></div><p><strong>批量获取</strong></p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; mget name1 name2 name3
+1) &quot;boy&quot;
+2) &quot;girl&quot;
+3) &quot;none&quot;
+</code></pre></div><p><strong>设置过期时间</strong></p> <p>用set + codehole</p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; SETEX name1 2 codehole  #设置2秒过期
+OK
+127.0.0.1:6379&gt; get name1  #2秒后该键值消失
+(nil)
+</code></pre></div><p>用expire</p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; expire name2 2
+(integer) 1
+127.0.0.1:6379&gt; get name2
+(nil)
+</code></pre></div><p><strong>计数</strong>
+如果 value 值是一个整数，还可以对它进行自增操作。</p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; set val 27
+OK
+127.0.0.1:6379&gt; get val
+&quot;27&quot;
+127.0.0.1:6379&gt; INCR val  #自增1
+(integer) 28
+127.0.0.1:6379&gt; get val
+&quot;28&quot;
+127.0.0.1:6379&gt; INCRBY val 5 #加5
+(integer) 33
+127.0.0.1:6379&gt; get val
+&quot;33&quot;
+127.0.0.1:6379&gt; INCRBY val -3 #减3
+(integer) 30
+127.0.0.1:6379&gt; get val
+&quot;30&quot;
+</code></pre></div><h2 id="列表"><a href="#列表" class="header-anchor">#</a> 列表</h2> <p>可以理解为数据结构中的双向链表，常用于队列。</p> <p><strong>向列表中添加元素(右边进)</strong></p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; rpush books python php golang c #右边进
+(integer) 4
+#lpush是左边进，后面的例子都是右边进的
+</code></pre></div><p><strong>查看该列表长度</strong></p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; llen books
+(integer) 4
+</code></pre></div><p><strong>查看该列表的元素</strong></p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; lrange books 0 3
+1) &quot;python&quot;
+2) &quot;php&quot;
+3) &quot;golang&quot;
+4) &quot;c&quot;
+</code></pre></div><p><strong>查看该列表的所有元素</strong></p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; lrange books 0 -1
+1) &quot;python&quot;
+2) &quot;php&quot;
+3) &quot;golang&quot;
+4) &quot;c&quot;
+</code></pre></div><p><strong>右边进左边出(先进先出)：队列</strong></p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; lpop books
+&quot;python&quot;
+127.0.0.1:6379&gt; lrange books 0 3
+1) &quot;php&quot;
+2) &quot;golang&quot;
+3) &quot;c&quot;
+</code></pre></div><p><strong>右边进右边出(先进后出)：栈</strong></p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; rpop books
+&quot;c&quot;
+127.0.0.1:6379&gt; lrange books 0 3
+1) &quot;php&quot;
+2) &quot;golang&quot;
+</code></pre></div><p>当列表弹出了最后一个元素之后，该数据结构自动被删除，内存被回收。</p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; rpop books
+&quot;golang&quot;
+127.0.0.1:6379&gt; rpop books
+&quot;php&quot;
+127.0.0.1:6379&gt; lrange books 0 3
+(empty list or set)
+</code></pre></div><p><strong>lindex索引</strong></p> <p>慎用</p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; rpush books python php golang c
+(integer) 4
+127.0.0.1:6379&gt; lindex books 2 #正方向
+&quot;golang&quot;
+127.0.0.1:6379&gt; lindex books -3 #反方向
+&quot;php&quot;
+</code></pre></div><p><strong>ltrim保留范围内的值</strong></p> <p>慎用</p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; ltrim books 1 2 #保留范围是1到2的值
+OK
+127.0.0.1:6379&gt; lrange books 0 3
+1) &quot;php&quot;
+2) &quot;golang&quot;
+</code></pre></div><h2 id="hash"><a href="#hash" class="header-anchor">#</a> Hash</h2> <p><strong>创建一个Hash</strong></p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; hset books golang &quot;hello golang&quot;
+(integer) 1
+127.0.0.1:6379&gt; hset books php &quot;hello php&quot;
+(integer) 1
+127.0.0.1:6379&gt; hset books python &quot;hello python&quot;
+(integer) 1
+127.0.0.1:6379&gt; hset books c &quot;hello c&quot;
+(integer) 1
+</code></pre></div><p><strong>获取该Hash的所有元素</strong></p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; hgetall books
+1) &quot;golang&quot;
+2) &quot;hello golang&quot;
+3) &quot;php&quot;
+4) &quot;hello php&quot;
+5) &quot;python&quot;
+6) &quot;hello python&quot;
+7) &quot;c&quot;
+8) &quot;hello c&quot;
+</code></pre></div><p><strong>获取指定key的元素</strong></p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; hget books golang
+&quot;hello golang&quot;
+</code></pre></div><p><strong>更新指定的key</strong></p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; hset books golang &quot;hi golang&quot;
+(integer) 0
+127.0.0.1:6379&gt; hget books golang
+&quot;hi golang&quot;
+</code></pre></div><p><strong>设置多个</strong></p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; hmset books java &quot;hi java&quot; js &quot;hi js&quot;
+OK
+</code></pre></div><p><strong>计数</strong></p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; hset books page 100
+(integer) 1
+127.0.0.1:6379&gt; HINCRBY books page 1
+(integer) 101
+127.0.0.1:6379&gt; hget books page
+&quot;101&quot;
+</code></pre></div><h2 id="集合"><a href="#集合" class="header-anchor">#</a> 集合</h2> <p>集合内的键值对是唯一无序的，它和列表的区别是：列表是序的，可重复的。</p> <p><strong>添加一个元素</strong></p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; sadd books python
+(integer) 1
+127.0.0.1:6379&gt; smembers books #查看值
+1) &quot;python&quot;
+127.0.0.1:6379&gt; sadd books python #重复添加
+(integer) 0
+127.0.0.1:6379&gt; smembers books #还是只有一个
+1) &quot;python&quot;
+127.0.0.1:6379&gt;
+</code></pre></div><p><strong>检查某个值是否存在</strong></p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; sismember books abc #不存在abc
+(integer) 0
+127.0.0.1:6379&gt; sismember books python #python存在
+(integer) 1
+</code></pre></div><p><strong>获取长度</strong></p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; sadd books php
+(integer) 1
+127.0.0.1:6379&gt; scard books
+(integer) 1
+127.0.0.1:6379&gt; sadd books go
+(integer) 1
+127.0.0.1:6379&gt; scard books
+(integer) 2
+</code></pre></div><p><strong>弹出</strong></p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; sadd books python php go
+(integer) 1
+127.0.0.1:6379&gt; spop books    #弹出一个
+&quot;python&quot;
+127.0.0.1:6379&gt; smembers books
+1) &quot;php&quot;
+2) &quot;go&quot;
+</code></pre></div><h2 id="有序集"><a href="#有序集" class="header-anchor">#</a> 有序集</h2> <p>可以理解为加强型的集合，它可以对value设置一个score，用来排序</p> <p><strong>添加元素</strong></p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; zadd user 98 xiaohong #添加个用户xiaohong，值是98
+(integer) 1
+127.0.0.1:6379&gt; zadd user 99 xiaoming 
+(integer) 1
+127.0.0.1:6379&gt; zadd user 97 xiaoli
+(integer) 1
+127.0.0.1:6379&gt; zadd user 98 xiaogang
+(integer) 1
+</code></pre></div><p><strong>正序</strong></p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; zrange user 0 -1
+1) &quot;xiaoli&quot;
+2) &quot;xiaogang&quot;
+3) &quot;xiaohong&quot;
+4) &quot;xiaoming&quot;
+</code></pre></div><p><strong>倒序</strong></p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; zrevrange user 0 -1
+1) &quot;xiaoming&quot;
+2) &quot;xiaohong&quot;
+3) &quot;xiaogang&quot;
+4) &quot;xiaoli&quot;
+</code></pre></div><p><strong>获取score</strong></p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt;  zscore user xiaohong
+&quot;98&quot;
+</code></pre></div><p><strong>查看长度</strong></p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; zcard  user
+(integer) 4
+</code></pre></div><p><strong>查看正序的排名</strong></p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; zrank user xiaohong
+(integer) 2
+127.0.0.1:6379&gt; zrank user xiaoli
+(integer) 0
+</code></pre></div><p><strong>查看倒序的排名</strong></p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; zrevrank user xiaohong
+(integer) 1
+127.0.0.1:6379&gt; zrevrank user xiaoli
+(integer) 3
+</code></pre></div><p><strong>查看某个范围的value</strong></p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; zrangebyscore user 98 99
+1) &quot;xiaogang&quot;
+2) &quot;xiaohong&quot;
+3) &quot;xiaoming&quot;
+</code></pre></div><p><strong>查看某个范围的value并返回对应的score</strong></p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; zrangebyscore user 98 99  withscores
+1) &quot;xiaogang&quot;
+2) &quot;98&quot;
+3) &quot;xiaohong&quot;
+4) &quot;98&quot;
+5) &quot;xiaoming&quot;
+6) &quot;99&quot;
+</code></pre></div><p><strong>删除某个value</strong></p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; zrem user xiaogang
+(integer) 1
+</code></pre></div><h2 id="注"><a href="#注" class="header-anchor">#</a> 注</h2> <p>我在学习的过程中参考的是<a href="https://juejin.im/book/5afc2e5f6fb9a07a9b362527/section/5b336601f265da598e13f917" target="_blank" rel="noopener noreferrer">Redis 深度历险：核心原理与应用实践<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>，有兴趣的可以去读下。</p></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div> <footer><div style="text-align: center;">
+            © 2020 小小郭的博客
+            <a href="http://www.beian.miit.gov.cn/">粤ICP备16016910号</a> <br><br></div></footer></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.158714e6.js" defer></script><script src="/assets/js/2.a806d99a.js" defer></script><script src="/assets/js/54.c876d67f.js" defer></script>
+  </body>
+</html>

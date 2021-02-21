@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>docker核心技术简介之namespace | 小小郭的博客</title>
+    <meta name="generator" content="VuePress 1.5.2">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="description" content="小小郭">
+    <link rel="preload" href="/assets/css/0.styles.f333096b.css" as="style"><link rel="preload" href="/assets/js/app.158714e6.js" as="script"><link rel="preload" href="/assets/js/2.a806d99a.js" as="script"><link rel="preload" href="/assets/js/13.2e80b5f4.js" as="script"><link rel="prefetch" href="/assets/js/10.ceb6da30.js"><link rel="prefetch" href="/assets/js/11.f6fcdde7.js"><link rel="prefetch" href="/assets/js/12.c1ccc7c5.js"><link rel="prefetch" href="/assets/js/14.86580eea.js"><link rel="prefetch" href="/assets/js/15.ec8bc9ac.js"><link rel="prefetch" href="/assets/js/16.ffe6c259.js"><link rel="prefetch" href="/assets/js/17.f11cefb5.js"><link rel="prefetch" href="/assets/js/18.ba7fa50a.js"><link rel="prefetch" href="/assets/js/19.d98194cd.js"><link rel="prefetch" href="/assets/js/20.b3e3e3ba.js"><link rel="prefetch" href="/assets/js/21.0560925d.js"><link rel="prefetch" href="/assets/js/22.151f504b.js"><link rel="prefetch" href="/assets/js/23.c0dd585a.js"><link rel="prefetch" href="/assets/js/24.5ac8c4b5.js"><link rel="prefetch" href="/assets/js/25.57989e7c.js"><link rel="prefetch" href="/assets/js/26.19ae4c70.js"><link rel="prefetch" href="/assets/js/27.7b7a4013.js"><link rel="prefetch" href="/assets/js/28.c02de8fb.js"><link rel="prefetch" href="/assets/js/29.be98b5ac.js"><link rel="prefetch" href="/assets/js/3.f9a5341d.js"><link rel="prefetch" href="/assets/js/30.151ce4ad.js"><link rel="prefetch" href="/assets/js/31.e3b05220.js"><link rel="prefetch" href="/assets/js/32.48233f51.js"><link rel="prefetch" href="/assets/js/33.cdf1ba85.js"><link rel="prefetch" href="/assets/js/34.8e175bdf.js"><link rel="prefetch" href="/assets/js/35.53e76add.js"><link rel="prefetch" href="/assets/js/36.2588db5d.js"><link rel="prefetch" href="/assets/js/37.904d3476.js"><link rel="prefetch" href="/assets/js/38.1424f189.js"><link rel="prefetch" href="/assets/js/39.0e05003b.js"><link rel="prefetch" href="/assets/js/4.84d9a9b8.js"><link rel="prefetch" href="/assets/js/40.e4b36098.js"><link rel="prefetch" href="/assets/js/41.13258ed7.js"><link rel="prefetch" href="/assets/js/42.6f5a7cbb.js"><link rel="prefetch" href="/assets/js/43.7898149d.js"><link rel="prefetch" href="/assets/js/44.37b08732.js"><link rel="prefetch" href="/assets/js/45.17998593.js"><link rel="prefetch" href="/assets/js/46.055bc79a.js"><link rel="prefetch" href="/assets/js/47.6df10fa7.js"><link rel="prefetch" href="/assets/js/48.2660180a.js"><link rel="prefetch" href="/assets/js/49.4625a12a.js"><link rel="prefetch" href="/assets/js/5.501f4465.js"><link rel="prefetch" href="/assets/js/50.b3b348da.js"><link rel="prefetch" href="/assets/js/51.dcb3be6c.js"><link rel="prefetch" href="/assets/js/52.7dd04b5b.js"><link rel="prefetch" href="/assets/js/53.20259b4b.js"><link rel="prefetch" href="/assets/js/54.c876d67f.js"><link rel="prefetch" href="/assets/js/55.52c8359c.js"><link rel="prefetch" href="/assets/js/56.ab71b89a.js"><link rel="prefetch" href="/assets/js/57.30af5fe9.js"><link rel="prefetch" href="/assets/js/58.d1f3acb8.js"><link rel="prefetch" href="/assets/js/59.0c65a864.js"><link rel="prefetch" href="/assets/js/6.56baaf4e.js"><link rel="prefetch" href="/assets/js/60.cc2dc3eb.js"><link rel="prefetch" href="/assets/js/61.bc3d577e.js"><link rel="prefetch" href="/assets/js/62.88dedbc6.js"><link rel="prefetch" href="/assets/js/63.5403d296.js"><link rel="prefetch" href="/assets/js/64.cdcabf93.js"><link rel="prefetch" href="/assets/js/65.7fba108e.js"><link rel="prefetch" href="/assets/js/66.51641258.js"><link rel="prefetch" href="/assets/js/67.f408a0b2.js"><link rel="prefetch" href="/assets/js/68.326016eb.js"><link rel="prefetch" href="/assets/js/69.9dde49ee.js"><link rel="prefetch" href="/assets/js/7.86ee5bb7.js"><link rel="prefetch" href="/assets/js/70.76be6feb.js"><link rel="prefetch" href="/assets/js/71.8bb3d5a3.js"><link rel="prefetch" href="/assets/js/72.3d340b56.js"><link rel="prefetch" href="/assets/js/73.94ae8b58.js"><link rel="prefetch" href="/assets/js/74.c38b2bf5.js"><link rel="prefetch" href="/assets/js/75.ab88131c.js"><link rel="prefetch" href="/assets/js/76.b15fc67e.js"><link rel="prefetch" href="/assets/js/8.77896323.js"><link rel="prefetch" href="/assets/js/9.1bb7c316.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.f333096b.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="global-layout"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">小小郭的博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav>  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h2 id="前言"><a href="#前言" class="header-anchor">#</a> 前言</h2> <p>时光匆匆，转眼2020年也只剩下2个多月了，感慨之。</p> <p>今天来介绍下docker中用到的一个核心技术Namespace，由于个人能力有限，不会深入到具体的细节。</p> <p>私认为一个基础的docker需具备以下功能：</p> <p><strong>1.资源隔离</strong>。即各个容器都是独立的，只能使用本容器的资源。比如每个容器只能看到自己的进程和文件，而看不到服务器上其他的进程和文件。每个容器的CPU和内存资源也是需要隔离的，不能出现某个容器把CPU占满，导致其他容器无法工作。</p> <p><strong>2.镜像功能</strong>。一处构建，到处执行。用户在安装好docker后，直接拉取镜像即可运行使用。</p> <p>为了实现这些，docker用到了<code>Namespace</code>,<code>CGroups</code>和<code>UnionFS</code>。</p> <p><code>Namespace</code>：解决进程、网络、文件系统的资源隔离问题。</p> <p><code>CGroups</code>：解决内存、CPU等物理资源隔离问题。</p> <p><code>UnionFS</code>：解决镜像问题。</p> <p>CGroups和UnionFS之前有简单介绍过，这次来看看Namespace。</p> <h3 id="namespace简介"><a href="#namespace简介" class="header-anchor">#</a> Namespace简介</h3> <p>Namespace 是Linux提供的一种内核级别隔离机制，目前提供的能力如下：</p> <table><thead><tr><th>名称</th> <th>宏</th> <th>隔离资源</th></tr></thead> <tbody><tr><td>Cgroup</td> <td>CLONE_NEWCGROUP</td> <td>cgroup根目录</td></tr> <tr><td>Ipc</td> <td>CLONE_NEWIPC</td> <td>System V IPC(信号量、消息队列和共享内存)和POSIX message queues</td></tr> <tr><td>Network</td> <td>CLONE_NEWNET</td> <td>Network devices, stacks, ports, etc(网络设备、网络栈、端口等).</td></tr> <tr><td>Mount</td> <td>CLONE_NEWNS</td> <td>Mount points(文件系统挂载点)</td></tr> <tr><td>PID</td> <td>CLONE_NEWPID</td> <td>Process IDs(进程编号)</td></tr> <tr><td>User</td> <td>CLONE_NEWUSER</td> <td>User and group IDs(用户和用户组)</td></tr> <tr><td>UTS</td> <td>CLONE_NEWUTS</td> <td>Hostname and NIS domain name(主机名与NIS域名)</td></tr></tbody></table> <p>以进程隔离为例，我们在启动docker时，会调用createSpec方法，创建docker的namespace。</p> <div class="language- extra-class"><pre class="language-text"><code>func (daemon *Daemon) createSpec(c *container.Container) (*specs.Spec, error) {
+	s := oci.DefaultSpec()
+
+	// ...
+	if err := setNamespaces(daemon, &amp;s, c); err != nil {
+		return nil, fmt.Errorf(&quot;linux spec namespaces: %v&quot;, err)
+	}
+
+	return &amp;s, nil
+}
+</code></pre></div><p>setNamespaces方法会设置容器的进程、用户、网络、IPC 以及 UTS 相关的命名空间：</p> <div class="language- extra-class"><pre class="language-text"><code>func setNamespaces(daemon *Daemon, s *specs.Spec, c *container.Container) error {
+	// user
+	// network
+	// ipc
+	// uts
+
+	// pid
+	if c.HostConfig.PidMode.IsContainer() {
+		ns := specs.LinuxNamespace{Type: &quot;pid&quot;}
+		pc, err := daemon.getPidContainer(c)
+		if err != nil {
+			return err
+		}
+		ns.Path = fmt.Sprintf(&quot;/proc/%d/ns/pid&quot;, pc.State.GetPID())
+		setNamespace(s, ns)
+	} else if c.HostConfig.PidMode.IsHost() {
+		oci.RemoveNamespace(s, specs.LinuxNamespaceType(&quot;pid&quot;))
+	} else {
+		ns := specs.LinuxNamespace{Type: &quot;pid&quot;}
+		setNamespace(s, ns)
+	}
+
+	return nil
+}
+</code></pre></div><p>通过docker exec 进入容器，你会发现所有pid是从1开始计数的,且看不到系统上其他的进程。</p> <div class="language- extra-class"><pre class="language-text"><code>/ # ps aux
+PID   USER     TIME  COMMAND
+    1 root      0:00 npm
+   17 root      0:00 node /node_modules/.bin/egg-scripts start --title=egg-serv
+   28 root      0:13 node --require /node_modules/source-map-support/register.j
+   35 root      2:32 /usr/local/bin/node --require /node_modules/source-map-sup
+   46 root      2:21 /usr/local/bin/node --require /node_modules/source-map-sup
+   52 root      2:24 /usr/local/bin/node --require /node_modules/source-map-sup
+   75 root      0:00 sh
+   81 root      0:00 ps aux
+</code></pre></div><p>在系统上找一下这个docker进程：</p> <div class="language- extra-class"><pre class="language-text"><code>[root@iZwz9eyfvpfa7klu4pa9odZ ~]# ps -ef | grep npm
+root     1076972  431810  0 16:12 pts/0    00:00:00 grep --color=auto npm
+root     2421826 2421807  0 9月18 ?       00:00:00 npm
+</code></pre></div><p>可以看到这个docker进程的pid是2421826，父进程是2421807。看下父进程2421807：</p> <div class="language- extra-class"><pre class="language-text"><code>[root@iZwz9eyfvpfa7klu4pa9odZ ~]# ps -ef | grep 2421807
+root     1030542 2421807  0 15:47 pts/0    00:00:00 sh
+root     1088496  431810  0 16:18 pts/0    00:00:00 grep --color=auto 2421807
+root     2421807    1731  0 9月18 ?       00:00:56 containerd-shim -namespace moby -workdir /var/lib/containerd/io.containerd.runtime.v1.linux/moby/80e012862a8fe4b8cc636928f8b6022d7414ba176b752edadca426a1f34fe815 -address /run/containerd/containerd.sock -containerd-binary /usr/bin/containerd -runtime-root /var/run/docker/runtime-runc -systemd-cgroup
+root     2421826 2421807  0 9月18 ?       00:00:00 npm
+</code></pre></div><p>可以看到是containerd-shim，是docker的核心进程，它的父进程是1731。我们再找几个父进程是1731的其他containerd-shim进程，对比下他们的namespace：</p> <div class="language- extra-class"><pre class="language-text"><code>[root@iZwz9eyfvpfa7klu4pa9odZ ~]# ps -ef | grep 1731
+root        1731       1  0 9月14 ?       01:58:44 /usr/bin/containerd
+root        2875    1731  0 9月14 ?       00:01:08 containerd-shim -namespace moby -workdir /var/lib/containerd/io.containerd.runtime.v1.linux/moby/77c2595e8a78cd7f4c405b6ee445789414707e669ac050a655bc0baa90dc6ba0 -address /run/containerd/containerd.sock -containerd-binary /usr/bin/containerd -runtime-root /var/run/docker/runtime-runc -systemd-cgroup
+root        2887    1731  0 9月14 ?       00:01:04 containerd-shim -namespace moby -workdir /var/lib/containerd/io.containerd.runtime.v1.linux/moby/1ae5ccfa0f656a3ce7ad1bf87e5d7c6302776676d76e0277463c9f43cf15e383 -address /run/containerd/containerd.sock -containerd-binary /usr/bin/containerd -runtime-root /var/run/docker/runtime-runc -systemd-cgroup
+root        2968    1731  0 9月14 ?       00:01:12 containerd-shim -namespace moby -workdir /var/lib/containerd/io.containerd.runtime.v1.linux/moby/ebe45fdd5fcd8ab585954cc285ec8122f37107f05feb9447dadb6120365a1af9 -address /run/containerd/containerd.sock -containerd-binary /usr/bin/containerd -runtime-root /var/run/docker/runtime-runc -systemd-cgroup
+</code></pre></div><p>以pid：2968为例，2968下有个/pause进程，pid是2988：</p> <div class="language- extra-class"><pre class="language-text"><code>[root@iZwz9eyfvpfa7klu4pa9odZ ~]# ps -ef | grep 2968
+root        2968    1731  0 9月14 ?       00:01:12 containerd-shim -namespace moby -workdir /var/lib/containerd/io.containerd.runtime.v1.linux/moby/ebe45fdd5fcd8ab585954cc285ec8122f37107f05feb9447dadb6120365a1af9 -address /run/containerd/containerd.sock -containerd-binary /usr/bin/containerd -runtime-root /var/run/docker/runtime-runc -systemd-cgroup
+root        2988    2968  0 9月14 ?       00:00:00 /pause
+</code></pre></div><p>我们对比下2988和2421807的namespace：</p> <div class="language- extra-class"><pre class="language-text"><code>[root@iZwz9eyfvpfa7klu4pa9odZ ~]# ll /proc/2988/ns
+总用量 0
+lrwxrwxrwx 1 root root 0 10月 10 16:29 cgroup -&gt; cgroup:[4026531835]
+lrwxrwxrwx 1 root root 0 10月 10 16:29 ipc -&gt; ipc:[4026532239]
+lrwxrwxrwx 1 root root 0 10月 10 16:29 mnt -&gt; mnt:[4026532237]
+lrwxrwxrwx 1 root root 0 10月 10 16:29 net -&gt; net:[4026531992]
+lrwxrwxrwx 1 root root 0 10月 10 16:29 pid -&gt; pid:[4026532240]
+lrwxrwxrwx 1 root root 0 10月 10 16:29 pid_for_children -&gt; pid:[4026532240]
+lrwxrwxrwx 1 root root 0 10月 10 16:29 user -&gt; user:[4026531837]
+lrwxrwxrwx 1 root root 0 10月 10 16:29 uts -&gt; uts:[4026532238]
+</code></pre></div><p>2421807如下：</p> <div class="language- extra-class"><pre class="language-text"><code>[root@iZwz9eyfvpfa7klu4pa9odZ ~]# ll /proc/2421807/ns
+总用量 0
+lrwxrwxrwx 1 root root 0 10月 10 16:25 cgroup -&gt; cgroup:[4026531835]
+lrwxrwxrwx 1 root root 0 10月 10 16:25 ipc -&gt; ipc:[4026531839]
+lrwxrwxrwx 1 root root 0 10月 10 16:25 mnt -&gt; mnt:[4026531840]
+lrwxrwxrwx 1 root root 0 10月 10 16:25 net -&gt; net:[4026531992]
+lrwxrwxrwx 1 root root 0 10月 10 16:25 pid -&gt; pid:[4026531836]
+lrwxrwxrwx 1 root root 0 10月 10 16:25 pid_for_children -&gt; pid:[4026531836]
+lrwxrwxrwx 1 root root 0 10月 10 16:25 user -&gt; user:[4026531837]
+lrwxrwxrwx 1 root root 0 10月 10 16:25 uts -&gt; uts:[4026531838]
+</code></pre></div><p>可以发现他们的<code>ipc</code>,<code>mnt</code>,<code>pid</code>,<code>pid_for_children</code>不同。</p> <h3 id="docker网络互通"><a href="#docker网络互通" class="header-anchor">#</a> docker网络互通</h3> <p>通过namespace把资源隔离后，网络也隔离了，此时需要解决容器间的网络互通问题。docker目前有<code>bridge</code>、<code>host</code>、<code>none</code>、<code>overlay</code>、<code>maclan</code> 和 <code>Network plugins</code>等网络模式，在启动docker时通过<code>network</code>参数设置具体使用那一种模式。</p> <p>以bridge模式为例，docker会给每个容器创建一对虚拟网卡，其中一个会加入到 docker0 网桥中，容器间的通信通过docker0来完成。容器和外部的通信使用NAT的方式，通过系统的iptables来实现。</p> <p>值得一提的是，docker的这些功能都是通过<code>Libnetwork</code>来实现的。<code>Libnetwork</code>是从docker1.6开始，从docker项目中的网络部分抽离出来形成的容器网络模型，也被称为Container Network Model，简称<code>CNM</code>，由Sandbox, Endpoint, Network 三种组件组成。具体的细节可以查阅相关资料，这里就不多做介绍了。</p> <p>值得二提的是，k8s用的是<code>CNI</code>模型，并非docker的CNM模型。在刚才的例子中，我们对比了两个容器的namespace，其中一个容器是<code>pause</code>，pause在k8s中提供了网络方面的功能，接管了pod里面其他容器的网络。在刚才的例子中也可以发现两者的net namespace是一致的。说到这里，索性就介绍下k8s下的docker网络通信吧：</p> <div class="language- extra-class"><pre class="language-text"><code>1.同一个pod里的容器通过localhost来通信。
+2.同一个node中pod间的容器通过docker0来通信。
+3.不同的node的pod间的容器通过Flannel、 Calico、 Romana、 Weave-net等网络插件来通信。
+</code></pre></div><h2 id="参考"><a href="#参考" class="header-anchor">#</a> 参考</h2> <p><a href="https://draveness.me/docker/" target="_blank" rel="noopener noreferrer">Docker 核心技术与实现原理<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><a href="https://www.qikqiak.com/k8s-book/docs/7.Docker%E7%9A%84%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%BC%8F.html" target="_blank" rel="noopener noreferrer">Docker 的网络模式<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div> <footer><div style="text-align: center;">
+            © 2020 小小郭的博客
+            <a href="http://www.beian.miit.gov.cn/">粤ICP备16016910号</a> <br><br></div></footer></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.158714e6.js" defer></script><script src="/assets/js/2.a806d99a.js" defer></script><script src="/assets/js/13.2e80b5f4.js" defer></script>
+  </body>
+</html>

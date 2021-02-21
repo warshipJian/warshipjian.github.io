@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>redis-08-做个秒杀系统 | 小小郭的博客</title>
+    <meta name="generator" content="VuePress 1.5.2">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="description" content="小小郭">
+    <link rel="preload" href="/assets/css/0.styles.f333096b.css" as="style"><link rel="preload" href="/assets/js/app.158714e6.js" as="script"><link rel="preload" href="/assets/js/2.a806d99a.js" as="script"><link rel="preload" href="/assets/js/61.bc3d577e.js" as="script"><link rel="prefetch" href="/assets/js/10.ceb6da30.js"><link rel="prefetch" href="/assets/js/11.f6fcdde7.js"><link rel="prefetch" href="/assets/js/12.c1ccc7c5.js"><link rel="prefetch" href="/assets/js/13.2e80b5f4.js"><link rel="prefetch" href="/assets/js/14.86580eea.js"><link rel="prefetch" href="/assets/js/15.ec8bc9ac.js"><link rel="prefetch" href="/assets/js/16.ffe6c259.js"><link rel="prefetch" href="/assets/js/17.f11cefb5.js"><link rel="prefetch" href="/assets/js/18.ba7fa50a.js"><link rel="prefetch" href="/assets/js/19.d98194cd.js"><link rel="prefetch" href="/assets/js/20.b3e3e3ba.js"><link rel="prefetch" href="/assets/js/21.0560925d.js"><link rel="prefetch" href="/assets/js/22.151f504b.js"><link rel="prefetch" href="/assets/js/23.c0dd585a.js"><link rel="prefetch" href="/assets/js/24.5ac8c4b5.js"><link rel="prefetch" href="/assets/js/25.57989e7c.js"><link rel="prefetch" href="/assets/js/26.19ae4c70.js"><link rel="prefetch" href="/assets/js/27.7b7a4013.js"><link rel="prefetch" href="/assets/js/28.c02de8fb.js"><link rel="prefetch" href="/assets/js/29.be98b5ac.js"><link rel="prefetch" href="/assets/js/3.f9a5341d.js"><link rel="prefetch" href="/assets/js/30.151ce4ad.js"><link rel="prefetch" href="/assets/js/31.e3b05220.js"><link rel="prefetch" href="/assets/js/32.48233f51.js"><link rel="prefetch" href="/assets/js/33.cdf1ba85.js"><link rel="prefetch" href="/assets/js/34.8e175bdf.js"><link rel="prefetch" href="/assets/js/35.53e76add.js"><link rel="prefetch" href="/assets/js/36.2588db5d.js"><link rel="prefetch" href="/assets/js/37.904d3476.js"><link rel="prefetch" href="/assets/js/38.1424f189.js"><link rel="prefetch" href="/assets/js/39.0e05003b.js"><link rel="prefetch" href="/assets/js/4.84d9a9b8.js"><link rel="prefetch" href="/assets/js/40.e4b36098.js"><link rel="prefetch" href="/assets/js/41.13258ed7.js"><link rel="prefetch" href="/assets/js/42.6f5a7cbb.js"><link rel="prefetch" href="/assets/js/43.7898149d.js"><link rel="prefetch" href="/assets/js/44.37b08732.js"><link rel="prefetch" href="/assets/js/45.17998593.js"><link rel="prefetch" href="/assets/js/46.055bc79a.js"><link rel="prefetch" href="/assets/js/47.6df10fa7.js"><link rel="prefetch" href="/assets/js/48.2660180a.js"><link rel="prefetch" href="/assets/js/49.4625a12a.js"><link rel="prefetch" href="/assets/js/5.501f4465.js"><link rel="prefetch" href="/assets/js/50.b3b348da.js"><link rel="prefetch" href="/assets/js/51.dcb3be6c.js"><link rel="prefetch" href="/assets/js/52.7dd04b5b.js"><link rel="prefetch" href="/assets/js/53.20259b4b.js"><link rel="prefetch" href="/assets/js/54.c876d67f.js"><link rel="prefetch" href="/assets/js/55.52c8359c.js"><link rel="prefetch" href="/assets/js/56.ab71b89a.js"><link rel="prefetch" href="/assets/js/57.30af5fe9.js"><link rel="prefetch" href="/assets/js/58.d1f3acb8.js"><link rel="prefetch" href="/assets/js/59.0c65a864.js"><link rel="prefetch" href="/assets/js/6.56baaf4e.js"><link rel="prefetch" href="/assets/js/60.cc2dc3eb.js"><link rel="prefetch" href="/assets/js/62.88dedbc6.js"><link rel="prefetch" href="/assets/js/63.5403d296.js"><link rel="prefetch" href="/assets/js/64.cdcabf93.js"><link rel="prefetch" href="/assets/js/65.7fba108e.js"><link rel="prefetch" href="/assets/js/66.51641258.js"><link rel="prefetch" href="/assets/js/67.f408a0b2.js"><link rel="prefetch" href="/assets/js/68.326016eb.js"><link rel="prefetch" href="/assets/js/69.9dde49ee.js"><link rel="prefetch" href="/assets/js/7.86ee5bb7.js"><link rel="prefetch" href="/assets/js/70.76be6feb.js"><link rel="prefetch" href="/assets/js/71.8bb3d5a3.js"><link rel="prefetch" href="/assets/js/72.3d340b56.js"><link rel="prefetch" href="/assets/js/73.94ae8b58.js"><link rel="prefetch" href="/assets/js/74.c38b2bf5.js"><link rel="prefetch" href="/assets/js/75.ab88131c.js"><link rel="prefetch" href="/assets/js/76.b15fc67e.js"><link rel="prefetch" href="/assets/js/8.77896323.js"><link rel="prefetch" href="/assets/js/9.1bb7c316.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.f333096b.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="global-layout"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">小小郭的博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav>  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="redis-08-做个秒杀系统"><a href="#redis-08-做个秒杀系统" class="header-anchor">#</a> redis-08-做个秒杀系统</h1> <h2 id="秒杀的要点"><a href="#秒杀的要点" class="header-anchor">#</a> 秒杀的要点</h2> <ol><li>对流量进行控制，逐步减少流量，使得最终到接口的流量是较小的。(流量控制不是说不要用户访问，而是对流量进行引导，保证有效请求的最大化)</li> <li>尽量不要用锁，锁就意味着资源的内耗</li> <li>整个过程可以分秒杀前，秒杀时，秒杀后三个步骤来思考，每一步都解耦出来。秒杀前对流量进行控制，秒杀时快速结束战斗，并且不超卖，订单处理，库存扣减可以放到秒杀后处理。</li></ol> <h2 id="流量控制"><a href="#流量控制" class="header-anchor">#</a> 流量控制</h2> <p>从用户点击秒杀到最终请求下单接口，整个过程可以参考下图：
+<img src="https://img.xiaoxiaoguo.cn/usr/uploads/2018/09/3268758038.png" alt="ms1.png">
+0. 可以将秒杀接口单独抽离出来，放一个集群。</p> <ol><li>在前端界面做好请求控制，秒杀开始后，可以控制下请求接口的频率。比如用户3秒内点了10多次，但实际的请求可以只发送1次。</li> <li>商品的秒杀全部走redis</li> <li>预先将库存放到redis中，将秒杀成功的用户放到一个redis队列中</li> <li>另外起一个进程来消费该队列，将结果写入数据库</li> <li>redis用主从，写在主，读在从</li> <li>数据库不用锁</li></ol> <h2 id="实现"><a href="#实现" class="header-anchor">#</a> 实现</h2> <p>redis的key设计：</p> <div class="language- extra-class"><pre class="language-text"><code>goodsId_start #标记是否可以秒杀，为0的时候，不能秒杀
+goodsId_count #库存
+goodsId_access #秒杀进来的用户
+order #用于存储秒杀成功的用户
+</code></pre></div><p><strong>过程</strong></p> <p>goodsId_start 不为0时开始秒杀，每进来一个用户，goodsId_access + 1，同时将该用户的uid放入redis队列，当goodsId_access == goodsId_count 时，秒杀结束，后面的流程不用再走了。</p> <p>同时起一个进程，不断地轮询消费order，取出uid，并写入数据库中。</p> <p><strong>要点</strong></p> <p>在计算goodsId_access时，必须保证goodsId_access+1，只插入一条记录到order中。也就是这两步必须是原子性的，这个可以用lua来完成，代码如下：</p> <div class="language- extra-class"><pre class="language-text"><code>local v = tonumber(redis.call('get','goodsId_access')) --获取当前的goodsId_access
+if (v &gt;= tonumber(KEYS[1])) then --将goodsId_count传进来，超过它时，秒杀结束，后面的流程不需要了
+    return 0
+end
+redis.call('set','goodsId_access',v+1) --秒杀成功，+1
+redis.call('lpush','order',KEYS[2]) --秒杀成功，将uid放入order队列中
+</code></pre></div><p><strong>完整代码参考</strong></p> <p>index.php</p> <div class="language-php extra-class"><pre class="language-php"><code><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+
+<span class="token keyword">require_once</span> <span class="token double-quoted-string string">&quot;RedisTool.php&quot;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">index</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">ms</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">session_start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token variable">$uid</span> <span class="token operator">=</span> <span class="token function">session_id</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token variable">$redisR</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">RedisTool</span><span class="token punctuation">(</span><span class="token boolean constant">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token variable">$goodsStart</span> <span class="token operator">=</span> <span class="token variable">$redisR</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token single-quoted-string string">'goodsId_start'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//用于标记秒杀是否开始</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token variable">$goodsStart</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token single-quoted-string string">'还没开始'</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token variable">$goodsCount</span> <span class="token operator">=</span> <span class="token variable">$redisR</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token single-quoted-string string">'goodsId_count'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//总库存</span>
+        <span class="token variable">$goodsAccess</span> <span class="token operator">=</span> <span class="token variable">$redisR</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token single-quoted-string string">'goodsId_access'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//已使用的库存</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">$goodsCount</span> <span class="token operator">-</span> <span class="token variable">$goodsAccess</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token single-quoted-string string">'抢完了'</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment">//把成功秒杀的用户放到redis队列中，同时将goodsId_access + 1，不超卖，整个过程用lua，保证原子性</span>
+        <span class="token variable">$redisW</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">RedisTool</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token variable">$script</span> <span class="token operator">=</span> <span class="token double-quoted-string string">&quot;local v = tonumber(redis.call('get','goodsId_access'))
+        if (v &gt;= tonumber(KEYS[1])) then 
+            return 0
+        end
+        redis.call('set','goodsId_access',v+1)
+        redis.call('lpush','order',KEYS[2])&quot;</span><span class="token punctuation">;</span>
+        <span class="token variable">$redisW</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">lua</span><span class="token punctuation">(</span><span class="token variable">$script</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token variable">$goodsCount</span><span class="token punctuation">,</span><span class="token variable">$uid</span><span class="token punctuation">.</span><span class="token single-quoted-string string">' '</span><span class="token punctuation">.</span><span class="token variable">$_SERVER</span><span class="token punctuation">[</span><span class="token single-quoted-string string">'REMOTE_ADDR'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token single-quoted-string string">'恭喜抢到'</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token variable">$t</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">index</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token variable">$t</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">ms</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</span></code></pre></div><p>RedisTool.php</p> <div class="language-php extra-class"><pre class="language-php"><code><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+
+<span class="token variable">$dir</span> <span class="token operator">=</span> <span class="token function">dirname</span><span class="token punctuation">(</span><span class="token constant">__FILE__</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">require</span><span class="token punctuation">(</span><span class="token variable">$dir</span> <span class="token punctuation">.</span> <span class="token single-quoted-string string">'/vendor/autoload.php'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+<span class="token keyword">class</span> <span class="token class-name">RedisTool</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">__construct</span><span class="token punctuation">(</span><span class="token variable">$slave</span><span class="token operator">=</span><span class="token constant">null</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token variable">$config</span> <span class="token operator">=</span> <span class="token punctuation">[</span>
+            <span class="token single-quoted-string string">'host'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token single-quoted-string string">'127.0.0.1'</span><span class="token punctuation">,</span>
+            <span class="token single-quoted-string string">'port'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token number">6379</span><span class="token punctuation">,</span> <span class="token comment">//主库，用于写</span>
+        <span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token variable">$slave</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token variable">$config</span><span class="token punctuation">[</span><span class="token single-quoted-string string">'port'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">6389</span><span class="token punctuation">;</span> <span class="token comment">//从库，用于读</span>
+        <span class="token punctuation">}</span>
+        <span class="token variable">$redis</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name"><span class="token punctuation">\</span>Predis<span class="token punctuation">\</span>Client</span><span class="token punctuation">(</span><span class="token variable">$config</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">ser</span> <span class="token operator">=</span> <span class="token variable">$redis</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">set</span><span class="token punctuation">(</span><span class="token variable">$key</span><span class="token punctuation">,</span><span class="token variable">$val</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">ser</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token variable">$key</span><span class="token punctuation">,</span><span class="token variable">$val</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">get</span><span class="token punctuation">(</span><span class="token variable">$key</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">ser</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token variable">$key</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">lpush</span><span class="token punctuation">(</span><span class="token variable">$key</span><span class="token punctuation">,</span><span class="token variable">$values</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">ser</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">lpush</span><span class="token punctuation">(</span><span class="token variable">$key</span><span class="token punctuation">,</span><span class="token variable">$values</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">lpop</span><span class="token punctuation">(</span><span class="token variable">$key</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">ser</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">lpop</span><span class="token punctuation">(</span><span class="token variable">$key</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">lua</span><span class="token punctuation">(</span><span class="token variable">$script</span><span class="token punctuation">,</span> <span class="token variable">$numkeys</span><span class="token punctuation">,</span><span class="token variable">$arg1</span><span class="token punctuation">,</span><span class="token variable">$arg2</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">ser</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token keyword">eval</span><span class="token punctuation">(</span><span class="token variable">$script</span><span class="token punctuation">,</span><span class="token variable">$numkeys</span><span class="token punctuation">,</span><span class="token variable">$arg1</span><span class="token punctuation">,</span><span class="token variable">$arg2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</span></code></pre></div><p><strong>测试</strong></p> <p>条件有限，服务和ab都在本机，ab测试结果符合预期：</p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; set goodsId_count 10
+OK
+127.0.0.1:6379&gt; set goodsId_access 0
+OK
+127.0.0.1:6379&gt; set goodsId_start 1
+OK
+</code></pre></div><div class="language- extra-class"><pre class="language-text"><code>[root@localhost tmp]# ab -n 5000 -c 120 http://172.20.10.10:88/index.php
+This is ApacheBench, Version 2.3 &lt;$Revision: 1430300 $&gt;
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 172.20.10.10 (be patient)
+Completed 500 requests
+Completed 1000 requests
+Completed 1500 requests
+Completed 2000 requests
+Completed 2500 requests
+Completed 3000 requests
+Completed 3500 requests
+Completed 4000 requests
+Completed 4500 requests
+Completed 5000 requests
+Finished 5000 requests
+
+
+Server Software:        nginx/1.13.8
+Server Hostname:        172.20.10.10
+Server Port:            88
+
+Document Path:          /index.php
+Document Length:        12 bytes
+
+Concurrency Level:      120
+Time taken for tests:   14.322 seconds
+Complete requests:      5000
+Failed requests:        4990
+   (Connect: 0, Receive: 0, Length: 4990, Exceptions: 0)
+Write errors:           0
+Total transferred:      1700030 bytes
+HTML transferred:       45030 bytes
+Requests per second:    349.11 [#/sec] (mean)
+Time per request:       343.729 [ms] (mean)
+Time per request:       2.864 [ms] (mean, across all concurrent requests)
+Transfer rate:          115.92 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        1  143 949.8     38    9169
+Processing:     2  197 973.5     70    9230
+Waiting:        2  194 973.7     68    9226
+Total:          3  339 1349.1    112    9271
+
+Percentage of the requests served within a certain time (ms)
+  50%    112
+  66%    122
+  75%    133
+  80%    139
+  90%    174
+  95%    422
+  98%   8777
+  99%   8882
+ 100%   9271 (longest request)
+</code></pre></div><div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6389&gt; lrange order 0 -1
+ 1) &quot;o9ulu8llhakot9i4a14297a68g 172.20.10.10&quot;
+ 2) &quot;qq9k1u8ngqoop48glmkfe7d3pd 172.20.10.10&quot;
+ 3) &quot;hucjmfm34ql1cdmcc29ovv6fql 172.20.10.10&quot;
+ 4) &quot;1m4fmg6kq3t3jr5g38or3mp4a7 172.20.10.10&quot;
+ 5) &quot;j1qbqak9g8gvitd3kitkj9ckd8 172.20.10.10&quot;
+ 6) &quot;gct81lunmooebs8tu6rif3nunu 172.20.10.10&quot;
+ 7) &quot;a1cpdjbrremnkc6k1k02umdbbb 172.20.10.10&quot;
+ 8) &quot;f15jotvsqm8mlvv9nndp9dhsl3 172.20.10.10&quot;
+ 9) &quot;sq8emhtja81b94dlkij1m06f2q 172.20.10.10&quot;
+10) &quot;8k5nukkdt50jjr8i6jshdrif48 172.20.10.10&quot;
+</code></pre></div><h2 id="参考"><a href="#参考" class="header-anchor">#</a> 参考</h2> <p><a href="https://help.aliyun.com/document_detail/63920.html" target="_blank" rel="noopener noreferrer">使用 Redis 搭建电商秒杀系统<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><a href="http://www.infoq.com/cn/articles/solution-to-the-architecture-of-spike-system" target="_blank" rel="noopener noreferrer">秒杀系统架构解决之道<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div> <footer><div style="text-align: center;">
+            © 2020 小小郭的博客
+            <a href="http://www.beian.miit.gov.cn/">粤ICP备16016910号</a> <br><br></div></footer></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.158714e6.js" defer></script><script src="/assets/js/2.a806d99a.js" defer></script><script src="/assets/js/61.bc3d577e.js" defer></script>
+  </body>
+</html>

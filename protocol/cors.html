@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>CORS跨域问题 | 小小郭的博客</title>
+    <meta name="generator" content="VuePress 1.5.2">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="description" content="小小郭">
+    <link rel="preload" href="/assets/css/0.styles.f333096b.css" as="style"><link rel="preload" href="/assets/js/app.158714e6.js" as="script"><link rel="preload" href="/assets/js/2.a806d99a.js" as="script"><link rel="preload" href="/assets/js/49.4625a12a.js" as="script"><link rel="prefetch" href="/assets/js/10.ceb6da30.js"><link rel="prefetch" href="/assets/js/11.f6fcdde7.js"><link rel="prefetch" href="/assets/js/12.c1ccc7c5.js"><link rel="prefetch" href="/assets/js/13.2e80b5f4.js"><link rel="prefetch" href="/assets/js/14.86580eea.js"><link rel="prefetch" href="/assets/js/15.ec8bc9ac.js"><link rel="prefetch" href="/assets/js/16.ffe6c259.js"><link rel="prefetch" href="/assets/js/17.f11cefb5.js"><link rel="prefetch" href="/assets/js/18.ba7fa50a.js"><link rel="prefetch" href="/assets/js/19.d98194cd.js"><link rel="prefetch" href="/assets/js/20.b3e3e3ba.js"><link rel="prefetch" href="/assets/js/21.0560925d.js"><link rel="prefetch" href="/assets/js/22.151f504b.js"><link rel="prefetch" href="/assets/js/23.c0dd585a.js"><link rel="prefetch" href="/assets/js/24.5ac8c4b5.js"><link rel="prefetch" href="/assets/js/25.57989e7c.js"><link rel="prefetch" href="/assets/js/26.19ae4c70.js"><link rel="prefetch" href="/assets/js/27.7b7a4013.js"><link rel="prefetch" href="/assets/js/28.c02de8fb.js"><link rel="prefetch" href="/assets/js/29.be98b5ac.js"><link rel="prefetch" href="/assets/js/3.f9a5341d.js"><link rel="prefetch" href="/assets/js/30.151ce4ad.js"><link rel="prefetch" href="/assets/js/31.e3b05220.js"><link rel="prefetch" href="/assets/js/32.48233f51.js"><link rel="prefetch" href="/assets/js/33.cdf1ba85.js"><link rel="prefetch" href="/assets/js/34.8e175bdf.js"><link rel="prefetch" href="/assets/js/35.53e76add.js"><link rel="prefetch" href="/assets/js/36.2588db5d.js"><link rel="prefetch" href="/assets/js/37.904d3476.js"><link rel="prefetch" href="/assets/js/38.1424f189.js"><link rel="prefetch" href="/assets/js/39.0e05003b.js"><link rel="prefetch" href="/assets/js/4.84d9a9b8.js"><link rel="prefetch" href="/assets/js/40.e4b36098.js"><link rel="prefetch" href="/assets/js/41.13258ed7.js"><link rel="prefetch" href="/assets/js/42.6f5a7cbb.js"><link rel="prefetch" href="/assets/js/43.7898149d.js"><link rel="prefetch" href="/assets/js/44.37b08732.js"><link rel="prefetch" href="/assets/js/45.17998593.js"><link rel="prefetch" href="/assets/js/46.055bc79a.js"><link rel="prefetch" href="/assets/js/47.6df10fa7.js"><link rel="prefetch" href="/assets/js/48.2660180a.js"><link rel="prefetch" href="/assets/js/5.501f4465.js"><link rel="prefetch" href="/assets/js/50.b3b348da.js"><link rel="prefetch" href="/assets/js/51.dcb3be6c.js"><link rel="prefetch" href="/assets/js/52.7dd04b5b.js"><link rel="prefetch" href="/assets/js/53.20259b4b.js"><link rel="prefetch" href="/assets/js/54.c876d67f.js"><link rel="prefetch" href="/assets/js/55.52c8359c.js"><link rel="prefetch" href="/assets/js/56.ab71b89a.js"><link rel="prefetch" href="/assets/js/57.30af5fe9.js"><link rel="prefetch" href="/assets/js/58.d1f3acb8.js"><link rel="prefetch" href="/assets/js/59.0c65a864.js"><link rel="prefetch" href="/assets/js/6.56baaf4e.js"><link rel="prefetch" href="/assets/js/60.cc2dc3eb.js"><link rel="prefetch" href="/assets/js/61.bc3d577e.js"><link rel="prefetch" href="/assets/js/62.88dedbc6.js"><link rel="prefetch" href="/assets/js/63.5403d296.js"><link rel="prefetch" href="/assets/js/64.cdcabf93.js"><link rel="prefetch" href="/assets/js/65.7fba108e.js"><link rel="prefetch" href="/assets/js/66.51641258.js"><link rel="prefetch" href="/assets/js/67.f408a0b2.js"><link rel="prefetch" href="/assets/js/68.326016eb.js"><link rel="prefetch" href="/assets/js/69.9dde49ee.js"><link rel="prefetch" href="/assets/js/7.86ee5bb7.js"><link rel="prefetch" href="/assets/js/70.76be6feb.js"><link rel="prefetch" href="/assets/js/71.8bb3d5a3.js"><link rel="prefetch" href="/assets/js/72.3d340b56.js"><link rel="prefetch" href="/assets/js/73.94ae8b58.js"><link rel="prefetch" href="/assets/js/74.c38b2bf5.js"><link rel="prefetch" href="/assets/js/75.ab88131c.js"><link rel="prefetch" href="/assets/js/76.b15fc67e.js"><link rel="prefetch" href="/assets/js/8.77896323.js"><link rel="prefetch" href="/assets/js/9.1bb7c316.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.f333096b.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="global-layout"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">小小郭的博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav>  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="前言"><a href="#前言" class="header-anchor">#</a> 前言</h1> <p>在web开发中，有时会遇到如下错误：</p> <div class="language- extra-class"><pre class="language-text"><code>Access to XMLHttpRequest has been blocked by cors policy
+</code></pre></div><p><img src="https://img.xiaoxiaoguo.cn/mp/cors/cors1.jpg" alt=""></p> <p>这个错误经常出现在新项目刚开始的时候，处理的方式一般有两种：</p> <div class="language- extra-class"><pre class="language-text"><code>1. 在浏览器上装个跨域插件或跑个本地代理，适用于本地调试。
+2. 调整服务端配置，从根本上解决。
+</code></pre></div><p>这是个老生常谈的跨域问题，今天我们来重新认识一下。</p> <h1 id="什么是跨域"><a href="#什么是跨域" class="header-anchor">#</a> 什么是跨域</h1> <p>一个URL的组成可以简化为四部分：协议，域名，端口号，路径。</p> <p>格式为：协议://域名:端口号/路径。</p> <p>比如地址: https://www.a.cn/tools/gitlab-runner.html</p> <p>协议是https，域名是www.a.cn，端口号是443(浏览器默认不显示443端口号)，路径是tools/gitlab-runner.html。</p> <p><img src="https://img.xiaoxiaoguo.cn/mp/cors/cors2.jpg" alt=""></p> <p>浏览器有个同源策略：对于两个URL，如果协议，域名，端口号都相同时，则这两个URL是同源的，如果有不同的则是不同源。两个不同源的URL之间的访问叫跨源访问，也就是我们说的跨域访问，简称跨域。</p> <p><img src="https://img.xiaoxiaoguo.cn/mp/cors/cors3.jpg" alt=""></p> <p>跨域时，使用XMLHttpRequest，Fetch API等会受到约束，出现类似&quot;Access to xmlhttprequest at has been blocked by cors policy&quot;的错误，这个问题是我们说的跨域问题了。</p> <h1 id="为什么要处理跨域问题"><a href="#为什么要处理跨域问题" class="header-anchor">#</a> 为什么要处理跨域问题</h1> <p>浏览器为了更安全，好心好意设计了同源策略，为什么我们还要突破这个限制？因为在实际使用中存在必须跨域的情况，举两个常见的例子：</p> <h2 id="本地开发跨域"><a href="#本地开发跨域" class="header-anchor">#</a> 本地开发跨域</h2> <p>在本地的开发环境中，前后端的地址一般是不一致的。</p> <p>比如前端地址为http://192.168.103.5:8080</p> <p>后端接口地址为http://192.168.10.6/api</p> <p>这两个地址的ip和端口不一样，前端请求后端接口时就会出现跨域问题。</p> <h2 id="线上接口跨域"><a href="#线上接口跨域" class="header-anchor">#</a> 线上接口跨域</h2> <p>比如有个页面地址为http://a.company.com</p> <p>页面需调用A接口http://api.company.com/a</p> <p>这两个地址的完整域名不一致，在页面中调用A接口时会出现跨域问题。</p> <h1 id="如何解决跨域问题"><a href="#如何解决跨域问题" class="header-anchor">#</a> 如何解决跨域问题</h1> <p>目前的方案可归类为四种：</p> <div class="language- extra-class"><pre class="language-text"><code>使用支持跨域的API，如window.postMessage
+使用JSONP
+使用代理
+使用CORS机制
+</code></pre></div><p>由于方案1和方案2的限制较多，在前后端分离的项目中基本不会采用。</p> <p>以JSONP为例，它只支持GET请求，需要接口输出JavaScript代码。正经的API会使用RESTful规范或类似的标准，JSONP显然不适合。</p> <h2 id="使用代理"><a href="#使用代理" class="header-anchor">#</a> 使用代理</h2> <p>跨域问题是浏览器搞出来的，在服务端访问则没这个问题，所以我们可以在服务端加一层代理，让前端请求代理地址。</p> <p>假设应用A地址为 http://192.168.103.5:808</p> <p>接口地址为为 http://192.168.10.6/api</p> <p>则可以在应用A上加一层代理，前端接口地址改为http://192.168.103.5:8080/api，如图：</p> <p><img src="https://img.xiaoxiaoguo.cn/mp/cors/cors4.jpg" alt=""></p> <p>代理可以用Nginx，Apache，Node Js等，挑个自己喜欢的即可。比如用Nginx可配置如下：</p> <div class="language- extra-class"><pre class="language-text"><code>server {
+        listen 8080;
+        server_name 192.168.103.5;
+        location /api {
+            proxy_pass http://192.168.10.6/api;
+        }
+}
+</code></pre></div><h1 id="cors机制"><a href="#cors机制" class="header-anchor">#</a> CORS机制</h1> <p>有没有一种对架构没有入侵性，更通用的方案呢？答案就是CORS。</p> <p>CORS是一种机制，该机制使用附加的 HTTP 头来告诉浏览器，准许运行在一个源上的Web应用访问位于另一不同源选定的资源。即我们可以在HTTP头部添加CORS字段，让浏览器允许跨域。</p> <p>当请求的HTTP头部包含CORS字段时，该请求就是CORS请求。CORS有简单请求和预检请求。</p> <h2 id="简单请求"><a href="#简单请求" class="header-anchor">#</a> 简单请求</h2> <p>简单请求指客户端发送请求给服务器后，服务器直接返回内容。</p> <p><img src="https://img.xiaoxiaoguo.cn/mp/cors/cors5.jpg" alt=""></p> <p>简单请求需满足如下条件：</p> <div class="language- extra-class"><pre class="language-text"><code>请求方法只能是GET、HEAD、POST中的一个
+
+人为设置的header字段只能是Accept、Accept-Language、Content-Language 、Content-Type、DPR、Downlink、Save-Data、Viewport-Width、Width
+
+Content-Type字段的值只能是text/plain、multipart/form-data、application/x-www-form-urlencoded中的一个
+
+请求中的任意XMLHttpRequestUpload 对象均没有注册任何事件监听器
+
+请求中没有使用 ReadableStream 对象
+</code></pre></div><h2 id="预检请求"><a href="#预检请求" class="header-anchor">#</a> 预检请求</h2> <p>不满足简单请求的条件时，会触发预检请求：浏览器会先发一个option请求到服务器，确认是否可以发送实际请求，确认允许后再发送实际请求。</p> <p><img src="https://img.xiaoxiaoguo.cn/mp/cors/cors6.jpg" alt=""></p> <h2 id="cors字段"><a href="#cors字段" class="header-anchor">#</a> CORS字段</h2> <p>在HTTP的请求和响应中都有CORS字段。</p> <p>CORS的<strong>请求头部</strong>(Request Hearders)字段如下：</p> <div class="language- extra-class"><pre class="language-text"><code>Origin
+
+Access-Control-Request-Method
+
+Access-Control-Request-Headers
+</code></pre></div><p>这三个字段是自动加的，在option请求中就可以看到，如图：</p> <p><img src="https://img.xiaoxiaoguo.cn/mp/cors/cors7.jpg" alt=""></p> <p>CORS的<strong>响应头部</strong>(Response Hearders)字段如下：</p> <div class="language- extra-class"><pre class="language-text"><code>Access-Control-Allow-Origin
+Access-Control-Expose-Headers
+Access-Control-Max-Age
+Access-Control-Allow-Credentials
+Access-Control-Allow-Methods
+Access-Control-Allow-Headers
+</code></pre></div><p>从字面上就能看出各字段的作用，这里就不多赘述了。</p> <h2 id="cors配置"><a href="#cors配置" class="header-anchor">#</a> CORS配置</h2> <p>一个简化的web服务架构如下：</p> <p><img src="https://img.xiaoxiaoguo.cn/mp/cors/cors8.jpg" alt=""></p> <p>用户发起请求，web服务端响应请求。</p> <p>图中的web服务指用PHP，Node Js，Java，Python，Go等语言开发的应用。在生产环境中一般会在这些服务前挂一个反向代理，比如Nginx。用户发起请求，先到反向代理，之后到后端的web服务。</p> <p><img src="https://img.xiaoxiaoguo.cn/mp/cors/cors9.jpg" alt=""></p> <p>此时请求的响应链路是由后端web服务到反向代理，再到用户。</p> <p><img src="https://img.xiaoxiaoguo.cn/mp/cors/cors10.jpg" alt=""></p> <p>在响应的HTTP头部加上CORS字段即可实现跨域。以上图为例，可以在Nginx或后端web服务上配置。</p> <p>Nginx使用add_header指令添加，后端语言也都有相应的添加方式，比如PHP，可以直接使用header函数添加。</p> <h1 id="cors实践"><a href="#cors实践" class="header-anchor">#</a> CORS实践</h1> <h2 id="_1-一些老旧的浏览器不支持cors"><a href="#_1-一些老旧的浏览器不支持cors" class="header-anchor">#</a> 1. 一些老旧的浏览器不支持CORS</h2> <p>比如IE7，IE8。不过现在基本不会用这些浏览器了，这个问题可以忽略。</p> <h2 id="_2-在配置cors跨域时，只在一处配置"><a href="#_2-在配置cors跨域时，只在一处配置" class="header-anchor">#</a> 2. 在配置CORS跨域时，只在一处配置</h2> <p>现在的后端框架组件都很齐全，基本都带了CORS组件，一行代码就能使用CORS了。但需注意的是如果整个链路有多处节点，则只在一处配置即可，避免多处配置，造成冲突。</p> <p>以上图Nginx反向代理为例，假如在Nginx上配置了CORS：</p> <div class="language- extra-class"><pre class="language-text"><code>add_header Access-Control-Allow-Origin '*';
+add_header Access-Control-Allow-Methods 'GET, POST, OPTIONS';
+add_header Access-Control-Allow-Headers 'DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization';
+if ($request_method = 'OPTIONS') {
+    return 204;
+}
+</code></pre></div><p>且后端web服务上也加了CORS的响应头：</p> <div class="language- extra-class"><pre class="language-text"><code>header(&quot;Access-Control-Allow-Origin:*&quot;)
+</code></pre></div><p>则最终响应头部的Access-Control-Allow-Origin字段值可能会变成*.*，导致无法达到想要的跨域效果。</p> <p>正确的处理方式是只在一处配置，比如只在Nginx上配置。</p> <h2 id="_3-成功状态码有cors字段，其他状态码没有"><a href="#_3-成功状态码有cors字段，其他状态码没有" class="header-anchor">#</a> 3. 成功状态码有CORS字段，其他状态码没有</h2> <p>比如Nginx，当响应状态码是4XX，5XX时，即使配置了CORS，头部也没有CORS相关字段，此时可以加一个always参数：</p> <div class="language- extra-class"><pre class="language-text"><code>add_header Access-Control-Allow-Origin '*' always;
+add_header Access-Control-Allow-Methods 'GET, POST, OPTIONS' always;
+add_header Access-Control-Allow-Headers 'DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization' always;
+if ($request_method = 'OPTIONS') {
+    return 204;
+}
+</code></pre></div><p>添加该参数后，其他的状态码下也有CORS字段了。</p> <p><img src="https://img.xiaoxiaoguo.cn/mp/cors/cors11.jpg" alt=""></p> <h1 id="总结"><a href="#总结" class="header-anchor">#</a> 总结</h1> <p>跨域是浏览器的问题，在其他端不存在这个问题。</p> <p>处理这个问题最常用的方式是CORS机制。CORS有简单请求和预检请求，在HTTP头部加上CORS的相关字段即可实现。</p> <p>在介绍CORS时提到了反向代理，跨域的解决方案中有一个方案也是代理。这两个代理是不同的，需注意下。</p></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div> <footer><div style="text-align: center;">
+            © 2020 小小郭的博客
+            <a href="http://www.beian.miit.gov.cn/">粤ICP备16016910号</a> <br><br></div></footer></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.158714e6.js" defer></script><script src="/assets/js/2.a806d99a.js" defer></script><script src="/assets/js/49.4625a12a.js" defer></script>
+  </body>
+</html>

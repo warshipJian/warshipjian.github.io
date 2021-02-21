@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>使用 kubeadm 安装部署 kubernetes 1.9 | 小小郭的博客</title>
+    <meta name="generator" content="VuePress 1.5.2">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="description" content="小小郭">
+    <link rel="preload" href="/assets/css/0.styles.f333096b.css" as="style"><link rel="preload" href="/assets/js/app.158714e6.js" as="script"><link rel="preload" href="/assets/js/2.a806d99a.js" as="script"><link rel="preload" href="/assets/js/19.d98194cd.js" as="script"><link rel="prefetch" href="/assets/js/10.ceb6da30.js"><link rel="prefetch" href="/assets/js/11.f6fcdde7.js"><link rel="prefetch" href="/assets/js/12.c1ccc7c5.js"><link rel="prefetch" href="/assets/js/13.2e80b5f4.js"><link rel="prefetch" href="/assets/js/14.86580eea.js"><link rel="prefetch" href="/assets/js/15.ec8bc9ac.js"><link rel="prefetch" href="/assets/js/16.ffe6c259.js"><link rel="prefetch" href="/assets/js/17.f11cefb5.js"><link rel="prefetch" href="/assets/js/18.ba7fa50a.js"><link rel="prefetch" href="/assets/js/20.b3e3e3ba.js"><link rel="prefetch" href="/assets/js/21.0560925d.js"><link rel="prefetch" href="/assets/js/22.151f504b.js"><link rel="prefetch" href="/assets/js/23.c0dd585a.js"><link rel="prefetch" href="/assets/js/24.5ac8c4b5.js"><link rel="prefetch" href="/assets/js/25.57989e7c.js"><link rel="prefetch" href="/assets/js/26.19ae4c70.js"><link rel="prefetch" href="/assets/js/27.7b7a4013.js"><link rel="prefetch" href="/assets/js/28.c02de8fb.js"><link rel="prefetch" href="/assets/js/29.be98b5ac.js"><link rel="prefetch" href="/assets/js/3.f9a5341d.js"><link rel="prefetch" href="/assets/js/30.151ce4ad.js"><link rel="prefetch" href="/assets/js/31.e3b05220.js"><link rel="prefetch" href="/assets/js/32.48233f51.js"><link rel="prefetch" href="/assets/js/33.cdf1ba85.js"><link rel="prefetch" href="/assets/js/34.8e175bdf.js"><link rel="prefetch" href="/assets/js/35.53e76add.js"><link rel="prefetch" href="/assets/js/36.2588db5d.js"><link rel="prefetch" href="/assets/js/37.904d3476.js"><link rel="prefetch" href="/assets/js/38.1424f189.js"><link rel="prefetch" href="/assets/js/39.0e05003b.js"><link rel="prefetch" href="/assets/js/4.84d9a9b8.js"><link rel="prefetch" href="/assets/js/40.e4b36098.js"><link rel="prefetch" href="/assets/js/41.13258ed7.js"><link rel="prefetch" href="/assets/js/42.6f5a7cbb.js"><link rel="prefetch" href="/assets/js/43.7898149d.js"><link rel="prefetch" href="/assets/js/44.37b08732.js"><link rel="prefetch" href="/assets/js/45.17998593.js"><link rel="prefetch" href="/assets/js/46.055bc79a.js"><link rel="prefetch" href="/assets/js/47.6df10fa7.js"><link rel="prefetch" href="/assets/js/48.2660180a.js"><link rel="prefetch" href="/assets/js/49.4625a12a.js"><link rel="prefetch" href="/assets/js/5.501f4465.js"><link rel="prefetch" href="/assets/js/50.b3b348da.js"><link rel="prefetch" href="/assets/js/51.dcb3be6c.js"><link rel="prefetch" href="/assets/js/52.7dd04b5b.js"><link rel="prefetch" href="/assets/js/53.20259b4b.js"><link rel="prefetch" href="/assets/js/54.c876d67f.js"><link rel="prefetch" href="/assets/js/55.52c8359c.js"><link rel="prefetch" href="/assets/js/56.ab71b89a.js"><link rel="prefetch" href="/assets/js/57.30af5fe9.js"><link rel="prefetch" href="/assets/js/58.d1f3acb8.js"><link rel="prefetch" href="/assets/js/59.0c65a864.js"><link rel="prefetch" href="/assets/js/6.56baaf4e.js"><link rel="prefetch" href="/assets/js/60.cc2dc3eb.js"><link rel="prefetch" href="/assets/js/61.bc3d577e.js"><link rel="prefetch" href="/assets/js/62.88dedbc6.js"><link rel="prefetch" href="/assets/js/63.5403d296.js"><link rel="prefetch" href="/assets/js/64.cdcabf93.js"><link rel="prefetch" href="/assets/js/65.7fba108e.js"><link rel="prefetch" href="/assets/js/66.51641258.js"><link rel="prefetch" href="/assets/js/67.f408a0b2.js"><link rel="prefetch" href="/assets/js/68.326016eb.js"><link rel="prefetch" href="/assets/js/69.9dde49ee.js"><link rel="prefetch" href="/assets/js/7.86ee5bb7.js"><link rel="prefetch" href="/assets/js/70.76be6feb.js"><link rel="prefetch" href="/assets/js/71.8bb3d5a3.js"><link rel="prefetch" href="/assets/js/72.3d340b56.js"><link rel="prefetch" href="/assets/js/73.94ae8b58.js"><link rel="prefetch" href="/assets/js/74.c38b2bf5.js"><link rel="prefetch" href="/assets/js/75.ab88131c.js"><link rel="prefetch" href="/assets/js/76.b15fc67e.js"><link rel="prefetch" href="/assets/js/8.77896323.js"><link rel="prefetch" href="/assets/js/9.1bb7c316.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.f333096b.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="global-layout"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">小小郭的博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav>  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="使用-kubeadm-安装部署-kubernetes-1-9"><a href="#使用-kubeadm-安装部署-kubernetes-1-9" class="header-anchor">#</a> 使用 kubeadm 安装部署 kubernetes 1.9</h1> <p>kubeadm是官方提供的安装方案,比纯手工安装方便。</p> <h2 id="零-准备"><a href="#零-准备" class="header-anchor">#</a> 零 准备</h2> <p>在安装前需做些设置让系统环境一致，确保后面顺利安装。</p> <h3 id="_0-0-硬件情况"><a href="#_0-0-硬件情况" class="header-anchor">#</a> 0.0 硬件情况</h3> <p>系统：centos 7</p> <p>用户： root</p> <p>机器规划：
+| 角色|数量|配置|物理ip|hostname|
+|------| ------ |------ |------ |
+| master|1| 4核 16G|172.16.93.220 |k8s |
+| node|1| 4核 16G|172.16.89.34 |cs-k8s-34 |
+| node|1| 4核 16G|172.16.89.35 |cs-k8s-35 |</p> <p>硬件配置参考：CPU 2核或以上，内存2GB或以上。</p> <p>机器最好都在同一个局域网，在三台机器上都设置好hostname</p> <h3 id="_0-1-配置代理"><a href="#_0-1-配置代理" class="header-anchor">#</a> 0.1 配置代理</h3> <p>参考：<a href="http://blog.csdn.net/u012375924/article/details/78706910" target="_blank" rel="noopener noreferrer">centos7下终端使用代理<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p>配置yum使用代理</p> <div class="language- extra-class"><pre class="language-text"><code>echo &quot;proxy=http://127.0.0.1:8118&quot; &gt;&gt; /etc/yum.conf
+</code></pre></div><p>这里注意下，终端不需要使用代理，配置完Privoxy即可。</p> <h3 id="_0-2-系统设置"><a href="#_0-2-系统设置" class="header-anchor">#</a> 0.2 系统设置</h3> <p>0.2.1 关闭防火墙吧，省事点，如果处于安全考虑，注意后面要开放端口。</p> <div class="language- extra-class"><pre class="language-text"><code>systemctl stop firewalld
+systemctl disable firewalld
+</code></pre></div><p>0.2.2 关闭swap内存</p> <div class="language- extra-class"><pre class="language-text"><code>swapoff -a
+</code></pre></div><p>修改/etc/fstab文件，注释掉SWAP的自动挂载，使用free -m确认swap已经关闭。</p> <p>0.2.3 关闭selinux</p> <div class="language- extra-class"><pre class="language-text"><code>vim /etc/sysconfig/selinux
+将SELINUX修改为disabled
+</code></pre></div><p>运行</p> <div class="language- extra-class"><pre class="language-text"><code>setenforce 0
+</code></pre></div><h3 id="_0-3-调整内核参数"><a href="#_0-3-调整内核参数" class="header-anchor">#</a> 0.3 调整内核参数</h3> <div class="language- extra-class"><pre class="language-text"><code>cat &lt;&lt;EOF &gt;  /etc/sysctl.d/k8s.conf
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+EOF
+</code></pre></div><div class="language- extra-class"><pre class="language-text"><code>sudo sysctl --system
+</code></pre></div><h2 id="一-安装"><a href="#一-安装" class="header-anchor">#</a> 一 安装</h2> <h3 id="_1-0-版本选择"><a href="#_1-0-版本选择" class="header-anchor">#</a> 1.0 版本选择</h3> <p>三台机器都需安装docker, kubeadm, kubelet和kubectl</p> <p>版本如下：</p> <div class="language- extra-class"><pre class="language-text"><code>docker-1.12.6-68
+kubelet-1.9.0-0.x86_64
+kubectl-1.9.0-0.x86_64
+kubeadm-1.9.0-0.x86_64
+</code></pre></div><h3 id="_1-1-安装docker"><a href="#_1-1-安装docker" class="header-anchor">#</a> 1.1 安装docker</h3> <div class="language- extra-class"><pre class="language-text"><code>yum install -y docker
+systemctl enable docker 
+systemctl start docker
+</code></pre></div><p>配置docker代理</p> <div class="language- extra-class"><pre class="language-text"><code>mkdir -p /etc/systemd/system/docker.service.d
+</code></pre></div><p>添加如下内容到/etc/systemd/system/docker.service.d/http-proxy.conf</p> <div class="language- extra-class"><pre class="language-text"><code>[Service]
+Environment=&quot;HTTP_PROXY=http://127.0.0.1:8118&quot; &quot;NO_PROXY=localhost,172.16.0.0/16,127.0.0.1,10.244.0.0/16&quot;
+</code></pre></div><p>添加如下内容到/etc/systemd/system/docker.service.d/https-proxy.conf</p> <div class="language- extra-class"><pre class="language-text"><code>[Service]
+Environment=&quot;HTTPS_PROXY=https://127.0.0.1:8118&quot; &quot;NO_PROXY=localhost,172.16.0.0/16,127.0.0.1,10.244.0.0/16&quot;
+</code></pre></div><p>启动docker</p> <div class="language- extra-class"><pre class="language-text"><code>systemctl daemon-reload &amp;&amp; systemctl restart docker
+</code></pre></div><h3 id="_1-2-安装kubeadm-kubelet和kubectl"><a href="#_1-2-安装kubeadm-kubelet和kubectl" class="header-anchor">#</a> 1.2 安装kubeadm, kubelet和kubectl</h3> <p>配置kubernetes源</p> <div class="language- extra-class"><pre class="language-text"><code>cat &lt;&lt;EOF &gt; /etc/yum.repos.d/kubernetes.repo
+[kubernetes]
+name=Kubernetes
+baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+EOF
+</code></pre></div><p>开始安装</p> <div class="language- extra-class"><pre class="language-text"><code>yum install -y kubelet kubeadm kubectl
+systemctl enable kubelet &amp;&amp; sudo systemctl start kubelet
+</code></pre></div><p>至此，在所有机器上安装所需的软件已经结束。</p> <h2 id="二-在master上配置"><a href="#二-在master上配置" class="header-anchor">#</a> 二 在master上配置</h2> <h3 id="_2-0-初始化k8s"><a href="#_2-0-初始化k8s" class="header-anchor">#</a> 2.0 初始化K8S</h3> <p>通过kubeadm init命令来初始化，指定一下kubernetes版本，并设置一下pod-network-cidr。</p> <div class="language- extra-class"><pre class="language-text"><code>kubeadm init --kubernetes-version=v1.9.0 --pod-network-cidr=10.244.0.0/16
+</code></pre></div><p>等待执行完成后，会看到类似如下的提示，非常友好</p> <div class="language- extra-class"><pre class="language-text"><code>kubeadm join --token 2fae1b.e4306e679794caaf 172.16.93.220:6443 --discovery-token-ca-cert-hash sha256:26d12811d5a60ecd91ba6bfea03daa34460d6143ceb11777179fd02e09f0ad16
+</code></pre></div><p>这行内容先记录下，等下节点添加的时候要使用。</p> <h3 id="_2-1-添加k8s配置"><a href="#_2-1-添加k8s配置" class="header-anchor">#</a> 2.1 添加K8S配置</h3> <div class="language- extra-class"><pre class="language-text"><code>export KUBECONFIG=/etc/kubernetes/admin.conf
+echo &quot;export KUBECONFIG=/etc/kubernetes/admin.conf&quot; &gt;&gt; ~/.bash_profile
+</code></pre></div><h3 id="_2-2-安装network-addon"><a href="#_2-2-安装network-addon" class="header-anchor">#</a> 2.2 安装network addon</h3> <p>要docker之间能互相通信需要做些配置，这里用Flannel来实现</p> <div class="language- extra-class"><pre class="language-text"><code>kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/v0.9.1/Documentation/kube-flannel.yml
+</code></pre></div><p>安装完成后，通过kubectl get pods --all-namespaces来判断kube-dns是否安装成功。</p> <div class="language- extra-class"><pre class="language-text"><code>[root@k8s ~]# kubectl get pods --all-namespaces
+NAMESPACE     NAME                                    READY     STATUS    RESTARTS   AGE
+default       redis-test-9b545dd64-8v5mv              1/1       Running   0          1d
+kube-system   etcd-k8s                                1/1       Running   1          2d
+kube-system   heapster-5c448886d-z9j4n                1/1       Running   0          1d
+kube-system   kube-apiserver-k8s                      1/1       Running   1          2d
+kube-system   kube-controller-manager-k8s             1/1       Running   1          2d
+kube-system   kube-dns-6f4fd4bdf-pp8bg                3/3       Running   3          2d
+kube-system   kube-flannel-ds-2xmhn                   1/1       Running   3          2d
+kube-system   kube-flannel-ds-rdnwn                   1/1       Running   2          2d
+kube-system   kube-flannel-ds-sqltw                   1/1       Running   1          2d
+kube-system   kube-proxy-4zbrs                        1/1       Running   2          2d
+kube-system   kube-proxy-d4mpm                        1/1       Running   1          2d
+kube-system   kube-proxy-drcf7                        1/1       Running   2          2d
+kube-system   kube-scheduler-k8s                      1/1       Running   1          2d
+</code></pre></div><p>可以看到kube-dns-6f4fd4bdf-pp8bg为running状态。</p> <p>至此，master部分的配置就完成了。</p> <h2 id="三-node加入集群"><a href="#三-node加入集群" class="header-anchor">#</a> 三 node加入集群</h2> <p>登录172.16.89.34和172.16.89.35，执行刚才记录的那一行命令</p> <div class="language- extra-class"><pre class="language-text"><code>kubeadm join --token 2fae1b.e4306e679794caaf 172.16.93.220:6443 --discovery-token-ca-cert-hash sha256:26d12811d5a60ecd91ba6bfea03daa34460d6143ceb11777179fd02e09f0ad16
+</code></pre></div><p>顺利的话可以看到类似如下的提示</p> <div class="language- extra-class"><pre class="language-text"><code>Run 'kubectl get nodes' on the master to see this node join the cluster.
+</code></pre></div><p>回到master机器上，运行该命令查看结果</p> <div class="language- extra-class"><pre class="language-text"><code>[root@k8s ~]# kubectl get nodes
+NAME        STATUS    ROLES     AGE       VERSION
+cs-k8s-34   Ready     &lt;none&gt;    2d        v1.9.0
+cs-k8s-35   Ready     &lt;none&gt;    2d        v1.9.0
+k8s         Ready     master    2d        v1.9.0
+</code></pre></div><p>可以看到两个节点都已经加入了，并且是正常的ready状态。</p> <p>至此，整个集群的配置完成，可以开始使用了。</p> <h2 id="四-配置dashboard"><a href="#四-配置dashboard" class="header-anchor">#</a> 四 配置dashboard</h2> <p>默认是没web界面的，可以在master机器上安装一个dashboard插件，实现通过web来管理</p> <h3 id="_4-0-下载配置文件"><a href="#_4-0-下载配置文件" class="header-anchor">#</a> 4.0 下载配置文件</h3> <div class="language- extra-class"><pre class="language-text"><code>wget https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
+</code></pre></div><p>编辑kubernetes-dashboard.yaml文件，在Dashboard Service中添加type: NodePort，暴露Dashboard服务</p> <div class="language- extra-class"><pre class="language-text"><code># ------------------- Dashboard Service ------------------- #
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    k8s-app: kubernetes-dashboard
+  name: kubernetes-dashboard
+  namespace: kube-system
+spec:
+  type: NodePort
+  ports:
+    - port: 443
+      targetPort: 8443
+  selector:
+    k8s-app: kubernetes-dashboard
+</code></pre></div><h3 id="_4-1-安装dashboard插件"><a href="#_4-1-安装dashboard插件" class="header-anchor">#</a> 4.1 安装Dashboard插件</h3> <div class="language- extra-class"><pre class="language-text"><code>kubectl create -f kubernetes-dashboard.yaml
+</code></pre></div><h3 id="_4-2-授予dashboard账户集群管理权限"><a href="#_4-2-授予dashboard账户集群管理权限" class="header-anchor">#</a> 4.2 授予Dashboard账户集群管理权限</h3> <p>需要一个管理集群admin的权限，新建kubernetes-dashboard-admin.rbac.yaml文件，内容如下</p> <div class="language-yaml extra-class"><pre class="language-yaml"><code><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> ServiceAccount
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+    <span class="token key atrule">k8s-app</span><span class="token punctuation">:</span> kubernetes<span class="token punctuation">-</span>dashboard
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> kubernetes<span class="token punctuation">-</span>dashboard<span class="token punctuation">-</span>admin
+  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> kube<span class="token punctuation">-</span>system
+<span class="token punctuation">---</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> rbac.authorization.k8s.io/v1beta1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> ClusterRoleBinding
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> kubernetes<span class="token punctuation">-</span>dashboard<span class="token punctuation">-</span>admin
+  <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+    <span class="token key atrule">k8s-app</span><span class="token punctuation">:</span> kubernetes<span class="token punctuation">-</span>dashboard
+<span class="token key atrule">roleRef</span><span class="token punctuation">:</span>
+  <span class="token key atrule">apiGroup</span><span class="token punctuation">:</span> rbac.authorization.k8s.io
+  <span class="token key atrule">kind</span><span class="token punctuation">:</span> ClusterRole
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> cluster<span class="token punctuation">-</span>admin
+<span class="token key atrule">subjects</span><span class="token punctuation">:</span>
+<span class="token punctuation">-</span> <span class="token key atrule">kind</span><span class="token punctuation">:</span> ServiceAccount
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> kubernetes<span class="token punctuation">-</span>dashboard<span class="token punctuation">-</span>admin
+  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> kube<span class="token punctuation">-</span>system
+</code></pre></div><p>执行命令</p> <div class="language- extra-class"><pre class="language-text"><code>kubectl create -f kubernetes-dashboard-admin.rbac.yaml
+</code></pre></div><p>找到kubernete-dashboard-admin的token，用户登录使用</p> <p>执行命令</p> <div class="language- extra-class"><pre class="language-text"><code>[root@k8s ~]# kubectl -n kube-system get secret | grep kubernetes-dashboard-admin
+kubernetes-dashboard-admin-token-ddskx           kubernetes.io/service-account-token   3         1d
+</code></pre></div><p>可以看到名称是kubernetes-dashboard-admin-token-ddskx，使用该名称执行如下命令</p> <div class="language- extra-class"><pre class="language-text"><code>[root@k8s ~]# kubectl describe -n kube-system secret/kubernetes-dashboard-admin-token-ddskx
+Name:         kubernetes-dashboard-admin-token-ddskx
+Namespace:    kube-system
+Labels:       &lt;none&gt;
+Annotations:  kubernetes.io/service-account.name=kubernetes-dashboard-admin
+              kubernetes.io/service-account.uid=3e70cc52-f121-11e7-a359-52540059e4c5
+
+Type:  kubernetes.io/service-account-token
+
+Data
+====
+ca.crt:     1025 bytes
+namespace:  11 bytes
+token:      eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJrdWJlcm5ldGVzLWRhc2hib2FyZC1hZG1pbi10b2tlbi1kZHNreCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJrdWJlcm5ldGVzLWRhc2hib2FyZC1hZG1pbiIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50LnVpZCI6IjNlNzBjYzUyLWYxMjEtMTFlNy1hMzU5LTUyNTQwMDU5ZTRjNSIsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDprdWJlLXN5c3RlbTprdWJlcm5ldGVzLWRhc2hib2FyZC1hZG1pbiJ9.vz7xBUDYoIfeR83BfbUKAWFiKUAgTen7GP9b7d2nmcNIwAht6Xl6OaC-vjC66gaBD9Y-1ljb384jUoHQ0wCxE4tNFE8G5FR7-xbt-OpFt5razy28QIZYzeK_cP5af5RcdacYwWIRGHdPAp8Ki2dGNTqXMNL-0ySosCvNisTNgzvn0XbggLmXGYLfluNm75aitJFuzR3tOtKd-2qL27jccOtDE_MtE4zRQ-X5ikHT2vQGOEfLGaukbFN211AFVPe6Vgp18TJM3kTc0Yom5947ZB1E660IP4mCatMwHDadutb662rNJGSn65shrBua9u7yBK9xWQ_asAjHfZGKhdO2wg
+</code></pre></div><p>记下这串token，等下登录使用，这个token默认是永久的。</p> <h3 id="_4-3-找出dashboard服务端口"><a href="#_4-3-找出dashboard服务端口" class="header-anchor">#</a> 4.3 找出Dashboard服务端口</h3> <div class="language- extra-class"><pre class="language-text"><code>[root@k8s ~]# kubectl get svc -n kube-system
+NAME                   TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)         AGE
+heapster               ClusterIP   10.103.146.118   &lt;none&gt;        80/TCP          1d
+kube-dns               ClusterIP   10.96.0.10       &lt;none&gt;        53/UDP,53/TCP   2d
+kubernetes-dashboard   NodePort    10.103.190.189   &lt;none&gt;        443:31472/TCP   1d
+monitoring-grafana     ClusterIP   10.109.25.3      &lt;none&gt;        80/TCP          1d
+monitoring-influxdb    ClusterIP   10.109.165.19    &lt;none&gt;        8086/TCP        1d
+</code></pre></div><p>可以看到它对外的端口为31472。
+打开浏览器，访问https://172.16.93.220:31472/#!/login，选择令牌，输入刚才的token即可进入</p> <p><img src="https://img.xiaoxiaoguo.cn/usr/uploads/2018/01/1015046954.png" alt=""></p> <p>界面如下</p> <p><img src="https://img.xiaoxiaoguo.cn/usr/uploads/2018/01/1355200635.png" alt=""></p> <p>上图的图表需要安装heapster仪表盘插件才能看到</p> <h2 id="五-部署heapster插件"><a href="#五-部署heapster插件" class="header-anchor">#</a> 五 部署heapster插件</h2> <div class="language- extra-class"><pre class="language-text"><code>mkdir -p ~/k8s/heapster
+cd ~/k8s/heapster
+wget https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/influxdb/grafana.yaml
+wget https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/rbac/heapster-rbac.yaml
+wget https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/influxdb/heapster.yaml
+wget https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/influxdb/influxdb.yaml
+kubectl create -f ./
+</code></pre></div><p>安装完成后，重新登录即可看到。</p> <h2 id="六-后记"><a href="#六-后记" class="header-anchor">#</a> 六 后记</h2> <p>在安装的时候参考了这两篇文章，节省了很多时间，感谢。</p> <p><a href="https://www.zybuluo.com/ncepuwanghui/note/953929" target="_blank" rel="noopener noreferrer">使用kubeadm在CentOS 7上安装Kubernetes 1.8<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><a href="https://www.kubernetes.org.cn/3357.html" target="_blank" rel="noopener noreferrer">使用 kubeadm 创建 kubernetes 1.9 集群<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div> <footer><div style="text-align: center;">
+            © 2020 小小郭的博客
+            <a href="http://www.beian.miit.gov.cn/">粤ICP备16016910号</a> <br><br></div></footer></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.158714e6.js" defer></script><script src="/assets/js/2.a806d99a.js" defer></script><script src="/assets/js/19.d98194cd.js" defer></script>
+  </body>
+</html>

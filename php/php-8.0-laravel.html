@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>PHP8.0正式版的编译安装与使用 | 小小郭的博客</title>
+    <meta name="generator" content="VuePress 1.5.2">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="description" content="小小郭">
+    <link rel="preload" href="/assets/css/0.styles.f333096b.css" as="style"><link rel="preload" href="/assets/js/app.158714e6.js" as="script"><link rel="preload" href="/assets/js/2.a806d99a.js" as="script"><link rel="preload" href="/assets/js/46.055bc79a.js" as="script"><link rel="prefetch" href="/assets/js/10.ceb6da30.js"><link rel="prefetch" href="/assets/js/11.f6fcdde7.js"><link rel="prefetch" href="/assets/js/12.c1ccc7c5.js"><link rel="prefetch" href="/assets/js/13.2e80b5f4.js"><link rel="prefetch" href="/assets/js/14.86580eea.js"><link rel="prefetch" href="/assets/js/15.ec8bc9ac.js"><link rel="prefetch" href="/assets/js/16.ffe6c259.js"><link rel="prefetch" href="/assets/js/17.f11cefb5.js"><link rel="prefetch" href="/assets/js/18.ba7fa50a.js"><link rel="prefetch" href="/assets/js/19.d98194cd.js"><link rel="prefetch" href="/assets/js/20.b3e3e3ba.js"><link rel="prefetch" href="/assets/js/21.0560925d.js"><link rel="prefetch" href="/assets/js/22.151f504b.js"><link rel="prefetch" href="/assets/js/23.c0dd585a.js"><link rel="prefetch" href="/assets/js/24.5ac8c4b5.js"><link rel="prefetch" href="/assets/js/25.57989e7c.js"><link rel="prefetch" href="/assets/js/26.19ae4c70.js"><link rel="prefetch" href="/assets/js/27.7b7a4013.js"><link rel="prefetch" href="/assets/js/28.c02de8fb.js"><link rel="prefetch" href="/assets/js/29.be98b5ac.js"><link rel="prefetch" href="/assets/js/3.f9a5341d.js"><link rel="prefetch" href="/assets/js/30.151ce4ad.js"><link rel="prefetch" href="/assets/js/31.e3b05220.js"><link rel="prefetch" href="/assets/js/32.48233f51.js"><link rel="prefetch" href="/assets/js/33.cdf1ba85.js"><link rel="prefetch" href="/assets/js/34.8e175bdf.js"><link rel="prefetch" href="/assets/js/35.53e76add.js"><link rel="prefetch" href="/assets/js/36.2588db5d.js"><link rel="prefetch" href="/assets/js/37.904d3476.js"><link rel="prefetch" href="/assets/js/38.1424f189.js"><link rel="prefetch" href="/assets/js/39.0e05003b.js"><link rel="prefetch" href="/assets/js/4.84d9a9b8.js"><link rel="prefetch" href="/assets/js/40.e4b36098.js"><link rel="prefetch" href="/assets/js/41.13258ed7.js"><link rel="prefetch" href="/assets/js/42.6f5a7cbb.js"><link rel="prefetch" href="/assets/js/43.7898149d.js"><link rel="prefetch" href="/assets/js/44.37b08732.js"><link rel="prefetch" href="/assets/js/45.17998593.js"><link rel="prefetch" href="/assets/js/47.6df10fa7.js"><link rel="prefetch" href="/assets/js/48.2660180a.js"><link rel="prefetch" href="/assets/js/49.4625a12a.js"><link rel="prefetch" href="/assets/js/5.501f4465.js"><link rel="prefetch" href="/assets/js/50.b3b348da.js"><link rel="prefetch" href="/assets/js/51.dcb3be6c.js"><link rel="prefetch" href="/assets/js/52.7dd04b5b.js"><link rel="prefetch" href="/assets/js/53.20259b4b.js"><link rel="prefetch" href="/assets/js/54.c876d67f.js"><link rel="prefetch" href="/assets/js/55.52c8359c.js"><link rel="prefetch" href="/assets/js/56.ab71b89a.js"><link rel="prefetch" href="/assets/js/57.30af5fe9.js"><link rel="prefetch" href="/assets/js/58.d1f3acb8.js"><link rel="prefetch" href="/assets/js/59.0c65a864.js"><link rel="prefetch" href="/assets/js/6.56baaf4e.js"><link rel="prefetch" href="/assets/js/60.cc2dc3eb.js"><link rel="prefetch" href="/assets/js/61.bc3d577e.js"><link rel="prefetch" href="/assets/js/62.88dedbc6.js"><link rel="prefetch" href="/assets/js/63.5403d296.js"><link rel="prefetch" href="/assets/js/64.cdcabf93.js"><link rel="prefetch" href="/assets/js/65.7fba108e.js"><link rel="prefetch" href="/assets/js/66.51641258.js"><link rel="prefetch" href="/assets/js/67.f408a0b2.js"><link rel="prefetch" href="/assets/js/68.326016eb.js"><link rel="prefetch" href="/assets/js/69.9dde49ee.js"><link rel="prefetch" href="/assets/js/7.86ee5bb7.js"><link rel="prefetch" href="/assets/js/70.76be6feb.js"><link rel="prefetch" href="/assets/js/71.8bb3d5a3.js"><link rel="prefetch" href="/assets/js/72.3d340b56.js"><link rel="prefetch" href="/assets/js/73.94ae8b58.js"><link rel="prefetch" href="/assets/js/74.c38b2bf5.js"><link rel="prefetch" href="/assets/js/75.ab88131c.js"><link rel="prefetch" href="/assets/js/76.b15fc67e.js"><link rel="prefetch" href="/assets/js/8.77896323.js"><link rel="prefetch" href="/assets/js/9.1bb7c316.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.f333096b.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="global-layout"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">小小郭的博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav>  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="php8-0正式版的编译安装与使用"><a href="#php8-0正式版的编译安装与使用" class="header-anchor">#</a> PHP8.0正式版的编译安装与使用</h1> <blockquote><p>2020-11-26发布了PHP8.0的正式版
+介绍下它的安装，并使用laravel对比下PHP7</p></blockquote> <h2 id="安装与配置"><a href="#安装与配置" class="header-anchor">#</a> 安装与配置</h2> <p>本次使用的操作系统<code>Ubuntu 18.04.4 LTS</code></p> <h3 id="安装"><a href="#安装" class="header-anchor">#</a> 安装</h3> <p>1.准备必要库</p> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">apt-get</span> <span class="token function">install</span> -y autoconf libxml2-dev libsqlite3-dev <span class="token punctuation">\</span>
+libcurl4-openssl-dev libssl-dev libonig-dev libtidy-dev zlib1g-dev
+</code></pre></div><p>2.去官网下载8.0正式版 https://www.php.net/releases/8.0/en.php</p> <p>3.解压安装</p> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">tar</span> php-8.0.0.tar.gz
+<span class="token builtin class-name">cd</span> php-8.0.0
+./configure --prefix<span class="token operator">=</span>/opt/php8 --with-config-file-path<span class="token operator">=</span>/opt/php8/etc <span class="token punctuation">\</span>
+--enable-fpm --enable-mysqlnd --enable-opcache --enable-pcntl <span class="token punctuation">\</span>
+--enable-mbstring --enable-soap --enable-zip --enable-calendar <span class="token punctuation">\</span>
+--enable-bcmath --enable-exif --enable-ftp --enable-intl --with-mysqli <span class="token punctuation">\</span>
+--with-pdo-mysql --with-openssl --with-curl --with-gd --with-gettext <span class="token punctuation">\</span>
+--with-mhash --with-openssl --with-mcrypt --with-tidy --enable-wddx <span class="token punctuation">\</span>
+--with-xmlrpc --with-zlib
+<span class="token function">make</span>
+<span class="token function">make</span> <span class="token function">install</span>
+<span class="token function">cp</span> php.ini-production /opt/php/etc/php.ini
+<span class="token builtin class-name">cd</span> /opt/php8/etc
+<span class="token function">cp</span> php-fpm.conf.default php-fpm.conf
+<span class="token function">cp</span> ./php-fpm.d/www.conf.default ./php-fpm.d/www.conf
+</code></pre></div><p>4.做个软连接</p> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">ln</span> -s /opt/php8/bin/php /usr/bin/php8
+</code></pre></div><p>4.安装composer</p> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token builtin class-name">cd</span> /opt/php8/bin/
+<span class="token function">curl</span> -sS https://getcomposer.org/installer <span class="token operator">|</span> php8
+<span class="token function">ln</span> -s /opt/php8/bin/composer.phar /usr/bin/composer8
+composer8 config -g repo.packagist composer https://mirrors.aliyun.com/composer/
+</code></pre></div><p>4.添加一个php8.0的system service</p> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">vim</span> /lib/systemd/system/php8.0-fpm.service 
+</code></pre></div><p>内容如下</p> <div class="language- extra-class"><pre class="language-text"><code>[Unit]
+Description=The PHP 8.0 FastCGI Process Manager
+Documentation=man:php-fpm8.0(8)
+After=network.target
+
+[Service]
+Type=simple
+PIDFile=/var/run/php8.0-fpm.pid
+ExecStart=/opt/php8/sbin/php-fpm --nodaemonize --fpm-config /opt/php8/etc/php-fpm.conf
+ExecReload=/bin/kill -USR2 $MAINPID
+
+[Install]
+WantedBy=multi-user.target
+</code></pre></div><h3 id="配置"><a href="#配置" class="header-anchor">#</a> 配置</h3> <h4 id="fpm-fpm，php-ini配置"><a href="#fpm-fpm，php-ini配置" class="header-anchor">#</a> fpm-fpm，php.ini配置</h4> <p>和PHP7一样，注意下用户权限</p> <h4 id="opcache配置"><a href="#opcache配置" class="header-anchor">#</a> opcache配置</h4> <p>PHP8多了一个jit配置，如下</p> <div class="language- extra-class"><pre class="language-text"><code>[opcache]
+zend_extension=opcache.so
+opcache.enable=1 
+opcache.jit_buffer_size=100M
+opcache.jit=1255
+</code></pre></div><h3 id="启动"><a href="#启动" class="header-anchor">#</a> 启动</h3> <div class="language- extra-class"><pre class="language-text"><code>systemctl start php8.0-fpm
+</code></pre></div><h2 id="laravel"><a href="#laravel" class="header-anchor">#</a> laravel</h2> <h3 id="创建一个laravel项目"><a href="#创建一个laravel项目" class="header-anchor">#</a> 创建一个laravel项目</h3> <div class="language- extra-class"><pre class="language-text"><code>cd /opt/web
+composer8 create-project --prefer-dist laravel/laravel php8
+</code></pre></div><p>配置一下.env文件</p> <h3 id="nginx配置"><a href="#nginx配置" class="header-anchor">#</a> nginx配置</h3> <p>nginx的配置和PHP7的一致</p> <div class="language- extra-class"><pre class="language-text"><code>server {
+    listen 94;
+
+    access_log  /tmp/test94.log main;
+
+    root /opt/web/php8/public;
+    index index.php index.html index.htm;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location ~ \.php {
+        fastcgi_pass unix:/run/php/php8.0-fpm.sock;
+        fastcgi_index /index.php;
+
+        include fastcgi_params;
+
+        fastcgi_split_path_info       ^(.+\.php)(/.+)$;
+        fastcgi_param PATH_INFO       $fastcgi_path_info;
+        fastcgi_param PATH_TRANSLATED $document_root$fastcgi_path_info;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    }
+}
+</code></pre></div><h3 id="添加一个接口"><a href="#添加一个接口" class="header-anchor">#</a> 添加一个接口</h3> <p>laravel7的路由写法在laravel8中有点问题，改下<code>RouteServiceProvider.php</code>的写法。
+比如API路由,将<code>$this-&gt;namespace</code>改为<code>App\Http\Controllers\Api</code>。</p> <div class="language-php extra-class"><pre class="language-php"><code><span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">boot</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">configureRateLimiting</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">routes</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            Route<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">prefix</span><span class="token punctuation">(</span><span class="token single-quoted-string string">'api'</span><span class="token punctuation">)</span>
+                <span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">middleware</span><span class="token punctuation">(</span><span class="token single-quoted-string string">'api'</span><span class="token punctuation">)</span>
+		<span class="token operator">-</span><span class="token operator">&gt;</span><span class="token keyword">namespace</span><span class="token punctuation">(</span><span class="token single-quoted-string string">'App\Http\Controllers\Api'</span><span class="token punctuation">)</span>
+                <span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">group</span><span class="token punctuation">(</span><span class="token function">base_path</span><span class="token punctuation">(</span><span class="token single-quoted-string string">'routes/api.php'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            Route<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">middleware</span><span class="token punctuation">(</span><span class="token single-quoted-string string">'web'</span><span class="token punctuation">)</span>
+                <span class="token operator">-</span><span class="token operator">&gt;</span><span class="token keyword">namespace</span><span class="token punctuation">(</span><span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token keyword">namespace</span><span class="token punctuation">)</span>
+                <span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">group</span><span class="token punctuation">(</span><span class="token function">base_path</span><span class="token punctuation">(</span><span class="token single-quoted-string string">'routes/web.php'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+</code></pre></div><p>其他一样，不用修改。
+加个测试接口看看：</p> <div class="language-php extra-class"><pre class="language-php"><code>Route<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token single-quoted-string string">'/test'</span><span class="token punctuation">,</span><span class="token single-quoted-string string">'WxController@test'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p><code>test</code>接口查一条数据并返回</p> <div class="language-php extra-class"><pre class="language-php"><code><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+
+<span class="token keyword">namespace</span> <span class="token package">App<span class="token punctuation">\</span>Http<span class="token punctuation">\</span>Controllers<span class="token punctuation">\</span>Api</span><span class="token punctuation">;</span>
+
+<span class="token keyword">use</span> <span class="token package">App<span class="token punctuation">\</span>Models<span class="token punctuation">\</span>WareHouses</span><span class="token punctuation">;</span>
+<span class="token keyword">use</span> <span class="token package">Illuminate<span class="token punctuation">\</span>Foundation<span class="token punctuation">\</span>Auth<span class="token punctuation">\</span>Access<span class="token punctuation">\</span>AuthorizesRequests</span><span class="token punctuation">;</span>
+<span class="token keyword">use</span> <span class="token package">Illuminate<span class="token punctuation">\</span>Foundation<span class="token punctuation">\</span>Bus<span class="token punctuation">\</span>DispatchesJobs</span><span class="token punctuation">;</span>
+<span class="token keyword">use</span> <span class="token package">Illuminate<span class="token punctuation">\</span>Foundation<span class="token punctuation">\</span>Validation<span class="token punctuation">\</span>ValidatesRequests</span><span class="token punctuation">;</span>
+<span class="token keyword">use</span> <span class="token package">Illuminate<span class="token punctuation">\</span>Http<span class="token punctuation">\</span>Request</span><span class="token punctuation">;</span>
+<span class="token keyword">use</span> <span class="token package">Illuminate<span class="token punctuation">\</span>Routing<span class="token punctuation">\</span>Controller</span> <span class="token keyword">as</span> BaseController<span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">WxController</span> <span class="token keyword">extends</span> <span class="token class-name">BaseController</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">use</span> <span class="token package">AuthorizesRequests</span><span class="token punctuation">,</span> DispatchesJobs<span class="token punctuation">,</span> ValidatesRequests<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">test</span><span class="token punctuation">(</span>Request <span class="token variable">$request</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> WareHouses<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">find</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">toarray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</span></code></pre></div><h2 id="对比测试php7"><a href="#对比测试php7" class="header-anchor">#</a> 对比测试PHP7</h2> <p>本次使用PHP7.3，接口代码和PHP8一致，两者都开启opcache。</p> <p>服务器配置是1核2G，用ab简单测试下。</p> <div class="language- extra-class"><pre class="language-text"><code>ab -n 100 -c 10
+</code></pre></div><p>PHP7.3的测试结果如下：</p> <div class="language- extra-class"><pre class="language-text"><code>This is ApacheBench, Version 2.3 &lt;$Revision: 1843412 $&gt;
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 192.168.10.10 (be patient).....done
+
+
+Server Software:        nginx/1.14.0
+Server Hostname:        192.168.10.10
+Server Port:            94
+
+Document Path:          /api/test
+Document Length:        255 bytes
+
+Concurrency Level:      10
+Time taken for tests:   0.400 seconds
+Complete requests:      10
+Failed requests:        0
+Total transferred:      5720 bytes
+HTML transferred:       2550 bytes
+Requests per second:    25.00 [#/sec] (mean)
+Time per request:       399.994 [ms] (mean)
+Time per request:       39.999 [ms] (mean, across all concurrent requests)
+Transfer rate:          13.97 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        8   10   2.1     11      13
+Processing:   101  159  42.8    174     228
+Waiting:      101  159  42.8    174     228
+Total:        114  170  42.0    186     235
+
+Percentage of the requests served within a certain time (ms)
+  50%    186
+  66%    186
+  75%    197
+  80%    219
+  90%    235
+  95%    235
+  98%    235
+  99%    235
+ 100%    235 (longest request)
+</code></pre></div><p>PHP8.0的测试结果如下：</p> <div class="language- extra-class"><pre class="language-text"><code>This is ApacheBench, Version 2.3 &lt;$Revision: 1843412 $&gt;
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 192.168.10.10 (be patient).....done
+
+
+Server Software:        nginx/1.14.0
+Server Hostname:        192.168.10.10
+Server Port:            94
+
+Document Path:          /api/test
+Document Length:        255 bytes
+
+Concurrency Level:      10
+Time taken for tests:   2.441 seconds
+Complete requests:      100
+Failed requests:        33
+   (Connect: 0, Receive: 0, Length: 33, Exceptions: 0)
+Non-2xx responses:      33
+Total transferred:      268489 bytes
+HTML transferred:       234720 bytes
+Requests per second:    40.97 [#/sec] (mean)
+Time per request:       244.096 [ms] (mean)
+Time per request:       24.410 [ms] (mean, across all concurrent requests)
+Transfer rate:          107.42 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        7   15  18.1     10     132
+Processing:    47  210 224.4    106     817
+Waiting:       17  118 107.4    101     787
+Total:         55  226 222.1    122     828
+
+Percentage of the requests served within a certain time (ms)
+  50%    122
+  66%    137
+  75%    164
+  80%    289
+  90%    640
+  95%    809
+  98%    820
+  99%    828
+ 100%    828 (longest request)
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div> <footer><div style="text-align: center;">
+            © 2020 小小郭的博客
+            <a href="http://www.beian.miit.gov.cn/">粤ICP备16016910号</a> <br><br></div></footer></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.158714e6.js" defer></script><script src="/assets/js/2.a806d99a.js" defer></script><script src="/assets/js/46.055bc79a.js" defer></script>
+  </body>
+</html>

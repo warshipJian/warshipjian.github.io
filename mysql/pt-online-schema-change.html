@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>在线修改表结构DDL | 小小郭的博客</title>
+    <meta name="generator" content="VuePress 1.5.2">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="description" content="小小郭">
+    <link rel="preload" href="/assets/css/0.styles.f333096b.css" as="style"><link rel="preload" href="/assets/js/app.158714e6.js" as="script"><link rel="preload" href="/assets/js/2.a806d99a.js" as="script"><link rel="preload" href="/assets/js/32.48233f51.js" as="script"><link rel="prefetch" href="/assets/js/10.ceb6da30.js"><link rel="prefetch" href="/assets/js/11.f6fcdde7.js"><link rel="prefetch" href="/assets/js/12.c1ccc7c5.js"><link rel="prefetch" href="/assets/js/13.2e80b5f4.js"><link rel="prefetch" href="/assets/js/14.86580eea.js"><link rel="prefetch" href="/assets/js/15.ec8bc9ac.js"><link rel="prefetch" href="/assets/js/16.ffe6c259.js"><link rel="prefetch" href="/assets/js/17.f11cefb5.js"><link rel="prefetch" href="/assets/js/18.ba7fa50a.js"><link rel="prefetch" href="/assets/js/19.d98194cd.js"><link rel="prefetch" href="/assets/js/20.b3e3e3ba.js"><link rel="prefetch" href="/assets/js/21.0560925d.js"><link rel="prefetch" href="/assets/js/22.151f504b.js"><link rel="prefetch" href="/assets/js/23.c0dd585a.js"><link rel="prefetch" href="/assets/js/24.5ac8c4b5.js"><link rel="prefetch" href="/assets/js/25.57989e7c.js"><link rel="prefetch" href="/assets/js/26.19ae4c70.js"><link rel="prefetch" href="/assets/js/27.7b7a4013.js"><link rel="prefetch" href="/assets/js/28.c02de8fb.js"><link rel="prefetch" href="/assets/js/29.be98b5ac.js"><link rel="prefetch" href="/assets/js/3.f9a5341d.js"><link rel="prefetch" href="/assets/js/30.151ce4ad.js"><link rel="prefetch" href="/assets/js/31.e3b05220.js"><link rel="prefetch" href="/assets/js/33.cdf1ba85.js"><link rel="prefetch" href="/assets/js/34.8e175bdf.js"><link rel="prefetch" href="/assets/js/35.53e76add.js"><link rel="prefetch" href="/assets/js/36.2588db5d.js"><link rel="prefetch" href="/assets/js/37.904d3476.js"><link rel="prefetch" href="/assets/js/38.1424f189.js"><link rel="prefetch" href="/assets/js/39.0e05003b.js"><link rel="prefetch" href="/assets/js/4.84d9a9b8.js"><link rel="prefetch" href="/assets/js/40.e4b36098.js"><link rel="prefetch" href="/assets/js/41.13258ed7.js"><link rel="prefetch" href="/assets/js/42.6f5a7cbb.js"><link rel="prefetch" href="/assets/js/43.7898149d.js"><link rel="prefetch" href="/assets/js/44.37b08732.js"><link rel="prefetch" href="/assets/js/45.17998593.js"><link rel="prefetch" href="/assets/js/46.055bc79a.js"><link rel="prefetch" href="/assets/js/47.6df10fa7.js"><link rel="prefetch" href="/assets/js/48.2660180a.js"><link rel="prefetch" href="/assets/js/49.4625a12a.js"><link rel="prefetch" href="/assets/js/5.501f4465.js"><link rel="prefetch" href="/assets/js/50.b3b348da.js"><link rel="prefetch" href="/assets/js/51.dcb3be6c.js"><link rel="prefetch" href="/assets/js/52.7dd04b5b.js"><link rel="prefetch" href="/assets/js/53.20259b4b.js"><link rel="prefetch" href="/assets/js/54.c876d67f.js"><link rel="prefetch" href="/assets/js/55.52c8359c.js"><link rel="prefetch" href="/assets/js/56.ab71b89a.js"><link rel="prefetch" href="/assets/js/57.30af5fe9.js"><link rel="prefetch" href="/assets/js/58.d1f3acb8.js"><link rel="prefetch" href="/assets/js/59.0c65a864.js"><link rel="prefetch" href="/assets/js/6.56baaf4e.js"><link rel="prefetch" href="/assets/js/60.cc2dc3eb.js"><link rel="prefetch" href="/assets/js/61.bc3d577e.js"><link rel="prefetch" href="/assets/js/62.88dedbc6.js"><link rel="prefetch" href="/assets/js/63.5403d296.js"><link rel="prefetch" href="/assets/js/64.cdcabf93.js"><link rel="prefetch" href="/assets/js/65.7fba108e.js"><link rel="prefetch" href="/assets/js/66.51641258.js"><link rel="prefetch" href="/assets/js/67.f408a0b2.js"><link rel="prefetch" href="/assets/js/68.326016eb.js"><link rel="prefetch" href="/assets/js/69.9dde49ee.js"><link rel="prefetch" href="/assets/js/7.86ee5bb7.js"><link rel="prefetch" href="/assets/js/70.76be6feb.js"><link rel="prefetch" href="/assets/js/71.8bb3d5a3.js"><link rel="prefetch" href="/assets/js/72.3d340b56.js"><link rel="prefetch" href="/assets/js/73.94ae8b58.js"><link rel="prefetch" href="/assets/js/74.c38b2bf5.js"><link rel="prefetch" href="/assets/js/75.ab88131c.js"><link rel="prefetch" href="/assets/js/76.b15fc67e.js"><link rel="prefetch" href="/assets/js/8.77896323.js"><link rel="prefetch" href="/assets/js/9.1bb7c316.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.f333096b.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="global-layout"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">小小郭的博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav>  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="在线修改表结构ddl"><a href="#在线修改表结构ddl" class="header-anchor">#</a> 在线修改表结构DDL</h1> <p>表的数据比较大时，如果直接修改会阻塞表，影响业务数据。有两个工具可以实现：</p> <p><strong>pt-online-schema-change</strong> 和 <strong>gh-ost</strong></p> <p>这次使用pt-online-schema-change</p> <p><strong>参考：https://segmentfault.com/a/1190000014924677</strong></p> <h3 id="一-安装"><a href="#一-安装" class="header-anchor">#</a> 一.安装</h3> <p>进入官网选择好对应的版本，下载到服务器</p> <p>https://www.percona.com/downloads/percona-toolkit/LATEST/</p> <p>本次是Ubuntu 16.04</p> <p>下载完成后安装下</p> <div class="language- extra-class"><pre class="language-text"><code>dpkg -i percona-toolkit_3.1.0-2.xenial_amd64.deb 
+apt-get install percona-toolkit
+apt-get -f install
+</code></pre></div><h3 id="二-使用"><a href="#二-使用" class="header-anchor">#</a> 二.使用</h3> <p>参考选项</p> <div class="language- extra-class"><pre class="language-text"><code>--user=        连接mysql的用户名
+--password=    连接mysql的密码
+--host=        连接mysql的地址
+P=3306         连接mysql的端口号
+D=             连接mysql的库名
+t=             连接mysql的表名
+--alter        修改表结构的语句
+--execute      执行修改表结构
+--charset=utf8 使用utf8编码，避免中文乱码
+--no-version-check  不检查版本，在阿里云服务器中一般加入此参数，否则会报错
+</code></pre></div><p>写成一个sh脚本，便于使用</p> <div class="language- extra-class"><pre class="language-text"><code>#!/bin/bash
+table=$1
+alter_conment=$2
+
+cnn_host='127.0.0.1'
+cnn_user='user'
+cnn_pwd='password'
+cnn_db='database_name'
+
+echo &quot;$table&quot;
+echo &quot;$alter_conment&quot;
+/root/percona-toolkit-2.2.19/bin/pt-online-schema-change --charset=utf8 --no-version-check --user=${cnn_user} --password=${cnn_pwd} --host=${cnn_host}  P=3306,D=${cnn_db},t=$table --alter 
+&quot;${alter_conment}&quot; --execute
+</code></pre></div><p>本次是增加一个索引，表有2千万行，执行了大概20分钟，由于不影响在线业务，完全可以接受。
+执行如下命令</p> <div class="language- extra-class"><pre class="language-text"><code>sh pt-online.sh custom_game_score 'ADD INDEX IDX_S_USER_ID(user_id)'
+</code></pre></div><p>结果</p> <div class="language- extra-class"><pre class="language-text"><code>custom_game_score
+ADD INDEX IDX_S_USER_ID(user_id)
+Cannot connect to A=utf8mb4,P=3017,h=,p=...,u=yewu_custom
+No slaves found.  See --recursion-method if host h=abc.mysql.rds.aliyuncs.com,P=3306 has slaves.
+Not checking slave lag because no slaves were found and --check-slave-lag was not specified.
+Operation, tries, wait:
+  analyze_table, 10, 1
+  copy_rows, 10, 0.25
+  create_triggers, 10, 1
+  drop_triggers, 10, 1
+  swap_tables, 10, 1
+  update_foreign_keys, 10, 1
+Altering `yewu`.`custom_game_score`...
+Creating new table...
+Created new table yewu._custom_game_score_new OK.
+Altering new table...
+Altered `yewu`.`_custom_game_score_new` OK.
+2019-10-29T19:50:33 Creating triggers...
+2019-10-29T19:50:33 Created triggers OK.
+2019-10-29T19:50:33 Copying approximately 27589521 rows...
+Copying `yewu`.`custom_game_score`:   3% 14:17 remain
+Copying `yewu`.`custom_game_score`:   6% 13:36 remain
+Copying `yewu`.`custom_game_score`:   9% 13:42 remain
+Copying `yewu`.`custom_game_score`:  12% 13:34 remain
+Copying `yewu`.`custom_game_score`:  15% 13:11 remain
+Copying `yewu`.`custom_game_score`:  18% 12:50 remain
+Copying `yewu`.`custom_game_score`:  21% 12:31 remain
+Copying `yewu`.`custom_game_score`:  24% 12:19 remain
+Copying `yewu`.`custom_game_score`:  27% 12:07 remain
+Copying `yewu`.`custom_game_score`:  29% 11:42 remain
+Copying `yewu`.`custom_game_score`:  32% 11:20 remain
+Copying `yewu`.`custom_game_score`:  35% 10:59 remain
+Copying `yewu`.`custom_game_score`:  37% 10:37 remain
+Copying `yewu`.`custom_game_score`:  40% 10:11 remain
+Copying `yewu`.`custom_game_score`:  43% 09:41 remain
+Copying `yewu`.`custom_game_score`:  46% 09:16 remain
+Copying `yewu`.`custom_game_score`:  49% 08:46 remain
+Copying `yewu`.`custom_game_score`:  52% 08:10 remain
+Copying `yewu`.`custom_game_score`:  55% 07:41 remain
+Copying `yewu`.`custom_game_score`:  58% 07:12 remain
+Copying `yewu`.`custom_game_score`:  60% 06:42 remain
+Copying `yewu`.`custom_game_score`:  63% 06:15 remain
+Copying `yewu`.`custom_game_score`:  66% 05:49 remain
+Copying `yewu`.`custom_game_score`:  69% 05:19 remain
+Copying `yewu`.`custom_game_score`:  72% 04:48 remain
+Copying `yewu`.`custom_game_score`:  75% 04:18 remain
+Copying `yewu`.`custom_game_score`:  77% 03:51 remain
+Copying `yewu`.`custom_game_score`:  80% 03:22 remain
+Copying `yewu`.`custom_game_score`:  83% 02:55 remain
+Copying `yewu`.`custom_game_score`:  85% 02:27 remain
+Copying `yewu`.`custom_game_score`:  88% 01:56 remain
+Copying `yewu`.`custom_game_score`:  91% 01:27 remain
+Copying `yewu`.`custom_game_score`:  94% 00:58 remain
+Copying `yewu`.`custom_game_score`:  97% 00:31 remain
+Copying `yewu`.`custom_game_score`:  99% 00:03 remain
+2019-10-29T20:08:46 Copied rows OK.
+2019-10-29T20:08:46 Analyzing new table...
+2019-10-29T20:08:46 Swapping tables...
+2019-10-29T20:08:46 Swapped original and new tables OK.
+2019-10-29T20:08:46 Dropping old table...
+2019-10-29T20:08:47 Dropped old table `yewu`.`_custom_game_score_old` OK.
+2019-10-29T20:08:47 Dropping triggers...
+2019-10-29T20:08:47 Dropped triggers OK.
+Successfully altered `yewu`.`custom_game_score`.
+</code></pre></div><h3 id="三-triggers触发器问题"><a href="#三-triggers触发器问题" class="header-anchor">#</a> 三.triggers触发器问题</h3> <p>由于pt-online-schema-change需要一个自己的触发器，如果表中有触发器了，则不能使用pt-online-schema-change。</p> <p>处理方法有两个：</p> <div class="language- extra-class"><pre class="language-text"><code>1.删除触发器
+2.使用其他工具，比如gh-ost
+</code></pre></div><p>查看一下这个表的触发器</p> <div class="language- extra-class"><pre class="language-text"><code>mysql&gt; show triggers like '%custom_game_score%';
++-----------------+--------+-------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------+---------+----------+------------+----------------------+----------------------+--------------------+
+| Trigger         | Event  | Table             | Statement                                                                                                                                                                                                                                | Timing | Created | sql_mode | Definer    | character_set_client | collation_connection | Database Collation |
++-----------------+--------+-------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------+---------+----------+------------+----------------------+----------------------+--------------------+
+| GAME_SCORE_BACK | DELETE | custom_game_score | insert into yewu_bak.custom_game_score (id, user_id, game_id, last_score, score, times, device_type, create_time)
+values (old.id, old.user_id, old.game_id, old.last_score, old.score, old.times, old.device_type, old.create_time) | AFTER  | NULL    |          | yewu@% | utf8                 | utf8_general_ci      | utf8mb4_general_ci |
++-----------------+--------+-------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------+---------+----------+------------+----------------------+----------------------+--------------------+
+1 row in set (0.00 sec)
+</code></pre></div><p>发现是备份数据到另一个库，其实完全不用，故删除之</p> <div class="language- extra-class"><pre class="language-text"><code>mysql&gt; DROP TRIGGER GAME_SCORE_BACK;
+Query OK, 0 rows affected (0.00 sec)
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div> <footer><div style="text-align: center;">
+            © 2020 小小郭的博客
+            <a href="http://www.beian.miit.gov.cn/">粤ICP备16016910号</a> <br><br></div></footer></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.158714e6.js" defer></script><script src="/assets/js/2.a806d99a.js" defer></script><script src="/assets/js/32.48233f51.js" defer></script>
+  </body>
+</html>

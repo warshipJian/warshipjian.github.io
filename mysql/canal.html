@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>使用canal同步mysql数据 | 小小郭的博客</title>
+    <meta name="generator" content="VuePress 1.5.2">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="description" content="小小郭">
+    <link rel="preload" href="/assets/css/0.styles.f333096b.css" as="style"><link rel="preload" href="/assets/js/app.158714e6.js" as="script"><link rel="preload" href="/assets/js/2.a806d99a.js" as="script"><link rel="preload" href="/assets/js/31.e3b05220.js" as="script"><link rel="prefetch" href="/assets/js/10.ceb6da30.js"><link rel="prefetch" href="/assets/js/11.f6fcdde7.js"><link rel="prefetch" href="/assets/js/12.c1ccc7c5.js"><link rel="prefetch" href="/assets/js/13.2e80b5f4.js"><link rel="prefetch" href="/assets/js/14.86580eea.js"><link rel="prefetch" href="/assets/js/15.ec8bc9ac.js"><link rel="prefetch" href="/assets/js/16.ffe6c259.js"><link rel="prefetch" href="/assets/js/17.f11cefb5.js"><link rel="prefetch" href="/assets/js/18.ba7fa50a.js"><link rel="prefetch" href="/assets/js/19.d98194cd.js"><link rel="prefetch" href="/assets/js/20.b3e3e3ba.js"><link rel="prefetch" href="/assets/js/21.0560925d.js"><link rel="prefetch" href="/assets/js/22.151f504b.js"><link rel="prefetch" href="/assets/js/23.c0dd585a.js"><link rel="prefetch" href="/assets/js/24.5ac8c4b5.js"><link rel="prefetch" href="/assets/js/25.57989e7c.js"><link rel="prefetch" href="/assets/js/26.19ae4c70.js"><link rel="prefetch" href="/assets/js/27.7b7a4013.js"><link rel="prefetch" href="/assets/js/28.c02de8fb.js"><link rel="prefetch" href="/assets/js/29.be98b5ac.js"><link rel="prefetch" href="/assets/js/3.f9a5341d.js"><link rel="prefetch" href="/assets/js/30.151ce4ad.js"><link rel="prefetch" href="/assets/js/32.48233f51.js"><link rel="prefetch" href="/assets/js/33.cdf1ba85.js"><link rel="prefetch" href="/assets/js/34.8e175bdf.js"><link rel="prefetch" href="/assets/js/35.53e76add.js"><link rel="prefetch" href="/assets/js/36.2588db5d.js"><link rel="prefetch" href="/assets/js/37.904d3476.js"><link rel="prefetch" href="/assets/js/38.1424f189.js"><link rel="prefetch" href="/assets/js/39.0e05003b.js"><link rel="prefetch" href="/assets/js/4.84d9a9b8.js"><link rel="prefetch" href="/assets/js/40.e4b36098.js"><link rel="prefetch" href="/assets/js/41.13258ed7.js"><link rel="prefetch" href="/assets/js/42.6f5a7cbb.js"><link rel="prefetch" href="/assets/js/43.7898149d.js"><link rel="prefetch" href="/assets/js/44.37b08732.js"><link rel="prefetch" href="/assets/js/45.17998593.js"><link rel="prefetch" href="/assets/js/46.055bc79a.js"><link rel="prefetch" href="/assets/js/47.6df10fa7.js"><link rel="prefetch" href="/assets/js/48.2660180a.js"><link rel="prefetch" href="/assets/js/49.4625a12a.js"><link rel="prefetch" href="/assets/js/5.501f4465.js"><link rel="prefetch" href="/assets/js/50.b3b348da.js"><link rel="prefetch" href="/assets/js/51.dcb3be6c.js"><link rel="prefetch" href="/assets/js/52.7dd04b5b.js"><link rel="prefetch" href="/assets/js/53.20259b4b.js"><link rel="prefetch" href="/assets/js/54.c876d67f.js"><link rel="prefetch" href="/assets/js/55.52c8359c.js"><link rel="prefetch" href="/assets/js/56.ab71b89a.js"><link rel="prefetch" href="/assets/js/57.30af5fe9.js"><link rel="prefetch" href="/assets/js/58.d1f3acb8.js"><link rel="prefetch" href="/assets/js/59.0c65a864.js"><link rel="prefetch" href="/assets/js/6.56baaf4e.js"><link rel="prefetch" href="/assets/js/60.cc2dc3eb.js"><link rel="prefetch" href="/assets/js/61.bc3d577e.js"><link rel="prefetch" href="/assets/js/62.88dedbc6.js"><link rel="prefetch" href="/assets/js/63.5403d296.js"><link rel="prefetch" href="/assets/js/64.cdcabf93.js"><link rel="prefetch" href="/assets/js/65.7fba108e.js"><link rel="prefetch" href="/assets/js/66.51641258.js"><link rel="prefetch" href="/assets/js/67.f408a0b2.js"><link rel="prefetch" href="/assets/js/68.326016eb.js"><link rel="prefetch" href="/assets/js/69.9dde49ee.js"><link rel="prefetch" href="/assets/js/7.86ee5bb7.js"><link rel="prefetch" href="/assets/js/70.76be6feb.js"><link rel="prefetch" href="/assets/js/71.8bb3d5a3.js"><link rel="prefetch" href="/assets/js/72.3d340b56.js"><link rel="prefetch" href="/assets/js/73.94ae8b58.js"><link rel="prefetch" href="/assets/js/74.c38b2bf5.js"><link rel="prefetch" href="/assets/js/75.ab88131c.js"><link rel="prefetch" href="/assets/js/76.b15fc67e.js"><link rel="prefetch" href="/assets/js/8.77896323.js"><link rel="prefetch" href="/assets/js/9.1bb7c316.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.f333096b.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="global-layout"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">小小郭的博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav>  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="使用canal同步mysql数据"><a href="#使用canal同步mysql数据" class="header-anchor">#</a> 使用canal同步mysql数据</h1> <h2 id="场景："><a href="#场景：" class="header-anchor">#</a> 场景：</h2> <p>有两个独立的MySql数据库A和B</p> <p>数据库A中有个表名为news，该表三个字段：</p> <table><thead><tr><th>字段</th> <th>type</th></tr></thead> <tbody><tr><td>id</td> <td>INT</td></tr> <tr><td>title</td> <td>VARCHAR</td></tr> <tr><td>data</td> <td>LONGTEXT</td></tr></tbody></table> <p>数据库B中有两个表，news1 和 news 2, 如下</p> <p>news 1</p> <table><thead><tr><th>字段</th> <th>type</th></tr></thead> <tbody><tr><td>id</td> <td>INT</td></tr> <tr><td>title</td> <td>VARCHAR</td></tr></tbody></table> <p>news 2</p> <table><thead><tr><th>字段</th> <th>type</th></tr></thead> <tbody><tr><td>news_id</td> <td>INT</td></tr> <tr><td>data</td> <td>LONGTEXT</td></tr></tbody></table> <p>如果要同步数据库A的news到数据库B的new1和new2，传统的同步方式满足不了</p> <h2 id="实现思路"><a href="#实现思路" class="header-anchor">#</a> 实现思路</h2> <p>利用canal获取数据库A中news的变化数据(增，删，改)</p> <p>利用canal_mysql_nosql_sync将变化的数据存入到redis队列
+(https://github.com/liukelin/canal_mysql_nosql_sync)</p> <p>起一个守护脚本一直消费该redis，将变化的数据写入到数据库B</p> <p>整个过程如下:</p> <div class="language- extra-class"><pre class="language-text"><code>数据库A -&gt; canal_server -&gt; canal_client / canal_mysql_nosql_sync -&gt; redis -&gt; 脚本处理 -&gt; 数据库B
+</code></pre></div><h2 id="实施步骤"><a href="#实施步骤" class="header-anchor">#</a> 实施步骤</h2> <h3 id="一-配置canal"><a href="#一-配置canal" class="header-anchor">#</a> 一.配置canal</h3> <p>**1.**确定服务器上有java环境，如果没有需安装下java</p> <div class="language- extra-class"><pre class="language-text"><code># java -version
+java version &quot;1.8.0_121&quot;
+</code></pre></div><p>**2.**获取canal包</p> <div class="language- extra-class"><pre class="language-text"><code>访问https://github.com/alibaba/canal/releases，下载相应的版本
+本次以1.0.24为例
+wget https://github.com/alibaba/canal/releases/download/canal-1.0.24/canal.deployer-1.0.24.tar.gz
+</code></pre></div><p>**3.**解压并配置</p> <p>详细的配置参数可参考https://github.com/alibaba/canal/wiki/AdminGuide</p> <p>将安装包解压后，默认有如下文件夹</p> <div class="language- extra-class"><pre class="language-text"><code># ls
+bin  conf  lib  logs
+</code></pre></div><p>canal的主配置文件为/conf/canal.properties，这里可以配置监听的端口等</p> <div class="language- extra-class"><pre class="language-text"><code>canal.id= 2
+canal.ip=
+canal.port= 11111
+canal.zkServers=
+</code></pre></div><p>编辑example的配置文件</p> <div class="language- extra-class"><pre class="language-text"><code>vim ./conf/example/instance.properties
+配置好数据库的相关信息
+canal.instance.master.address = 127.0.0.1:3306
+
+# username/password
+canal.instance.dbUsername = root
+canal.instance.dbPassword = root123456
+canal.instance.defaultDatabaseName = news
+canal.instance.connectionCharset = UTF-8
+
+配置下正则表达式，用于指定要同步的表
+# table regex
+canal.instance.filter.regex = .* 
+# table black regex
+canal.instance.filter.black.regex = platform_news\\..*
+</code></pre></div><p>这里注意下</p> <div class="language- extra-class"><pre class="language-text"><code>canal.instance.filter.regex的白名单配置是无效的，不用配置
+如果要指定库和表，可以把不同步的库和表写到canal.instance.filter.black.regex配置中，黑名单的配置有效.
+比如我不要同步test这个数据库，则可以这样写
+canal.instance.filter.black.regex = test\\..*
+</code></pre></div><p>配置完成后,启动服务</p> <div class="language- extra-class"><pre class="language-text"><code>sh bin/startup.sh
+启动完成后，会看到有个端口号为11111的进程
+</code></pre></div><h3 id="二-部署canal-mysql-nosql-sync"><a href="#二-部署canal-mysql-nosql-sync" class="header-anchor">#</a> 二.部署canal_mysql_nosql_sync</h3> <p>**1.**获取canal_mysql_nosql_sync</p> <div class="language- extra-class"><pre class="language-text"><code>git clone https://github.com/liukelin/canal_mysql_nosql_sync
+</code></pre></div><p>**2.**配置</p> <div class="language- extra-class"><pre class="language-text"><code>cd canal_mysql_nosql_sync/canal-client/conf
+vim canal.properties
+配置好对应参数即可,注意下canal.binlog.dir路径
+</code></pre></div><p>**3.**启动</p> <div class="language- extra-class"><pre class="language-text"><code>sh ./canal_mysql_nosql_sync/canal-client/start_canal_client.sh
+
+正常启动后，去项目A的表中改个数据，可立即看到变化
+</code></pre></div><h3 id="三-通过脚本获取redis数据，并写入到数据库b中"><a href="#三-通过脚本获取redis数据，并写入到数据库b中" class="header-anchor">#</a> 三.通过脚本获取redis数据，并写入到数据库B中</h3> <p><strong>1.</strong> 连接redis，获取redis中变化的数据，任意语言都可以，只要能使用redis和mysql即可。</p> <p>以PHP为例:</p> <div class="language- extra-class"><pre class="language-text"><code>        $predis = new \Predis\Client('tcp://172.16.93.239:2889');
+        $predis-&gt;connect();
+        $msg = $predis-&gt;lpop('canal_binlog_data');
+        $predis-&gt;disconnect();
+</code></pre></div><p>获取的数据结构如下:</p> <div class="language- extra-class"><pre class="language-text"><code>eventType ：操作类型（UPDATE/INSERT/DELETE）
+
+db：   涉及库
+
+table: 涉及表
+
+before:变更前数据
+
+after: 变更后数据
+
+time:  操作时间
+</code></pre></div><p>**2.**提取出变化的数据，根据eventType，将数据更新到数据库B中</p> <h3 id="故障排除"><a href="#故障排除" class="header-anchor">#</a> 故障排除</h3> <p>启动canal时，提示Could not find first log file name in binary log index file</p> <div class="language- extra-class"><pre class="language-text"><code>需删除example下的meta.dat文件，再重新启动
+</code></pre></div><p>redis中没数据</p> <div class="language- extra-class"><pre class="language-text"><code>1.确保数据库是ROW模式
+2.数据库的用户需要有slave权限
+3.看下canal的logs/example/meta.log文件是否有更新
+4.看下canal_client中canal.binlog.dir路径下的文件是否有更新
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div> <footer><div style="text-align: center;">
+            © 2020 小小郭的博客
+            <a href="http://www.beian.miit.gov.cn/">粤ICP备16016910号</a> <br><br></div></footer></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.158714e6.js" defer></script><script src="/assets/js/2.a806d99a.js" defer></script><script src="/assets/js/31.e3b05220.js" defer></script>
+  </body>
+</html>

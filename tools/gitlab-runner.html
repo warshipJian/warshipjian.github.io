@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>gitlab的runner实践 | 小小郭的博客</title>
+    <meta name="generator" content="VuePress 1.5.2">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="description" content="小小郭">
+    <link rel="preload" href="/assets/css/0.styles.f333096b.css" as="style"><link rel="preload" href="/assets/js/app.158714e6.js" as="script"><link rel="preload" href="/assets/js/2.a806d99a.js" as="script"><link rel="preload" href="/assets/js/70.76be6feb.js" as="script"><link rel="prefetch" href="/assets/js/10.ceb6da30.js"><link rel="prefetch" href="/assets/js/11.f6fcdde7.js"><link rel="prefetch" href="/assets/js/12.c1ccc7c5.js"><link rel="prefetch" href="/assets/js/13.2e80b5f4.js"><link rel="prefetch" href="/assets/js/14.86580eea.js"><link rel="prefetch" href="/assets/js/15.ec8bc9ac.js"><link rel="prefetch" href="/assets/js/16.ffe6c259.js"><link rel="prefetch" href="/assets/js/17.f11cefb5.js"><link rel="prefetch" href="/assets/js/18.ba7fa50a.js"><link rel="prefetch" href="/assets/js/19.d98194cd.js"><link rel="prefetch" href="/assets/js/20.b3e3e3ba.js"><link rel="prefetch" href="/assets/js/21.0560925d.js"><link rel="prefetch" href="/assets/js/22.151f504b.js"><link rel="prefetch" href="/assets/js/23.c0dd585a.js"><link rel="prefetch" href="/assets/js/24.5ac8c4b5.js"><link rel="prefetch" href="/assets/js/25.57989e7c.js"><link rel="prefetch" href="/assets/js/26.19ae4c70.js"><link rel="prefetch" href="/assets/js/27.7b7a4013.js"><link rel="prefetch" href="/assets/js/28.c02de8fb.js"><link rel="prefetch" href="/assets/js/29.be98b5ac.js"><link rel="prefetch" href="/assets/js/3.f9a5341d.js"><link rel="prefetch" href="/assets/js/30.151ce4ad.js"><link rel="prefetch" href="/assets/js/31.e3b05220.js"><link rel="prefetch" href="/assets/js/32.48233f51.js"><link rel="prefetch" href="/assets/js/33.cdf1ba85.js"><link rel="prefetch" href="/assets/js/34.8e175bdf.js"><link rel="prefetch" href="/assets/js/35.53e76add.js"><link rel="prefetch" href="/assets/js/36.2588db5d.js"><link rel="prefetch" href="/assets/js/37.904d3476.js"><link rel="prefetch" href="/assets/js/38.1424f189.js"><link rel="prefetch" href="/assets/js/39.0e05003b.js"><link rel="prefetch" href="/assets/js/4.84d9a9b8.js"><link rel="prefetch" href="/assets/js/40.e4b36098.js"><link rel="prefetch" href="/assets/js/41.13258ed7.js"><link rel="prefetch" href="/assets/js/42.6f5a7cbb.js"><link rel="prefetch" href="/assets/js/43.7898149d.js"><link rel="prefetch" href="/assets/js/44.37b08732.js"><link rel="prefetch" href="/assets/js/45.17998593.js"><link rel="prefetch" href="/assets/js/46.055bc79a.js"><link rel="prefetch" href="/assets/js/47.6df10fa7.js"><link rel="prefetch" href="/assets/js/48.2660180a.js"><link rel="prefetch" href="/assets/js/49.4625a12a.js"><link rel="prefetch" href="/assets/js/5.501f4465.js"><link rel="prefetch" href="/assets/js/50.b3b348da.js"><link rel="prefetch" href="/assets/js/51.dcb3be6c.js"><link rel="prefetch" href="/assets/js/52.7dd04b5b.js"><link rel="prefetch" href="/assets/js/53.20259b4b.js"><link rel="prefetch" href="/assets/js/54.c876d67f.js"><link rel="prefetch" href="/assets/js/55.52c8359c.js"><link rel="prefetch" href="/assets/js/56.ab71b89a.js"><link rel="prefetch" href="/assets/js/57.30af5fe9.js"><link rel="prefetch" href="/assets/js/58.d1f3acb8.js"><link rel="prefetch" href="/assets/js/59.0c65a864.js"><link rel="prefetch" href="/assets/js/6.56baaf4e.js"><link rel="prefetch" href="/assets/js/60.cc2dc3eb.js"><link rel="prefetch" href="/assets/js/61.bc3d577e.js"><link rel="prefetch" href="/assets/js/62.88dedbc6.js"><link rel="prefetch" href="/assets/js/63.5403d296.js"><link rel="prefetch" href="/assets/js/64.cdcabf93.js"><link rel="prefetch" href="/assets/js/65.7fba108e.js"><link rel="prefetch" href="/assets/js/66.51641258.js"><link rel="prefetch" href="/assets/js/67.f408a0b2.js"><link rel="prefetch" href="/assets/js/68.326016eb.js"><link rel="prefetch" href="/assets/js/69.9dde49ee.js"><link rel="prefetch" href="/assets/js/7.86ee5bb7.js"><link rel="prefetch" href="/assets/js/71.8bb3d5a3.js"><link rel="prefetch" href="/assets/js/72.3d340b56.js"><link rel="prefetch" href="/assets/js/73.94ae8b58.js"><link rel="prefetch" href="/assets/js/74.c38b2bf5.js"><link rel="prefetch" href="/assets/js/75.ab88131c.js"><link rel="prefetch" href="/assets/js/76.b15fc67e.js"><link rel="prefetch" href="/assets/js/8.77896323.js"><link rel="prefetch" href="/assets/js/9.1bb7c316.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.f333096b.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="global-layout"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">小小郭的博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav>  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="gitlab的runner实践"><a href="#gitlab的runner实践" class="header-anchor">#</a> gitlab的runner实践</h1> <p>公司的项目有个特点：项目多。</p> <p>这意味着每有一个新项目，就需要在gitlab，jenkins，k8s上新建对应的项目。</p> <p>虽然每次配置只花10分钟，但这种重复的劳动终究不是我们想要的。</p> <p>仔细一看，发现每次新建项目基本是改下名字，其他配置都没怎么改过，于是便有了改造思路：</p> <ol><li><p>去掉中间商jenkins（jenkins是很优秀的，这里不用它是为了偷懒）</p></li> <li><p>利用gitlab的runner来做CI/CD</p></li></ol> <h2 id="ci-cd-流程"><a href="#ci-cd-流程" class="header-anchor">#</a> CI/CD 流程</h2> <p>去掉jenkins后，代码的打包发布工作就交给了gitlab的Runner。</p> <p>Runner是一个干活的，整个流程如下：</p> <div class="language- extra-class"><pre class="language-text"><code>提交代码 -&gt; 触发 gitlab Runner 
+            -&gt; 打包代码
+                      -&gt; 发布
+</code></pre></div><p>代码提交后，Runner会根据.gitlab-ci.yml的配置来工作，该打包的打包，该发布的发布。</p> <p>这里有个问题：怎么区分不同的环境呢？</p> <p>我们的做法是把环境和分支结合在一起。</p> <table><thead><tr><th>分支名</th> <th>环境</th></tr></thead> <tbody><tr><td>dev</td> <td>开发环境</td></tr> <tr><td>test</td> <td>测试环境</td></tr> <tr><td>release</td> <td>正式环境</td></tr></tbody></table> <p>在对应分支上提交代码，Runner会自动打包到对应的环境中。</p> <h2 id="runner使用示例"><a href="#runner使用示例" class="header-anchor">#</a> Runner使用示例</h2> <p>Runner的安装就不赘述了，可以用docker，可以放k8s里，也可以直接放某台服务器上。</p> <p>我们的方案是：每个项目组都配置一个Runner，使用不同的.gitlab-ci.yml。</p> <h3 id="前端gitlab-ci-yml"><a href="#前端gitlab-ci-yml" class="header-anchor">#</a> 前端gitlab-ci.yml</h3> <div class="language-yaml extra-class"><pre class="language-yaml"><code><span class="token key atrule">cache</span><span class="token punctuation">:</span>
+  <span class="token key atrule">paths</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> node_modules <span class="token comment"># 缓存 node_modules</span>
+<span class="token key atrule">stages</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> install
+  <span class="token punctuation">-</span> build
+  <span class="token punctuation">-</span> deploy
+
+<span class="token key atrule">install</span><span class="token punctuation">:</span>
+  <span class="token key atrule">stage</span><span class="token punctuation">:</span> install
+  <span class="token key atrule">only</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> test
+    <span class="token punctuation">-</span> release 
+  <span class="token key atrule">script</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> yarn config set registry http<span class="token punctuation">:</span>//registry.npm.taobao.org/
+    <span class="token punctuation">-</span> yarn
+
+<span class="token key atrule">build</span><span class="token punctuation">:</span>
+  <span class="token key atrule">stage</span><span class="token punctuation">:</span> build
+  <span class="token key atrule">only</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> release
+    <span class="token punctuation">-</span> test
+  <span class="token key atrule">script</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> yarn build
+  <span class="token key atrule">artifacts</span><span class="token punctuation">:</span>
+    <span class="token key atrule">paths</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> dist
+
+<span class="token key atrule">deploy</span><span class="token punctuation">:</span>
+  <span class="token key atrule">stage</span><span class="token punctuation">:</span> deploy
+  <span class="token key atrule">only</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> release
+    <span class="token punctuation">-</span> test
+  <span class="token key atrule">script</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> python3 /opt/script/oss.py `pwd`/dist  $<span class="token punctuation">{</span>CI_PROJECT_NAME<span class="token punctuation">}</span> $<span class="token punctuation">{</span>CI_COMMIT_REF_NAME<span class="token punctuation">}</span>
+</code></pre></div><p>说明：</p> <ol><li>在deploy阶段，脚本oss.py会根据变量CI_PROJECT_NAME和CI_COMMIT_REF_NAME，把代码发布到对应的环境中。</li></ol> <h3 id="后端gitlab-ci-yml"><a href="#后端gitlab-ci-yml" class="header-anchor">#</a> 后端gitlab-ci.yml</h3> <div class="language-yaml extra-class"><pre class="language-yaml"><code><span class="token key atrule">variables</span><span class="token punctuation">:</span>
+  <span class="token key atrule">DOCKER_REGISTRY</span><span class="token punctuation">:</span> <span class="token string">'registry.cn-shenzhen.aliyuncs.com'</span> <span class="token comment"># docker镜像仓库地址</span>
+  <span class="token key atrule">DOCKER_NAMESAPCE</span><span class="token punctuation">:</span> <span class="token string">'xxxxx'</span> <span class="token comment"># docker镜像仓库名</span>
+
+<span class="token key atrule">stages</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> build
+  <span class="token punctuation">-</span> deploy
+
+<span class="token key atrule">build</span><span class="token punctuation">:</span>
+  <span class="token key atrule">stage</span><span class="token punctuation">:</span> build
+  <span class="token key atrule">only</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> release
+    <span class="token punctuation">-</span> test
+  <span class="token key atrule">script</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> TAG=`python3 /opt/script/get_docker_tag.py $<span class="token punctuation">{</span>CI_PROJECT_NAME<span class="token punctuation">}</span><span class="token punctuation">-</span>$<span class="token punctuation">{</span>CI_COMMIT_REF_NAME<span class="token punctuation">}</span>`
+    <span class="token punctuation">-</span> DOCKER_TAG=$<span class="token punctuation">{</span>CI_COMMIT_REF_NAME<span class="token punctuation">}</span>$<span class="token punctuation">{</span>TAG<span class="token punctuation">}</span>
+    <span class="token punctuation">-</span> echo &quot;DOCKER_TAG=$<span class="token punctuation">{</span>DOCKER_TAG<span class="token punctuation">}</span>&quot; <span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span> build.env
+    <span class="token punctuation">-</span> docker build <span class="token punctuation">-</span>t $<span class="token punctuation">{</span>CI_PROJECT_NAME<span class="token punctuation">}</span><span class="token punctuation">:</span>$<span class="token punctuation">{</span>DOCKER_TAG<span class="token punctuation">}</span> .
+    <span class="token punctuation">-</span> docker tag $<span class="token punctuation">{</span>CI_PROJECT_NAME<span class="token punctuation">}</span><span class="token punctuation">:</span>$<span class="token punctuation">{</span>DOCKER_TAG<span class="token punctuation">}</span> $<span class="token punctuation">{</span>DOCKER_REGISTRY<span class="token punctuation">}</span>/$<span class="token punctuation">{</span>DOCKER_NAMESAPCE<span class="token punctuation">}</span>/$<span class="token punctuation">{</span>CI_PROJECT_NAME<span class="token punctuation">}</span><span class="token punctuation">:</span>$<span class="token punctuation">{</span>DOCKER_TAG<span class="token punctuation">}</span>
+    <span class="token punctuation">-</span> docker push $<span class="token punctuation">{</span>DOCKER_REGISTRY<span class="token punctuation">}</span>/$<span class="token punctuation">{</span>DOCKER_NAMESAPCE<span class="token punctuation">}</span>/$<span class="token punctuation">{</span>CI_PROJECT_NAME<span class="token punctuation">}</span><span class="token punctuation">:</span>$<span class="token punctuation">{</span>DOCKER_TAG<span class="token punctuation">}</span>
+  <span class="token key atrule">artifacts</span><span class="token punctuation">:</span>
+    <span class="token key atrule">reports</span><span class="token punctuation">:</span>
+      <span class="token key atrule">dotenv</span><span class="token punctuation">:</span> build.env
+
+<span class="token key atrule">deploy</span><span class="token punctuation">:</span>
+  <span class="token key atrule">stage</span><span class="token punctuation">:</span> deploy
+  <span class="token key atrule">only</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> release
+    <span class="token punctuation">-</span> test
+  <span class="token key atrule">script</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> python3 /opt/script/k8s.py $<span class="token punctuation">{</span>CI_PROJECT_NAME<span class="token punctuation">}</span> $<span class="token punctuation">{</span>DOCKER_TAG<span class="token punctuation">}</span>
+  <span class="token key atrule">dependencies</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> build
+
+</code></pre></div><p>说明：</p> <p>1.为了使docker镜像的tag好看一点，写了个get_docker_tag.py脚本来产生自增id，和变量CI_COMMIT_REF_NAME组合成一个tag变量DOCKER_TAG，比如会是test1, release2这样的。</p> <p>2.在deploy阶段，脚本k8s.py会根据变量CI_PROJECT_NAME和DOCKER_TAG，在k8s上创建或更新应用。</p></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div> <footer><div style="text-align: center;">
+            © 2020 小小郭的博客
+            <a href="http://www.beian.miit.gov.cn/">粤ICP备16016910号</a> <br><br></div></footer></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.158714e6.js" defer></script><script src="/assets/js/2.a806d99a.js" defer></script><script src="/assets/js/70.76be6feb.js" defer></script>
+  </body>
+</html>

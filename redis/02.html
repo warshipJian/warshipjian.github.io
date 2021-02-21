@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>redis-02-用redis来做锁 | 小小郭的博客</title>
+    <meta name="generator" content="VuePress 1.5.2">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="description" content="小小郭">
+    <link rel="preload" href="/assets/css/0.styles.f333096b.css" as="style"><link rel="preload" href="/assets/js/app.158714e6.js" as="script"><link rel="preload" href="/assets/js/2.a806d99a.js" as="script"><link rel="preload" href="/assets/js/55.52c8359c.js" as="script"><link rel="prefetch" href="/assets/js/10.ceb6da30.js"><link rel="prefetch" href="/assets/js/11.f6fcdde7.js"><link rel="prefetch" href="/assets/js/12.c1ccc7c5.js"><link rel="prefetch" href="/assets/js/13.2e80b5f4.js"><link rel="prefetch" href="/assets/js/14.86580eea.js"><link rel="prefetch" href="/assets/js/15.ec8bc9ac.js"><link rel="prefetch" href="/assets/js/16.ffe6c259.js"><link rel="prefetch" href="/assets/js/17.f11cefb5.js"><link rel="prefetch" href="/assets/js/18.ba7fa50a.js"><link rel="prefetch" href="/assets/js/19.d98194cd.js"><link rel="prefetch" href="/assets/js/20.b3e3e3ba.js"><link rel="prefetch" href="/assets/js/21.0560925d.js"><link rel="prefetch" href="/assets/js/22.151f504b.js"><link rel="prefetch" href="/assets/js/23.c0dd585a.js"><link rel="prefetch" href="/assets/js/24.5ac8c4b5.js"><link rel="prefetch" href="/assets/js/25.57989e7c.js"><link rel="prefetch" href="/assets/js/26.19ae4c70.js"><link rel="prefetch" href="/assets/js/27.7b7a4013.js"><link rel="prefetch" href="/assets/js/28.c02de8fb.js"><link rel="prefetch" href="/assets/js/29.be98b5ac.js"><link rel="prefetch" href="/assets/js/3.f9a5341d.js"><link rel="prefetch" href="/assets/js/30.151ce4ad.js"><link rel="prefetch" href="/assets/js/31.e3b05220.js"><link rel="prefetch" href="/assets/js/32.48233f51.js"><link rel="prefetch" href="/assets/js/33.cdf1ba85.js"><link rel="prefetch" href="/assets/js/34.8e175bdf.js"><link rel="prefetch" href="/assets/js/35.53e76add.js"><link rel="prefetch" href="/assets/js/36.2588db5d.js"><link rel="prefetch" href="/assets/js/37.904d3476.js"><link rel="prefetch" href="/assets/js/38.1424f189.js"><link rel="prefetch" href="/assets/js/39.0e05003b.js"><link rel="prefetch" href="/assets/js/4.84d9a9b8.js"><link rel="prefetch" href="/assets/js/40.e4b36098.js"><link rel="prefetch" href="/assets/js/41.13258ed7.js"><link rel="prefetch" href="/assets/js/42.6f5a7cbb.js"><link rel="prefetch" href="/assets/js/43.7898149d.js"><link rel="prefetch" href="/assets/js/44.37b08732.js"><link rel="prefetch" href="/assets/js/45.17998593.js"><link rel="prefetch" href="/assets/js/46.055bc79a.js"><link rel="prefetch" href="/assets/js/47.6df10fa7.js"><link rel="prefetch" href="/assets/js/48.2660180a.js"><link rel="prefetch" href="/assets/js/49.4625a12a.js"><link rel="prefetch" href="/assets/js/5.501f4465.js"><link rel="prefetch" href="/assets/js/50.b3b348da.js"><link rel="prefetch" href="/assets/js/51.dcb3be6c.js"><link rel="prefetch" href="/assets/js/52.7dd04b5b.js"><link rel="prefetch" href="/assets/js/53.20259b4b.js"><link rel="prefetch" href="/assets/js/54.c876d67f.js"><link rel="prefetch" href="/assets/js/56.ab71b89a.js"><link rel="prefetch" href="/assets/js/57.30af5fe9.js"><link rel="prefetch" href="/assets/js/58.d1f3acb8.js"><link rel="prefetch" href="/assets/js/59.0c65a864.js"><link rel="prefetch" href="/assets/js/6.56baaf4e.js"><link rel="prefetch" href="/assets/js/60.cc2dc3eb.js"><link rel="prefetch" href="/assets/js/61.bc3d577e.js"><link rel="prefetch" href="/assets/js/62.88dedbc6.js"><link rel="prefetch" href="/assets/js/63.5403d296.js"><link rel="prefetch" href="/assets/js/64.cdcabf93.js"><link rel="prefetch" href="/assets/js/65.7fba108e.js"><link rel="prefetch" href="/assets/js/66.51641258.js"><link rel="prefetch" href="/assets/js/67.f408a0b2.js"><link rel="prefetch" href="/assets/js/68.326016eb.js"><link rel="prefetch" href="/assets/js/69.9dde49ee.js"><link rel="prefetch" href="/assets/js/7.86ee5bb7.js"><link rel="prefetch" href="/assets/js/70.76be6feb.js"><link rel="prefetch" href="/assets/js/71.8bb3d5a3.js"><link rel="prefetch" href="/assets/js/72.3d340b56.js"><link rel="prefetch" href="/assets/js/73.94ae8b58.js"><link rel="prefetch" href="/assets/js/74.c38b2bf5.js"><link rel="prefetch" href="/assets/js/75.ab88131c.js"><link rel="prefetch" href="/assets/js/76.b15fc67e.js"><link rel="prefetch" href="/assets/js/8.77896323.js"><link rel="prefetch" href="/assets/js/9.1bb7c316.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.f333096b.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="global-layout"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">小小郭的博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/about/index.html" class="nav-link">
+  关于我
+</a></div> <!----></nav>  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="redis-02-用redis来做锁"><a href="#redis-02-用redis来做锁" class="header-anchor">#</a> redis-02-用redis来做锁</h1> <p>在很多的业务场景中对数据的处理都会涉及到锁，常用的方案有</p> <div class="language- extra-class"><pre class="language-text"><code>基于 DB 的唯一索引。
+基于 ZK 的临时有序节点。
+基于 Redis 的 NX EX 参数。
+</code></pre></div><p>这次用redis和PHP来做个锁，为了方便说明，统一以多进程的场景做例子。</p> <h2 id="一-思路"><a href="#一-思路" class="header-anchor">#</a> 一.思路</h2> <h3 id="上锁"><a href="#上锁" class="header-anchor">#</a> 上锁</h3> <p>说到redis锁，首先想到的是用setex来做，比如某个进程先上一把锁</p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; setnx lock 1
+(integer) 1
+</code></pre></div><p>这时当另一个进程去读的时候，返回的是0，认为被锁了</p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; setnx lock 1
+(integer) 0
+</code></pre></div><p>但实际上会有问题：</p> <div class="language- extra-class"><pre class="language-text"><code>某个进程上锁后，还没解锁，进程就crash了，则该key会一直存在redis中，变成了死锁
+</code></pre></div><p>于是想到了另一个指令expire，给这个key加上过期时间不就可以了嘛，但还是有缺陷：</p> <div class="language- extra-class"><pre class="language-text"><code>setex和expire是独立的两个操作，不是原子的，如果这两个操作中间出现问题，则还是会出现死锁
+</code></pre></div><p>作为一把好锁，能避免的缺陷就要去避免，继续看发现在Redis 2.8 版本中，作者加入了 set 指令的扩展参数，使得 setnx 和 expire 指令可以一起执行，于是上锁的问题就解决了</p> <div class="language- extra-class"><pre class="language-text"><code>set lock 1 ex 5 nx 
+#设置一个key值为1，有效时间为5秒，该key不存在时返回OK，已存在时返回nil
+</code></pre></div><h3 id="解锁"><a href="#解锁" class="header-anchor">#</a> 解锁</h3> <p>直接通过del删除该key不就可以了吗，但实际会有问题：</p> <div class="language- extra-class"><pre class="language-text"><code>进程A上了把锁a，设置了锁a的过期时间为5秒，之后进程A执行业务逻辑。
+5秒后，锁a释放了，第6秒进程B跑过来上了把新锁b，设置过期时间10秒。
+到第7秒时，进程A的业务逻辑执行完毕，接着执行解锁操作，结果把进程B的锁释放了。
+</code></pre></div><p>这里暴露了两个问题：</p> <div class="language- extra-class"><pre class="language-text"><code>1.上锁后的业务执行时间过长，超过了锁的有效时间，导致锁混乱了
+2.解锁时，把其他人的锁解了
+</code></pre></div><p>对于问题1，需要在代码处理中优化好业务逻辑的处理，避免执行时间过长，超过了锁的有效时间。</p> <p>对于问题2，要保证只解自己的锁，有个方案是使用lua脚本， 因为Lua 脚本可以保证连续多个指令的原子性执行。脚本内容如下：</p> <div class="language- extra-class"><pre class="language-text"><code>if redis.call(&quot;get&quot;,KEYS[1]) == ARGV[1] then
+    return redis.call(&quot;del&quot;,KEYS[1])
+else
+    return 0
+end
+</code></pre></div><h2 id="二-php实现"><a href="#二-php实现" class="header-anchor">#</a> 二.PHP实现</h2> <p>总结刚才的思路：上锁使用set的扩展参数ex和nx，解锁使用lua脚本</p> <p>本次使用predis库，在laravel下运行，代码如下</p> <div class="language-php extra-class"><pre class="language-php"><code>	<span class="token keyword">const</span> <span class="token constant">LOCK_SUCCESS</span> <span class="token operator">=</span> <span class="token single-quoted-string string">'OK'</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> <span class="token constant">IF_NOT_EXIST</span> <span class="token operator">=</span> <span class="token single-quoted-string string">'NX'</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> <span class="token constant">MILLISECONDS_EXPIRE_TIME</span> <span class="token operator">=</span> <span class="token single-quoted-string string">'PX'</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">const</span> <span class="token constant">RELEASE_SUCCESS</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">__construct</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token variable">$config</span> <span class="token operator">=</span> <span class="token punctuation">[</span>
+            <span class="token single-quoted-string string">'host'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token single-quoted-string string">'127.0.0.1'</span><span class="token punctuation">,</span>
+            <span class="token single-quoted-string string">'port'</span> <span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token number">6379</span><span class="token punctuation">,</span>
+        <span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token variable">$redis</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name"><span class="token punctuation">\</span>Predis<span class="token punctuation">\</span>Client</span><span class="token punctuation">(</span><span class="token variable">$config</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">ser</span> <span class="token operator">=</span> <span class="token variable">$redis</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+	
+	<span class="token comment">//上锁</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">tryGetLock</span><span class="token punctuation">(</span>String <span class="token variable">$key</span><span class="token punctuation">,</span> String <span class="token variable">$requestId</span><span class="token punctuation">,</span> int <span class="token variable">$expireTime</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token variable">$result</span> <span class="token operator">=</span> <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token variable">$key</span><span class="token punctuation">,</span> <span class="token variable">$requestId</span><span class="token punctuation">,</span> self<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token constant">MILLISECONDS_EXPIRE_TIME</span><span class="token punctuation">,</span> <span class="token variable">$expireTime</span><span class="token punctuation">,</span> self<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token constant">IF_NOT_EXIST</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> self<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token constant">LOCK_SUCCESS</span> <span class="token operator">===</span> <span class="token punctuation">(</span>string<span class="token punctuation">)</span><span class="token variable">$result</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+	<span class="token comment">//解锁</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">releaseLock</span><span class="token punctuation">(</span>String <span class="token variable">$key</span><span class="token punctuation">,</span> String <span class="token variable">$requestId</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token variable">$lua</span> <span class="token operator">=</span> <span class="token double-quoted-string string">&quot;if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end&quot;</span><span class="token punctuation">;</span>
+        <span class="token variable">$result</span> <span class="token operator">=</span> <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">ser</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token keyword">eval</span><span class="token punctuation">(</span><span class="token variable">$lua</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token variable">$key</span><span class="token punctuation">,</span> <span class="token variable">$requestId</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> self<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token constant">RELEASE_SUCCESS</span> <span class="token operator">===</span> <span class="token variable">$result</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">set</span><span class="token punctuation">(</span><span class="token variable">$key</span><span class="token punctuation">,</span><span class="token variable">$val</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">ser</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token variable">$key</span><span class="token punctuation">,</span><span class="token variable">$val</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+</code></pre></div><h3 id="测试"><a href="#测试" class="header-anchor">#</a> 测试</h3> <div class="language-php extra-class"><pre class="language-php"><code>	<span class="token variable">$key</span> <span class="token operator">=</span> <span class="token single-quoted-string string">'test'</span><span class="token punctuation">;</span>
+	<span class="token variable">$id</span> <span class="token operator">=</span> <span class="token function">rand</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token shell-comment comment">#模拟不同的会话</span>
+	<span class="token variable">$ser</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">RedisTool</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token variable">$lock</span> <span class="token operator">=</span> <span class="token variable">$ser</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">tryGetLock</span><span class="token punctuation">(</span><span class="token variable">$key</span><span class="token punctuation">,</span><span class="token variable">$id</span><span class="token punctuation">,</span><span class="token number">10000</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token shell-comment comment">#设置过期时间为10秒</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token variable">$lock</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+	    <span class="token keyword">echo</span> <span class="token single-quoted-string string">'获取了锁'</span><span class="token punctuation">;</span>
+	    <span class="token function">fastcgi_finish_request</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	    <span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">12</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token shell-comment comment">#模拟业务执行时间过长</span>
+	    <span class="token variable">$ser</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">releaseLock</span><span class="token punctuation">(</span><span class="token variable">$key</span><span class="token punctuation">,</span><span class="token variable">$id</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token shell-comment comment">#释放锁</span>
+	    <span class="token keyword">return</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+	    <span class="token keyword">return</span> <span class="token single-quoted-string string">'获取锁失败'</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+</code></pre></div><p>第一次访问，显示“获取了锁”，key的值为59.</p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; get test
+&quot;59&quot;
+</code></pre></div><p>接着不断刷新页面，显示为“获取锁失败”，10秒后，显示“获取了锁”，看到key的值为4</p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; get test
+&quot;4&quot;
+</code></pre></div><p>继续获取key的值，发现一直是4，没有被第一次的访问释放。</p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; get test
+&quot;4&quot;
+127.0.0.1:6379&gt; get test
+&quot;4&quot;
+127.0.0.1:6379&gt; get test
+&quot;4&quot;
+127.0.0.1:6379&gt; get test
+&quot;4&quot;
+</code></pre></div><p>之后第二次获取的锁也到期了，自动释放</p> <div class="language- extra-class"><pre class="language-text"><code>127.0.0.1:6379&gt; get test
+(nil)
+</code></pre></div><h2 id="三-分布式锁"><a href="#三-分布式锁" class="header-anchor">#</a> 三.分布式锁</h2> <p>以上的过程是基于单机redis的，如果是redis集群时，则要考虑主从切换的问题：</p> <div class="language- extra-class"><pre class="language-text"><code>进程A在主redis上加了把锁，这时主挂了，从接管，但该锁还没来得及同步到从，这时进程B去加锁，则可以加锁成功，导致一个集群里出现两把相同的锁
+</code></pre></div><p>为了解决这个问题，Antirez 发明了 Redlock 算法。python和PHP都有相关的封装：<a href="https://pypi.org/project/redlock-py/" target="_blank" rel="noopener noreferrer">redlock-py<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>，<a href="https://github.com/ronnylt/redlock-php" target="_blank" rel="noopener noreferrer">redlock-php<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>。开箱即用，省去了造轮子的麻烦。</p> <div class="language- extra-class"><pre class="language-text"><code>$servers = [
+    ['127.0.0.1', 6379, 0.01],
+    ['127.0.0.1', 6389, 0.01],
+    ['127.0.0.1', 6399, 0.01],
+];
+$redLock = new RedLock($servers);
+//上锁
+$lock = $redLock-&gt;lock('my_resource_name', 1000);
+//解锁
+$redLock-&gt;unlock($lock)
+</code></pre></div><p>Redlock的原理是部署多个没有主从关系的redis服务，加锁时，它会向过半节点发送 set(key, value, nx=True, ex=xxx) 指令，只要过半节点 set 成功，那就认为加锁成功。释放锁时，需要向所有节点发送 del 指令。</p> <p>Redlock的缺点是对性能有损耗，增加了运维的复杂度，在开发中需要单独引入Redlock的封装。如果是高可用的场景，可以考虑使用。</p> <p>设想下它的微服务架构：将多个没有主从关系的redis实例单独出来，做成一个Redlock锁的服务，其他redis集群另外独立，当需要锁时，就使用它。</p></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div> <footer><div style="text-align: center;">
+            © 2020 小小郭的博客
+            <a href="http://www.beian.miit.gov.cn/">粤ICP备16016910号</a> <br><br></div></footer></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.158714e6.js" defer></script><script src="/assets/js/2.a806d99a.js" defer></script><script src="/assets/js/55.52c8359c.js" defer></script>
+  </body>
+</html>
